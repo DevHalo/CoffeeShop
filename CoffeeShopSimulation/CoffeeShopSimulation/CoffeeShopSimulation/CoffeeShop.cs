@@ -7,12 +7,16 @@ namespace CoffeeShopSimulation
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public class Game1 : Microsoft.Xna.Framework.Game
+    public class CoffeeShop : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        public Game1()
+        private InputManager inputManager;              // Controller Class
+        private SimulationModel simulationModel;        // Model Class
+        private SimulationView simulationView;          // View Class
+
+        public CoffeeShop()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -40,7 +44,6 @@ namespace CoffeeShopSimulation
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
         }
 
         /// <summary>
@@ -49,7 +52,6 @@ namespace CoffeeShopSimulation
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
         }
 
         /// <summary>
@@ -59,12 +61,11 @@ namespace CoffeeShopSimulation
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
+            float gTime = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            // TODO: Add your update logic here
-
+            inputManager.Update(gTime);
+            simulationModel.Update(gTime);
+            
             base.Update(gameTime);
         }
 
@@ -74,9 +75,9 @@ namespace CoffeeShopSimulation
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
-            // TODO: Add your drawing code here
+            simulationView.Draw(spriteBatch, simulationModel);
 
             base.Draw(gameTime);
         }
