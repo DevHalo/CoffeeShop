@@ -12,7 +12,7 @@ namespace CoffeeShopSimulation
     {
         public Customer(Queue<Vector2> waypoints)
         {
-            
+            string dank;   
         }
     }
 }
