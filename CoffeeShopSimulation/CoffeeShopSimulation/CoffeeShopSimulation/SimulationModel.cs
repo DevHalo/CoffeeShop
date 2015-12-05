@@ -13,7 +13,11 @@ namespace CoffeeShopSimulation
 {
     class SimulationModel
     {
+        private InputManager inputManager = new InputManager();  // Controller Class
 
+
+
+        public void Initialize()
 
         public void Update(float gameTime)
         {

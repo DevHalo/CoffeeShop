@@ -12,7 +12,6 @@ namespace CoffeeShopSimulation
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        private InputManager inputManager;              // Controller Class
         private SimulationModel simulationModel;        // Model Class
         private SimulationView simulationView;          // View Class
 
@@ -63,7 +62,6 @@ namespace CoffeeShopSimulation
         {
             float gTime = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            inputManager.Update(gTime);
             simulationModel.Update(gTime);
             
             base.Update(gameTime);
@@ -77,8 +75,9 @@ namespace CoffeeShopSimulation
         {
             GraphicsDevice.Clear(Color.Black);
 
+            spriteBatch.Begin();
             simulationView.Draw(spriteBatch, simulationModel);
-
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
