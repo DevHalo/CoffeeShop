@@ -40,6 +40,9 @@ namespace CoffeeShopSimulation
         /// </summary>
         public bool Paused { get; private set; }
 
+        /// <summary>
+        /// Returns a rounded version of the
+        /// </summary>
         public double SimTime
         {
             get { return Math.Round(simTime, 2); }
@@ -68,11 +71,13 @@ namespace CoffeeShopSimulation
                 // Advance simulation time
                 SimTime += gameTime;
 
+                // Get the next customer in the queue
+                Node<Customer> curCustomer = Customers.Peek();
+
                 // Update each customer
                 for (int i = 0; i < Customers.Size; i++)
                 {
-                    // Get the next customer in the queue
-                    Node<Customer> curCustomer = Customers.Peek();
+                    
                     curCustomer.Value.Update(gameTime);
 
                     switch (curCustomer.Value.CurrentState)
@@ -88,11 +93,14 @@ namespace CoffeeShopSimulation
                             if (curCustomer.Value.Waypoints.Size == 1 &&
                                 curCustomer.Value.Postion == curCustomer.Value.Waypoints.Peek().Value)
                             {
+                                
                                 // Dequeue the current customer
                                 Customers.Dequeue();
                             }
                             break;
                     }
+
+                    curCustomer = curCustomer.GetNext();
                 }
             }
         }

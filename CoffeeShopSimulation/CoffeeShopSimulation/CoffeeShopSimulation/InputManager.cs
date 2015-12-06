@@ -28,28 +28,10 @@ namespace CoffeeShopSimulation
 
         }
 
-        /// <summary>
-        /// Used to check for new mouse state and to see if the user is clicking
-        /// </summary>
-        public void Update(float gameTime)
+        public bool IsClicked()
         {
-            currMouseState = Mouse.GetState();
 
-            if ((currMouseState.LeftButton == ButtonState.Pressed) &&
-                (prevMouseState.LeftButton == ButtonState.Released))
-            {
-                IsClicked = true;
-            }
-
-            prevMouseState = currMouseState;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public void ResetIsClicked()
-        {
-            IsClicked = false;
-        }
     }
 }

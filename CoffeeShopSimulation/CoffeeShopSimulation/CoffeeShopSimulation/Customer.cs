@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace CoffeeShopSimulation
 {
@@ -31,6 +32,9 @@ namespace CoffeeShopSimulation
 
         //
         public double OrderTime { get; private set; }
+
+        //
+        public double WaitTime { get; private set; }
 
         //
         public Vector2 Postion { get; private set; }
@@ -125,6 +129,11 @@ namespace CoffeeShopSimulation
 
                     break;
             }
+
+        }
+
+        public void Draw(SpriteBatch sb)
+        {
 
         }
     }
