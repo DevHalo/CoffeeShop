@@ -20,7 +20,7 @@ namespace CoffeeShopSimulation
         SpriteBatch spriteBatch;
 
         private SimulationModel simulationModel = new SimulationModel();        // Model Class
-        private SimulationView simulationView = new SimulationView();           // View Class
+        private SimulationView simulationView;                                  // View Class
 
         public CoffeeShop()
         {
@@ -52,6 +52,7 @@ namespace CoffeeShopSimulation
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             simulationModel.Initialize();
+            simulationView = new SimulationView(GraphicsDevice, Content);
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
         }
@@ -71,7 +72,7 @@ namespace CoffeeShopSimulation
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            float gTime = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            float gTime = (float)gameTime.ElapsedGameTime.TotalMilliseconds / 1000f;
 
             simulationModel.Update(gTime);
             
