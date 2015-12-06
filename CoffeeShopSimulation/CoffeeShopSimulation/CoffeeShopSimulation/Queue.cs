@@ -9,6 +9,12 @@ namespace CoffeeShopSimulation
     class Queue<T>
     {
         int hello = 21;
+
+
+        private void Enqueue()
+        {
+
+        }
     }
 
     class Node<T>
