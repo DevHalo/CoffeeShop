@@ -17,8 +17,11 @@ namespace CoffeeShopSimulation
         const float ORDER_TIME_FOOD = 18.0f;
         const float ORDER_TIME_BOTH = 30.0f;
 
+        // Bool is set to true to when the customer leaves the shop
+        public bool IsDone { get; private set; }
+
         // 
-        private int CustomerNumber { get; private set; }
+        public int CustomerNumber { get; private set; }
 
         //
         public string CustomerName { get; private set; }
@@ -129,7 +132,7 @@ namespace CoffeeShopSimulation
         /// </param>
         public void Draw(SpriteBatch sb)
         {
-
+            
         }
     }
 }

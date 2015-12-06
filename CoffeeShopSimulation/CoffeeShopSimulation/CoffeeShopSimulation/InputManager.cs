@@ -31,7 +31,7 @@ namespace CoffeeShopSimulation
         /// <summary>
         /// Used to check for new mouse state and to see if the user is clicking
         /// </summary>
-        public void Update()
+        public void Update(float gameTime)
         {
             currMouseState = Mouse.GetState();
 
