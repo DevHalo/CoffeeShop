@@ -20,7 +20,9 @@ namespace CoffeeShopSimulation
         /// </summary>
         public Queue<Customer> Customers { get; private set; }
 
-        private const int MAX_CUSTOMERS = 16;   // Maximum number of customers in the store
+        private const int MAX_CUSTOMERS = 16;   // Maximum number of customers inside the store
+        public int CustomersInStore = 0;        // Number of customers inside the store
+
         Customer[] cashiers = new Customer[4];  // Cashiers which serve the customers
 
         private double simTime;                     // Total time the simulation has run
@@ -54,6 +56,7 @@ namespace CoffeeShopSimulation
         {
             inputManager.Update(gameTime);
 
+            // Pause the simulation if the left mouse button is called
             if (inputManager.IsClicked)
             {
                 Paused = !Paused;
