@@ -15,6 +15,9 @@ namespace CoffeeShopSimulation
         //Stores the size of the queue
         public int Size { get; private set; }
 
+        /// <summary>
+        /// Creates a queue in the form of a linked list
+        /// </summary>
         public Queue()
         {
             //Set size to zero
@@ -94,18 +97,24 @@ namespace CoffeeShopSimulation
 
     class Node<T>
     {
+        //Stores the value
         public T Value { get; private set; }
+
+        //Stores the index of the current node
         public int Index { get; private set; }
+
+        //Stores the next node
         public Node<T> Next { get; private set; }
 
         /// <summary>
-        /// Creates a new node with the type specified
+        /// Creates a node with the specified type
         /// </summary>
-        /// <param name="value"></param>
-        public Node(T value)
+        /// <param name="index">the index of the node</param>
+        public Node(int index)
         {
-            Value = value;
+            Index = index;
         }
+
 
         /// <summary>
         /// Gets the next node 
