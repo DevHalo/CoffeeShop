@@ -31,7 +31,7 @@ namespace CoffeeShopSimulation
         public void Update(float gameTime)
         {
             // Update each customer
-            for (int i = 0; i < customers.)
+            for (int i = 0; i < customers.) 
             Node<Customer> curCustomer = customers.Peek();
 
            
