@@ -13,12 +13,12 @@ namespace CoffeeShopSimulation
         private Node<T> head;
 
         //Stores the size of the queue
-        int size;
+        public int Size { get; private set; }
 
         public Queue()
         {
             //Set size to zero
-            size = 0;
+            Size = 0;
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace CoffeeShopSimulation
             Node<T> curNode = head;
 
             //If the size of the queue is zero add the new node to the head, otherwise add the new node to the end
-            switch (size)
+            switch (Size)
             {
                 case 0:
                     //Set the head as the new node
@@ -49,7 +49,7 @@ namespace CoffeeShopSimulation
             }
 
             //Increment the size of the queue
-            size++;
+            Size++;
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace CoffeeShopSimulation
             head = tempHead.GetNext();
 
             //Decrement the size of the queue
-            size--;
+            Size--;
 
             //Returns the temporary head
             return tempHead;
@@ -88,7 +88,7 @@ namespace CoffeeShopSimulation
         public bool isEmpty()
         {
             //Returns true or false if the size of the queue is zero
-            return (size == 0);
+            return (Size == 0);
         }
     }
 
@@ -98,6 +98,14 @@ namespace CoffeeShopSimulation
         public int Index { get; private set; }
         public Node<T> Next { get; private set; }
 
+        /// <summary>
+        /// Creates a new node with the type specified
+        /// </summary>
+        /// <param name="value"></param>
+        public Node(T value)
+        {
+            Value = value;
+        }
 
         /// <summary>
         /// Gets the next node 

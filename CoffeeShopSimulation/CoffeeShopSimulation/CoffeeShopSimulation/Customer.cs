@@ -37,7 +37,6 @@ namespace CoffeeShopSimulation
 
         public Queue<Vector2> Waypoints { get; private set; }
 
-
         public enum CustomerType
         {
             Coffee,

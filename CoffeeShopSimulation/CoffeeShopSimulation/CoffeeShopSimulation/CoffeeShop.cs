@@ -1,3 +1,10 @@
+// Authors: Mark Voong, Sanjay Paraboo, Shawn Verma
+// Class Name: CoffeeShop.cs
+// Project Name: A5
+// Date Created: Dec 5th 2015
+// Date Modified: Dec 5th 2015
+// Description: A simulation involving processing customers orders as they enter a coffee shop.
+// The customer has the ability to 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -12,12 +19,15 @@ namespace CoffeeShopSimulation
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        private SimulationModel simulationModel;        // Model Class
-        private SimulationView simulationView;          // View Class
+        private SimulationModel simulationModel = new SimulationModel();        // Model Class
+        private SimulationView simulationView;                                  // View Class
 
         public CoffeeShop()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = 1366;
+            graphics.PreferredBackBufferHeight = 768;
+
             Content.RootDirectory = "Content";
         }
 
@@ -41,6 +51,8 @@ namespace CoffeeShopSimulation
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
+            simulationModel.Initialize();
+            simulationView = new SimulationView(GraphicsDevice, Content);
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
         }
@@ -60,8 +72,10 @@ namespace CoffeeShopSimulation
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            float gTime = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            // Get wall time in seconds
+            float gTime = (float)gameTime.ElapsedGameTime.TotalMilliseconds / 1000f;
 
+            // Simulate
             simulationModel.Update(gTime);
             
             base.Update(gameTime);
@@ -76,8 +90,12 @@ namespace CoffeeShopSimulation
             GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin();
+            
+            // Draw the simulation
             simulationView.Draw(spriteBatch, simulationModel);
+            
             spriteBatch.End();
+
             base.Draw(gameTime);
         }
     }
