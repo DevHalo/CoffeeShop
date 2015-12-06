@@ -8,7 +8,7 @@ namespace CoffeeShopSimulation
 {
     class Queue<T>
     {
-      
+        int hello = 21;
     }
 
     class Node<T>
