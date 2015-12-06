@@ -34,6 +34,9 @@ namespace CoffeeShopSimulation
         public double OrderTime { get; private set; }
 
         //
+        public double WaitTime { get; private set; }
+
+        //
         public Vector2 Postion { get; private set; }
 
         //
