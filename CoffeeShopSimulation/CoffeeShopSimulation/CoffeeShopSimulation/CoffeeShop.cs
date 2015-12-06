@@ -72,8 +72,10 @@ namespace CoffeeShopSimulation
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            // Get wall time in seconds
             float gTime = (float)gameTime.ElapsedGameTime.TotalMilliseconds / 1000f;
 
+            // Simulate
             simulationModel.Update(gTime);
             
             base.Update(gameTime);
@@ -88,7 +90,10 @@ namespace CoffeeShopSimulation
             GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin();
+            
+            // Draw the simulation
             simulationView.Draw(spriteBatch, simulationModel);
+            
             spriteBatch.End();
 
             base.Draw(gameTime);
