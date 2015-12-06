@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace CoffeeShopSimulation
 {
     class SimulationView
-    {
+    { 
 
 
         public void Draw(SpriteBatch sb, SimulationModel model)
