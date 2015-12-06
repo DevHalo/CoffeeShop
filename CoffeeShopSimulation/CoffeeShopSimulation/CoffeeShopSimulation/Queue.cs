@@ -13,12 +13,15 @@ namespace CoffeeShopSimulation
         private Node<T> head;
 
         //Stores the size of the queue
-        int size;
+        public int Size { get; private set; }
 
+        /// <summary>
+        /// Creates a queue in the form of a linked list
+        /// </summary>
         public Queue()
         {
             //Set size to zero
-            size = 0;
+            Size = 0;
         }
 
         /// <summary>
@@ -30,7 +33,7 @@ namespace CoffeeShopSimulation
             Node<T> curNode = head;
 
             //If the size of the queue is zero add the new node to the head, otherwise add the new node to the end
-            switch (size)
+            switch (Size)
             {
                 case 0:
                     //Set the head as the new node
@@ -49,7 +52,7 @@ namespace CoffeeShopSimulation
             }
 
             //Increment the size of the queue
-            size++;
+            Size++;
         }
 
         /// <summary>
@@ -65,7 +68,7 @@ namespace CoffeeShopSimulation
             head = tempHead.GetNext();
 
             //Decrement the size of the queue
-            size--;
+            Size--;
 
             //Returns the temporary head
             return tempHead;
@@ -88,15 +91,29 @@ namespace CoffeeShopSimulation
         public bool isEmpty()
         {
             //Returns true or false if the size of the queue is zero
-            return (size == 0);
+            return (Size == 0);
         }
     }
 
     class Node<T>
     {
+        //Stores the value
         public T Value { get; private set; }
+        
+        //Stores the index of the current node
         public int Index { get; private set; }
+        
+        //Stores the next node
         public Node<T> Next { get; private set; }
+
+        /// <summary>
+        /// Creates a node with the specified type
+        /// </summary>
+        /// <param name="index">the index of the node</param>
+        public Node(int index)
+        {
+            Index = index;
+        }
 
 
         /// <summary>
