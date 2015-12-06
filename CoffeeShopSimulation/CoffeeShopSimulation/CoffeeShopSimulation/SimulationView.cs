@@ -43,7 +43,7 @@ namespace CoffeeShopSimulation
         {
             // Draw statistics and other important information
             sb.DrawString(mainFont, "Tim Hortons Simulator 2015", Vector2.Zero, Color.Red);
-            sb.DrawString(mainFont, "Simulation Time: " + model.SimTime, new Vector2(0, 25), Color.Red);
+            sb.DrawString(mainFont, "Simulation Time: " + model.SimTime + " Seconds", new Vector2(0, 25), Color.Red);
 
             if (model.Paused)
             {
