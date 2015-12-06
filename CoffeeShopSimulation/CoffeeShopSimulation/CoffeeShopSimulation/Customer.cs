@@ -1,12 +1,15 @@
 ﻿// Author: Sanjay Paraboo
-// File Name: A5_DataManipulation.sln
+// File Name: CoffeeShopSimulation.sln
 // Project Name: A5 Data Manipulation Assignment
 // Creation Date: Dec 5, 2015
-// Modified Date: , 2015
+// Modified Date:
 // Description:
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace CoffeeShopSimulation
 {
@@ -20,10 +23,10 @@ namespace CoffeeShopSimulation
         // Bool is set to true to when the customer leaves the shop
         public bool IsDone { get; private set; }
 
-        // 
+        // Integer that stores the customers number
         public int CustomerNumber { get; private set; }
 
-        //
+        // Stores the customer info
         public string CustomerName { get; private set; }
 
         //
@@ -36,6 +39,7 @@ namespace CoffeeShopSimulation
         public Vector2 currWaypoint { get; private set; }
 
         public Queue<Vector2> Waypoints { get; private set; }
+
 
         public enum CustomerType
         {
@@ -121,17 +125,7 @@ namespace CoffeeShopSimulation
 
                     break;
             }
-        }
 
-        /// <summary>
-        /// Used to draw the customer instance onto the screen
-        /// </summary>
-        /// <param name="sb">
-        /// Passes through an instance of SpriteBatch in order to use its drawing commands
-        /// </param>
-        public void Draw(SpriteBatch sb)
-        {
-            
         }
     }
 }

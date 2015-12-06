@@ -1,19 +1,16 @@
 ﻿// Author: Sanjay Paraboo
-// File Name: CoffeeShopSimulation.sln
+// File Name: A5_DataManipulation.sln
 // Project Name: A5 Data Manipulation Assignment
 // Creation Date: Dec 5, 2015
-// Modified Date:
+// Modified Date: , 2015
 // Description:
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace CoffeeShopSimulation
 {
-    class CustomerModel
+    class Customer
     {
         // Creates constants for the order times in seconds
         const float ORDER_TIME_COFFEE = 12.0f;
@@ -23,10 +20,10 @@ namespace CoffeeShopSimulation
         // Bool is set to true to when the customer leaves the shop
         public bool IsDone { get; private set; }
 
-        // Integer that stores the customers number
+        // 
         public int CustomerNumber { get; private set; }
 
-        // Stores the customer info
+        //
         public string CustomerName { get; private set; }
 
         //
@@ -39,7 +36,6 @@ namespace CoffeeShopSimulation
         public Vector2 currWaypoint { get; private set; }
 
         public Queue<Vector2> Waypoints { get; private set; }
-
 
         public enum CustomerType
         {
@@ -72,7 +68,7 @@ namespace CoffeeShopSimulation
         /// <param name="customerNumber">
         /// Used to store the customers current postion in the Queue
         /// </param>
-        public CustomerModel(Queue<Vector2> waypoints, CustomerType customerType, int customerNumber)
+        public Customer(Queue<Vector2> waypoints, CustomerType customerType, int customerNumber)
         {
             // Sets the class level variables values to the ones obtained from the constructor
             this.Type = customerType;
@@ -125,7 +121,17 @@ namespace CoffeeShopSimulation
 
                     break;
             }
+        }
 
+        /// <summary>
+        /// Used to draw the customer instance onto the screen
+        /// </summary>
+        /// <param name="sb">
+        /// Passes through an instance of SpriteBatch in order to use its drawing commands
+        /// </param>
+        public void Draw(SpriteBatch sb)
+        {
+            
         }
     }
 }
