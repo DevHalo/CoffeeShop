@@ -20,16 +20,21 @@ namespace CoffeeShopSimulation
         private Statistics statistics;
 
         private float simTime;
+        private float respawnTimer;
+        private const float SPAWN_TIME = 5.0f;    // Time in seconds between each customer attempting to enter the store
 
         public void Initialize()
         {
             // Initialize Waypoints
-            
         }
 
         public void Update(float gameTime)
         {
             // Update each customer
+            for (int i = 0; i < customers.)
+            Node<Customer> curCustomer = customers.Peek();
+
+           
         }
     }
 }
