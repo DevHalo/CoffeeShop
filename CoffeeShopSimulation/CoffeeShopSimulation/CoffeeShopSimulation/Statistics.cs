@@ -9,23 +9,68 @@ namespace CoffeeShopSimulation
 {
     class Statistics
     {
+        //Stores the minimum, maximum, total, and average wait time from all customers
         private float minWaitTime;
         private float maxWaitTime;
         private float totalWaitTime;
         private float avgWaitTime;
+
+        //Stores the number of visits
         private float visits;
         
+        //Stores the top 5 longest wait time for the customers still waiting
         private float[] longestWaitTimes = new float[5];
 
+        /// <summary>
+        /// Updates the longest wait times according to the current customers in the store
+        /// </summary>
+        /// <param name="customers">stores the queue of customers</param>
         public void Update(Queue<Customer> customers)
         {
-            Node<Customer> customer = customers.Peek();
+            //Variable used to store the current customer node
+            Node<Customer> curCustomer = customers.Peek();
 
+            //Goes throught every customer
             for(int i = 0; i < customers.Size; i++)
             {
+                //If the the current customer has waited longer than the shortest wait time from the top 5 longest wait times
+                if (curCustomer.Value.WaitTime > longestWaitTimes[longestWaitTimes.Length - 1])
+                {
+                    //Set the shortest wait time from the longest wait time to the current customer wait time
+                    longestWaitTimes[longestWaitTimes.Length - 1] = (float)curCustomer.Value.WaitTime;
 
+                    //Sort the array
+                    Sort();
+                }
 
-                customer = customer.GetNext();                
+                //Set the current customer to the next customer
+                curCustomer = curCustomer.GetNext();                
+            }
+        }
+
+        /// <summary>
+        /// Sorts the longest wait times array using bubble sort method
+        /// </summary>
+        private void Sort()
+        {
+            //Holds temp data of the next index of the array
+            float temp = 0f;
+
+            //Goes through every index of the longest wait time array
+            for (int i = longestWaitTimes.Length - 1; i > 0; i++)
+            {
+                //
+                if (longestWaitTimes[i] > longestWaitTimes[i - 1])
+                {
+                    //Set the temporary variable to the longest wait time being replaced
+                    temp = longestWaitTimes[i - 1];
+
+                    //Replace
+                    longestWaitTimes[i - 1] = longestWaitTimes[i];
+
+                    //Set
+                    longestWaitTimes[i] = temp;
+                }
             }
         }
 
