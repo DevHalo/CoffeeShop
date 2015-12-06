@@ -115,7 +115,6 @@ namespace CoffeeShopSimulation
             Index = index;
         }
 
-
         /// <summary>
         /// Gets the next node 
         /// </summary>
