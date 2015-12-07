@@ -30,7 +30,7 @@ namespace CoffeeShopSimulation
         MouseState prevMouseState;
 
         // Will be used to tell the main class whether the button has been clicked or not
-        public bool isClicked { get; private set; }
+        public bool IsClicked { get; private set; }
 
         // Used to store the SpriteFont that will be used to draw the button headings
         SpriteFont btnFont;
@@ -41,13 +41,9 @@ namespace CoffeeShopSimulation
         // Stores the labels for each of the buttons
         string buttonLabelName;
 
-        // Used for the buttons destination screen
-        private TetrisMain.GameState buttonNameState;
-
         // Used to store string length in order to centre the text on the button
         private Vector2 textDimensions;
-
-
+        
         /// <summary>
         /// Used to create an instance of a Button
         /// </summary>
@@ -56,26 +52,17 @@ namespace CoffeeShopSimulation
         /// <param name="btnFont"> Font is used to draw labels onto the buttons </param>
         /// <param name="buttonNameState"> Used to specify the destination screen for each button </param>
         /// <param name="buttonLabelName"> This string will be used to draw onto the buttons </param>
-        public Button(Rectangle buttonRect, Texture2D buttonTexture, SpriteFont btnFont, TetrisMain.GameState buttonNameState, string buttonLabelName)
+        public Button(Rectangle buttonRect, Texture2D buttonTexture, SpriteFont btnFont, string buttonLabelName)
         {
             this.buttonRect = buttonRect;
             this.buttonTexture = buttonTexture;
             this.btnFont = btnFont;
-            this.buttonNameState = buttonNameState;
             this.buttonLabelName = buttonLabelName;
 
             // Gets the width and height of the SpriteFont and stores it in a Vector2
             textDimensions = btnFont.MeasureString(buttonLabelName);
         }
 
-        /// <summary>
-        /// Used to tell the main game class what to set the destination screen to
-        /// </summary>
-        /// <returns> Returns the enum of the destination screen </returns>
-        public TetrisMain.GameState GetButtonName()
-        {
-            return buttonNameState;
-        }
 
         /// <summary>
         /// Updates the color of the button when the cursor is on or off it and it changes the IsClicked
@@ -96,7 +83,8 @@ namespace CoffeeShopSimulation
                 if ((currMouseState.LeftButton == ButtonState.Pressed) &&
                     (prevMouseState.LeftButton == ButtonState.Released))
                 {
-                    isClicked = true;
+                    IsClicked = true;
+                    IsClicked = false;
                 }
             }
             else
@@ -121,19 +109,11 @@ namespace CoffeeShopSimulation
                     btnColor);          // Sets the color to the btnColor variable
 
             // Draws the Button labels onto the button
-            sb.DrawString(btnFont,                                                                    // Uses the btnFont SpriteFont variable
-                          buttonLabelName,                                                            // Draws the text in the string ButtonLabelName
+            sb.DrawString(btnFont,                                                                      // Uses the btnFont SpriteFont variable
+                          buttonLabelName,                                                              // Draws the text in the string ButtonLabelName
                           new Vector2((buttonRect.X + ((buttonRect.Width - textDimensions.X) * 0.5f)),  // Sets the Vector2 to the middle of the button
                                       buttonRect.Y + ((buttonRect.Height - textDimensions.Y) * 0.5f)),
-                          Color.White);                                                               // Makes the font white
-        }
-
-        /// <summary>
-        /// REsets the isClicked bool back to false
-        /// </summary>
-        public void ResetIsClicked()
-        {
-            isClicked = false;
+                          Color.White);                                                                 // Makes the font white
         }
     }
 }

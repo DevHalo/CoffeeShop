@@ -21,6 +21,9 @@ namespace CoffeeShopSimulation
         const float ORDER_TIME_FOOD = 18.0f;
         const float ORDER_TIME_BOTH = 30.0f;
 
+        // Constant used to store the customers movement speed
+        const int MOVEMENT_SPEED = 10;
+
         // Bool is set to true to when the customer leaves the shop
         public bool IsDone { get; private set; }
 
@@ -49,6 +52,9 @@ namespace CoffeeShopSimulation
         private Texture2D customerImg;
         private SpriteFont labelFont;
 
+        // Used to store the angle and direction between the destination point and the customers current position
+        private double angleToDestination;
+        private Vector2 customerDirection;
 
         /// <summary>
         /// Used to specify what type of customer will be initialized
@@ -119,10 +125,36 @@ namespace CoffeeShopSimulation
         /// <summary>
         /// Runs the update logic for the customer instance
         /// </summary>
-        /// <param name="gameTimeInMilliSeconds">Passses through the elapsed time in milliseconds</param>
+        /// <param name="gameTimeInMilliSeconds">Passes through the elapsed time in milliseconds</param>
         public void Update(float gameTimeInMilliSeconds)
         {
+            // Adds the elasped time to the customers wait time
             WaitTime += gameTimeInMilliSeconds;
+
+            //////////////ADD Logic to change CustomerState enum based on waypoint info/////////////
+
+
+            // If the customer is not at the waypoint it will calulate the abgle towards it and move it towards the waypoint
+            if (Postion != CurrWaypoint)
+            {
+                // Calculates the angle and direction from the customer to the waypoint. angleToDestination is only 0 when
+                // the angle hasnt been calulated or if the customer is at the waypoint
+                if (angleToDestination == 0)
+                {
+                    angleToDestination = Math.Atan2(CurrWaypoint.Y - Postion.Y, CurrWaypoint.X - Postion.X);
+
+                    customerDirection = new Vector2((float)Math.Cos(angleToDestination), (float)Math.Sin(angleToDestination));
+                }
+
+                // Adds the customer direction to the customers position  in order to move it towards the waypoint
+                Postion += (customerDirection) * MOVEMENT_SPEED;
+
+                // Sets the angle to zero when the customer is at the waypoint
+                if (Postion == CurrWaypoint)
+                {
+                    angleToDestination = 0;
+                }
+            }
         }
 
         /// <summary>
