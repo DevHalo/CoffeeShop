@@ -131,6 +131,7 @@ namespace CoffeeShopSimulation
         /// <param name="node">The node you are adding to be next node</param>
         public void SetNext(Node<T> node)
         {
+            //Set the next node
             Next = node;
         }
     }
