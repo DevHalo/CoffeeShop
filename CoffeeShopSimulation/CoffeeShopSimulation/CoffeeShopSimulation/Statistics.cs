@@ -39,7 +39,7 @@ namespace CoffeeShopSimulation
                     //Set the shortest wait time from the longest wait time to the current customer wait time
                     longestWaitTimes[longestWaitTimes.Length - 1] = (float)curCustomer.Value.WaitTime;
 
-                    //Sort the array
+                    //Sort the top 5 longest wait times
                     Sort();
                 }
 
