@@ -27,33 +27,43 @@ namespace CoffeeShopSimulation
         // Integer that stores the customers number
         public int CustomerNumber { get; private set; }
 
-        // Stores the customer info
+        // Used to store the customers name which will be displayed when the customer is drawn onto the screen
         public string CustomerName { get; private set; }
 
-        //
-        public double OrderTime { get; private set; }
+        // Stores the customers order time and is based on what they ordered
+        public float OrderTime { get; private set; }
 
-        //
-        public double WaitTime { get; private set; }
+        // Used to record the amount of time that has passed since the customer was initialized
+        public float WaitTime { get; private set; }
 
-        //
+        // Stores the cusotmers position on the screen
         public Vector2 Postion { get; private set; }
 
-        //
-        public Vector2 currWaypoint { get; private set; }
+        // Stores the location on the current waypoint
+        public Vector2 CurrWaypoint { get; private set; }
 
+        // Stores the location of all the waypoints in the coffee shop
         public Queue<Vector2> Waypoints { get; private set; }
 
+        // This will be used to draw the customer name and image onto the screen
+        private Texture2D customerImg;
+        private SpriteFont labelFont;
 
+
+        /// <summary>
+        /// Used to specify what type of customer will be initialized
+        /// </summary>
         public enum CustomerType
         {
             Coffee,
             Food,
             Both
         };
-
         public CustomerType Type { get; private set; }
 
+        /// <summary>
+        /// Used to store the current state of the customer
+        /// </summary>
         public enum CustomerState
         {
             Outside,
@@ -61,7 +71,6 @@ namespace CoffeeShopSimulation
             AtCashier,
             ExitStore
         };
-
         public CustomerState CurrentState { get; private set; }
 
         /// <summary>
@@ -76,7 +85,7 @@ namespace CoffeeShopSimulation
         /// <param name="customerNumber">
         /// Used to store the customers current postion in the Queue
         /// </param>
-        public Customer(Queue<Vector2> waypoints, CustomerType customerType, int customerNumber)
+        public Customer(Queue<Vector2> waypoints, CustomerType customerType, int customerNumber, Texture2D customerImg, SpriteFont labelText)
         {
             // Sets the class level variables values to the ones obtained from the constructor
             this.Type = customerType;
@@ -103,38 +112,41 @@ namespace CoffeeShopSimulation
                     break;
             }
 
+            // Sets the initial state of the customer to outside the coffee shop
+            CurrentState = CustomerState.Outside;
         }
 
         /// <summary>
-        /// 
+        /// Runs the update logic for the customer instance
         /// </summary>
-        /// <param name="gameTime"></param>
-        public void Update(float gameTime)
+        /// <param name="gameTimeInMilliSeconds">Passses through the elapsed time in milliseconds</param>
+        public void Update(float gameTimeInMilliSeconds)
         {
-            switch (CurrentState)
-            {
-                case CustomerState.Outside:
-
-                    break;
-
-                case CustomerState.InLine:
-
-                    break;
-
-                case CustomerState.AtCashier:
-
-                    break;
-
-                case CustomerState.ExitStore:
-
-                    break;
-            }
-
+            WaitTime += gameTimeInMilliSeconds;
         }
 
+        /// <summary>
+        /// Draws the customer instance onto the screen
+        /// </summary>
+        /// <param name="sb">Passes through the SpriteBatch instance in order to use its draw commands</param>
         public void Draw(SpriteBatch sb)
         {
+            // Draws the customer image onto the screen
+            sb.Draw(customerImg,
+                Postion,
+                null,
+                Color.White,
+                0f,
+                Vector2.Zero,
+                0f,
+                SpriteEffects.None,
+                0);
 
+            // Draws the customer name above the customer image
+            sb.DrawString(labelFont,
+                CustomerName,
+                new Vector2(Postion.X - 50, Postion.Y - 50),
+                Color.White);
         }
     }
 }
