@@ -2,7 +2,8 @@
 // Class Name: Statistics.cs
 // Date Created: Dec 5th 2015
 // Date Modified: Dec 5th 2015
-// Description: 
+// Description: Keeps track of the statistics of the simulation such as, minimum wait time, max wait time, total wait time, 
+//              average wait time, number of visits, and top 5 longest wait times
 
 using Microsoft.Xna.Framework.Graphics;
 namespace CoffeeShopSimulation
