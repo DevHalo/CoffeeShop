@@ -38,7 +38,7 @@ namespace CoffeeShopSimulation
                 if (curCustomer.Value.WaitTime > longestWaitTimes[longestWaitTimes.Length - 1])
                 {
                     //Set the shortest wait time from the longest wait time to the current customer wait time
-                    longestWaitTimes[longestWaitTimes.Length - 1] = (float)curCustomer.Value.WaitTime;
+                    longestWaitTimes[longestWaitTimes.Length - 1] = curCustomer.Value.WaitTime;
 
                     //Sort the top 5 longest wait times
                     Sort();
@@ -55,7 +55,7 @@ namespace CoffeeShopSimulation
         private void Sort()
         {
             //Holds temp data of the next index of the array
-            float temp = 0f;
+            float temp;
 
             //Goes through every index of the longest wait time array
             for (int i = longestWaitTimes.Length - 1; i > 0; i++)
@@ -82,36 +82,33 @@ namespace CoffeeShopSimulation
         public void ProcessExitingCustomer(Node<Customer> customer)
         {
             //add the customer wait time the the total wait time
-            totalWaitTime += (float)(customer.Value.WaitTime);
+            totalWaitTime += (customer.Value.WaitTime);
 
             //Increment the number of visits
             visits++;
 
             //Calculate the average wait time
-            avgWaitTime = (float)(totalWaitTime / visits);
+            avgWaitTime = (totalWaitTime / visits);
 
             //if the current customer being checked has a greater wait time than the max wait time
             if (maxWaitTime < customer.Value.OrderTime)
             {
                 //set the max wait time to the current customer wait time
-                maxWaitTime = (float)customer.Value.WaitTime;
+                maxWaitTime = customer.Value.WaitTime;
             }
 
             //If minimum wait time is zero
-            if (minWaitTime == 0)
+            if (minWaitTime <= 0)
             {
                 //set the minimum wait time to the customer wait time
-                minWaitTime = (float)customer.Value.WaitTime;
+                minWaitTime = customer.Value.WaitTime;
             }
             // If minimum wait time is greater than the customer wait time
             else if (minWaitTime > customer.Value.WaitTime)
             {
                 //Set minimum wait time to customer wait time
-                minWaitTime = (float)customer.Value.WaitTime;
+                minWaitTime = customer.Value.WaitTime;
             }
-
-            //Set the current customer to the next customer
-            customer = customer.GetNext();
         }
 
         public void Draw(SpriteBatch sb)
