@@ -74,7 +74,7 @@ namespace CoffeeShopSimulation
                     // Restart the respawn timer
                     CustomersInStore++;
                     CustomerModel.CustomerType customerType;
-                    int randType = rand.Next(0, 2);
+                    int randType = rand.Next(0, 3);
 
                     switch (randType)
                     {
