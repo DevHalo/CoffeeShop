@@ -23,6 +23,8 @@ namespace CoffeeShopSimulation
         public CustomerView(CustomerModel customerModel, Texture2D customerImg, SpriteFont labelFont)
         {
             this.customerModel = customerModel;
+            this.customerImg = customerImg;
+            this.labelFont = labelFont;
         }
 
         /// <summary>
