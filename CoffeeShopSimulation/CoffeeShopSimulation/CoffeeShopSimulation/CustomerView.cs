@@ -13,25 +13,19 @@ namespace CoffeeShopSimulation
         // Stores an instance of Customer Model
         CustomerModel customerModel;
 
-        // This will be used to draw the customer name and image onto the screen
-        private Texture2D customerImg;
-        private SpriteFont labelFont;
-
         /// <summary>
         /// 
         /// </summary>
-        public CustomerView(CustomerModel customerModel, Texture2D customerImg, SpriteFont labelFont)
+        public CustomerView(CustomerModel customerModel)
         {
             this.customerModel = customerModel;
-            this.customerImg = customerImg;
-            this.labelFont = labelFont;
         }
 
         /// <summary>
         /// Draws the customer instance onto the screen
         /// </summary>
         /// <param name="sb">Passes through the SpriteBatch instance in order to use its draw commands</param>
-        public void Draw(SpriteBatch sb)
+        public void Draw(SpriteBatch sb, Texture2D customerImg, SpriteFont labelFont)
         {
             // Draws the customer image onto the screen
             sb.Draw(customerImg,

@@ -117,6 +117,8 @@ namespace CoffeeShopSimulation
 
             // Sets the initial state of the customer to outside the coffee shop
             CurrentState = CustomerState.Outside;
+
+            View = new CustomerView(this);
         }
 
         /// <summary>
