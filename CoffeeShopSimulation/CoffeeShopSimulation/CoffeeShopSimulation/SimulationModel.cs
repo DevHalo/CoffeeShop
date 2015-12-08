@@ -73,23 +73,26 @@ namespace CoffeeShopSimulation
                 {
                     // Restart the respawn timer
                     CustomersInStore++;
-                    Customer.CustomerType customerType;
+                    CustomerModel.CustomerType customerType;
                     int randType = rand.Next(0, 2);
 
                     switch (randType)
                     {
                         case 0:
-                            customerType = Customer.CustomerType.Coffee;
+                            customerType = CustomerModel.CustomerType.Coffee;
                             break;
                         case 1:
-                            customerType = Customer.CustomerType.Food;
+                            customerType = CustomerModel.CustomerType.Food;
                             break;
                         case 2:
-                            customerType = Customer.CustomerType.Both;
+                            customerType = CustomerModel.CustomerType.Both;
+                            break;
+                        default:
+                            customerType = CustomerModel.CustomerType.Coffee;
                             break;
                     }
                     
-                    Customers.Enqueue(new Node<Customer>(CustomersInStore, new Customer(waypoints, customerType, numCustomers, )));
+                    Customers.Enqueue(new Node<CustomerModel>(CustomersInStore, new CustomerModel(waypoints, customerType, numCustomers)));
                 }
 
                 // Get the next customer in the queue
