@@ -93,6 +93,7 @@ namespace CoffeeShopSimulation
             //Returns true or false if the size of the queue is zero
             return (Size == 0);
         }
+        
     }
 
     class Node<T>
