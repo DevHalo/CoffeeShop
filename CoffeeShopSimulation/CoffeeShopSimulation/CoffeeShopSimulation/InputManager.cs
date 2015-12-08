@@ -28,10 +28,10 @@ namespace CoffeeShopSimulation
 
         }
 
-        public bool IsClicked()
-        {
+        //public bool IsClicked()
+        //{
 
-        }
+        //}
 
     }
 }

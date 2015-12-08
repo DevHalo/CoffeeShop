@@ -21,25 +21,25 @@ namespace CoffeeShopSimulation
     class Button
     {
         // Stores the button coordinates
-        Rectangle buttonRect;
+        private Rectangle buttonRect;
 
         // Stores button texture
-        Texture2D buttonTexture;
+        private Texture2D buttonTexture;
 
         // Records current mouse state
-        MouseState prevMouseState;
+        private MouseState prevMouseState;
 
         // Will be used to tell the main class whether the button has been clicked or not
         public bool IsClicked { get; private set; }
 
         // Used to store the SpriteFont that will be used to draw the button headings
-        SpriteFont btnFont;
+        private SpriteFont btnFont;
 
         // Used to control the button color
-        Color btnColor;
+        private Color btnColor;
 
         // Stores the labels for each of the buttons
-        string buttonLabelName;
+        private string buttonLabelName;
 
         // Used to store string length in order to centre the text on the button
         private Vector2 textDimensions;
@@ -50,7 +50,6 @@ namespace CoffeeShopSimulation
         /// <param name="buttonRect"> Used to set the X, Y, Width and Height of the button </param>
         /// <param name="buttonTexture"> Used to store the image of the button </param>
         /// <param name="btnFont"> Font is used to draw labels onto the buttons </param>
-        /// <param name="buttonNameState"> Used to specify the destination screen for each button </param>
         /// <param name="buttonLabelName"> This string will be used to draw onto the buttons </param>
         public Button(Rectangle buttonRect, Texture2D buttonTexture, SpriteFont btnFont, string buttonLabelName)
         {
