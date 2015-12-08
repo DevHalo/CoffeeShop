@@ -50,7 +50,6 @@ namespace CoffeeShopSimulation
         /// <param name="buttonRect"> Used to set the X, Y, Width and Height of the button </param>
         /// <param name="buttonTexture"> Used to store the image of the button </param>
         /// <param name="btnFont"> Font is used to draw labels onto the buttons </param>
-        /// <param name="buttonNameState"> Used to specify the destination screen for each button </param>
         /// <param name="buttonLabelName"> This string will be used to draw onto the buttons </param>
         public Button(Rectangle buttonRect, Texture2D buttonTexture, SpriteFont btnFont, string buttonLabelName)
         {
