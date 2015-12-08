@@ -88,12 +88,11 @@ namespace CoffeeShopSimulation
         /// Returns true if the Size of the queue is zero, false otherwise
         /// </summary>
         /// <returns>whether or not the queue is empty</returns>
-        public bool isEmpty()
+        public bool IsEmpty()
         {
             //Returns true or false if the size of the queue is zero
-            return (Size == 0);
+            return (Size <= 0);
         }
-        
     }
 
     class Node<T>
