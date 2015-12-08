@@ -131,10 +131,9 @@ namespace CoffeeShopSimulation
             // Adds the elasped time to the customers wait time
             WaitTime += gameTimeInMilliSeconds;
 
-            //////////////ADD Logic to change CustomerState enum based on waypoint info/////////////
 
 
-            // If the customer is not at the waypoint it will calulate the abgle towards it and move it towards the waypoint
+            // If the customer is not at the waypoint it will calulate the angle towards it and move it towards the waypoint
             if (Postion != CurrWaypoint)
             {
                 // Calculates the angle and direction from the customer to the waypoint. angleToDestination is only 0 when
