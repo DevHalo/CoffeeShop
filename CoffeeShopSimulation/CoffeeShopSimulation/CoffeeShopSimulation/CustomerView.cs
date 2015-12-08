@@ -14,7 +14,7 @@ namespace CoffeeShopSimulation
         CustomerModel customerModel;
 
         /// <summary>
-        /// 
+        /// nigger
         /// </summary>
         public CustomerView(CustomerModel customerModel)
         {
