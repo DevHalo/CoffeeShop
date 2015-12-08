@@ -111,9 +111,31 @@ namespace CoffeeShopSimulation
             }
         }
 
-        public void Draw(SpriteBatch sb)
+        /// <summary>
+        /// Saves each customer's wait time and name in an array that is comma deliminated
+        /// </summary>
+        /// <param name="customers"></param>
+        /// <returns>comma deliminated array that holds the customer wait time and name</returns>
+        public string[] ToStringArray(Queue<CustomerModel> customers)
         {
+            //Stores the data of the customer
+            string[] data = new string[customers.Size];
 
+            //Variable used to store the current customer node
+            Node<CustomerModel> curCustomer = customers.Peek();
+
+            //Itterates through each customer
+            for (int i = 0; i < customers.Size; i++)
+            {
+                //Saves the customer data with a comma inbetween the wait time and the customer name
+                data[i] = curCustomer.Value.WaitTime.ToString() + "," + curCustomer.Value.CustomerName;
+
+                //Set the current customer to the next customer
+                curCustomer = curCustomer.GetNext();
+            }
+
+            //Return the data of all the customers
+            return data;
         }
     }
 }
