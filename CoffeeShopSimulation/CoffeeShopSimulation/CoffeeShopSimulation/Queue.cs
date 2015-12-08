@@ -110,9 +110,11 @@ namespace CoffeeShopSimulation
         /// Creates a node with the specified type
         /// </summary>
         /// <param name="index">the index of the node</param>
-        public Node(int index)
+        /// <param name="value">the cargo of the node</param>
+        public Node(int index, T value)
         {
             Index = index;
+            Value = value;
         }
 
         /// <summary>

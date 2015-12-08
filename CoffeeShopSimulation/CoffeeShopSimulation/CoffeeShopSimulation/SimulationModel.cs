@@ -22,13 +22,15 @@ namespace CoffeeShopSimulation
 
         private const int MAX_CUSTOMERS = 16;   // Maximum number of customers inside the store
         public int CustomersInStore = 0;        // Number of customers inside the store
+        private int numCustomers = 0;           // Number of customers that have visited the store
 
         CustomerModel[] cashiers = new CustomerModel[4];  // Cashiers which serve the customers
 
-        private double simTime;                     // Total time the simulation has run
-        private double respawnTimer;                // Timer used to delay time between customer spawning
-        private const double SPAWN_TIME = 5.0d;     // Time in seconds between each customer attempting to enter the store
-        private const double SIM_DURATION = 300.0d; // Time in seconds for how long the simulation should run
+        private float simTime;                     // Total time the simulation has run
+        private float respawnTimer;                // Timer used to delay time between customer spawning
+        private const float SPAWN_TIME = 6.0f;     // Time in seconds between each customer attempting to enter the store
+        private const float SIM_DURATION = 300.0f; // Time in seconds for how long the simulation should run
+        private Random rand = new Random();         // Used to determine what type of customer to generate
 
         /// <summary>
         /// Stores all statistics that are tracked during the simulation
@@ -41,11 +43,11 @@ namespace CoffeeShopSimulation
         public bool Paused { get; private set; }
 
         /// <summary>
-        /// Returns a rounded version of the
+        /// Returns a rounded version of the current simulation time
         /// </summary>
-        public double SimTime
+        public float SimTime
         {
-            get { return Math.Round(simTime, 2); }
+            get { return (float)Math.Round(simTime, 2); }
             private set { simTime = value; }
         }
 
@@ -57,19 +59,38 @@ namespace CoffeeShopSimulation
 
         public void Update(float gameTime)
         {
-            inputManager.Update(gameTime);
-
-            // Pause the simulation if the left mouse button is called
-            if (inputManager.IsClicked)
-            {
-                Paused = !Paused;
-                inputManager.ResetIsClicked();
-            }
 
             if (!Paused)
             {
                 // Advance simulation time
                 SimTime += gameTime;
+
+                // Advance respawn timer
+                respawnTimer += gameTime;
+
+                // If the required amount of time has passed to spawn another customer
+                if (respawnTimer >= SPAWN_TIME)
+                {
+                    // Restart the respawn timer
+                    CustomersInStore++;
+                    Customer.CustomerType customerType;
+                    int randType = rand.Next(0, 2);
+
+                    switch (randType)
+                    {
+                        case 0:
+                            customerType = Customer.CustomerType.Coffee;
+                            break;
+                        case 1:
+                            customerType = Customer.CustomerType.Food;
+                            break;
+                        case 2:
+                            customerType = Customer.CustomerType.Both;
+                            break;
+                    }
+                    
+                    Customers.Enqueue(new Node<Customer>(CustomersInStore, new Customer(waypoints, customerType, numCustomers, )));
+                }
 
                 // Get the next customer in the queue
                 Node<CustomerModel> curCustomer = Customers.Peek();
