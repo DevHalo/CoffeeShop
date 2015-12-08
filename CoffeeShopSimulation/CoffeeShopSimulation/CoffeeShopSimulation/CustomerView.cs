@@ -1,4 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿// Author: Sanjay Paraboo
+// File Name: CoffeeShopSimulation.sln
+// Project Name: A5 Data Manipulation Assignment
+// Creation Date: Dec 5, 2015
+// Modified Date:
+// Description:
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;

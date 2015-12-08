@@ -118,6 +118,7 @@ namespace CoffeeShopSimulation
             // Sets the initial state of the customer to outside the coffee shop
             CurrentState = CustomerState.Outside;
 
+            // Intializes the Customer view instance and passes through the current customer model class
             View = new CustomerView(this);
         }
 
@@ -129,9 +130,7 @@ namespace CoffeeShopSimulation
         {
             // Adds the elasped time to the customers wait time
             WaitTime += gameTimeInMilliSeconds;
-
-
-
+            
             // If the customer is not at the waypoint it will calulate the angle towards it and move it towards the waypoint
             if (Postion != CurrWaypoint)
             {
