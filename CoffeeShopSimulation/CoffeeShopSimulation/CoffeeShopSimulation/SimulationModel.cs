@@ -18,12 +18,12 @@ namespace CoffeeShopSimulation
         /// <summary>
         /// Queue that stores every customer that has entered the store
         /// </summary>
-        public Queue<Customer> Customers { get; private set; }
+        public Queue<CustomerModel> Customers { get; private set; }
 
         private const int MAX_CUSTOMERS = 16;   // Maximum number of customers inside the store
         public int CustomersInStore = 0;        // Number of customers inside the store
 
-        Customer[] cashiers = new Customer[4];  // Cashiers which serve the customers
+        CustomerModel[] cashiers = new CustomerModel[4];  // Cashiers which serve the customers
 
         private double simTime;                     // Total time the simulation has run
         private double respawnTimer;                // Timer used to delay time between customer spawning
@@ -51,7 +51,7 @@ namespace CoffeeShopSimulation
 
         public void Initialize()
         {
-            Customers = new Queue<Customer>();
+            Customers = new Queue<CustomerModel>();
             // Initialize Waypoints
         }
 
@@ -72,7 +72,7 @@ namespace CoffeeShopSimulation
                 SimTime += gameTime;
 
                 // Get the next customer in the queue
-                Node<Customer> curCustomer = Customers.Peek();
+                Node<CustomerModel> curCustomer = Customers.Peek();
 
                 // Update each customer
                 for (int i = 0; i < Customers.Size; i++)
@@ -82,13 +82,13 @@ namespace CoffeeShopSimulation
 
                     switch (curCustomer.Value.CurrentState)
                     {
-                        case Customer.CustomerState.Outside:
+                        case CustomerModel.CustomerState.Outside:
                             break;
-                        case Customer.CustomerState.InLine:
+                        case CustomerModel.CustomerState.InLine:
                             break;
-                        case Customer.CustomerState.AtCashier:
+                        case CustomerModel.CustomerState.AtCashier:
                             break;
-                        case Customer.CustomerState.ExitStore:
+                        case CustomerModel.CustomerState.ExitStore:
                             // If the customer has made it to the final waypoint
                             if (curCustomer.Value.Waypoints.Size == 1 &&
                                 curCustomer.Value.Postion == curCustomer.Value.Waypoints.Peek().Value)

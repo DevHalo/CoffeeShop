@@ -51,7 +51,7 @@ namespace CoffeeShopSimulation
             }
 
             // Get the head of the queue to draw all the customers in the queue
-            Node<Customer> curNode = model.Customers.Peek();
+            Node<CustomerModel> curNode = model.Customers.Peek();
             for (int i = 0; i < model.Customers.Size; i++)
             {
                 // Draw the customer stored in the node

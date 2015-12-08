@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace CoffeeShopSimulation
 {
-    class Customer
+    class CustomerModel
     {
         // Creates constants for the order times in seconds
         const float ORDER_TIME_COFFEE = 12.0f;
@@ -47,10 +47,6 @@ namespace CoffeeShopSimulation
 
         // Stores the location of all the waypoints in the coffee shop
         public Queue<Vector2> Waypoints { get; private set; }
-
-        // This will be used to draw the customer name and image onto the screen
-        private Texture2D customerImg;
-        private SpriteFont labelFont;
 
         // Used to store the angle and direction between the destination point and the customers current position
         private double angleToDestination;
@@ -91,7 +87,7 @@ namespace CoffeeShopSimulation
         /// <param name="customerNumber">
         /// Used to store the customers current postion in the Queue
         /// </param>
-        public Customer(Queue<Vector2> waypoints, CustomerType customerType, int customerNumber, Texture2D customerImg, SpriteFont labelText)
+        public CustomerModel(Queue<Vector2> waypoints, CustomerType customerType, int customerNumber)
         {
             // Sets the class level variables values to the ones obtained from the constructor
             this.Type = customerType;
@@ -156,28 +152,6 @@ namespace CoffeeShopSimulation
             }
         }
 
-        /// <summary>
-        /// Draws the customer instance onto the screen
-        /// </summary>
-        /// <param name="sb">Passes through the SpriteBatch instance in order to use its draw commands</param>
-        public void Draw(SpriteBatch sb)
-        {
-            // Draws the customer image onto the screen
-            sb.Draw(customerImg,
-                Postion,
-                null,
-                Color.White,
-                0f,
-                Vector2.Zero,
-                0f,
-                SpriteEffects.None,
-                0);
 
-            // Draws the customer name above the customer image
-            sb.DrawString(labelFont,
-                CustomerName,
-                new Vector2(Postion.X - 50, Postion.Y - 50),
-                Color.White);
-        }
     }
 }

@@ -26,10 +26,10 @@ namespace CoffeeShopSimulation
         /// Updates the longest wait times according to the current customers in the store
         /// </summary>
         /// <param name="customers">stores the queue of customers</param>
-        public void Update(Queue<Customer> customers)
+        public void Update(Queue<CustomerModel> customers)
         {
             //Variable used to store the current customer node
-            Node<Customer> curCustomer = customers.Peek();
+            Node<CustomerModel> curCustomer = customers.Peek();
 
             //Goes throught every customer
             for(int i = 0; i < customers.Size; i++)
@@ -79,7 +79,7 @@ namespace CoffeeShopSimulation
         /// Calculates the average wait time, checks to change max and minimum wait times
         /// </summary>
         /// <param name="customer">stores the customer that exited the store</param>
-        public void ProcessExitingCustomer(Node<Customer> customer)
+        public void ProcessExitingCustomer(Node<CustomerModel> customer)
         {
             //add the customer wait time the the total wait time
             totalWaitTime += (float)(customer.Value.WaitTime);
