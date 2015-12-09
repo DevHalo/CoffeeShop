@@ -45,22 +45,22 @@ namespace CoffeeShopSimulation
             switch (customerState)
             {
                 case CustomerModel.CustomerState.Outside:
-                    return new Vector2(initialOutsideWaypoint.X + ((customerNumber - firstCustomerOutside) * SPACE_BETWEEN_CUSTOMERS));
+                    return new Vector2(InitialOutsideWaypoint.X + ((customerNumber - firstCustomerOutside) * SPACE_BETWEEN_CUSTOMERS));
 
                 case CustomerModel.CustomerState.InLine:
                     int numberInQueue = customerNumber - firstCustomerInLine;
 
-                    return inLineWaypoints[numberInQueue];
+                    return InLineWaypoints[numberInQueue];
 
                 case CustomerModel.CustomerState.AtCashier:
                     //add logic to see which cashier is available
 
                     int availableCashier = 0;
 
-                    return cashierWaypoints[availableCashier];
+                    return CashierWaypoints[availableCashier];
 
                 case CustomerModel.CustomerState.ExitStore:
-                    return exitWaypoint;
+                    return ExitWaypoint;
 
                 default:
                     return Vector2.Zero;
