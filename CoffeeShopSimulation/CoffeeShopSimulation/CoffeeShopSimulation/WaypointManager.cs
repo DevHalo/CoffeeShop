@@ -23,10 +23,10 @@ namespace CoffeeShopSimulation
         private int firstCustomerOutside;
 
         // Stores the waypoint locations for the customer
-        private Vector2 initialOutsideWaypoint;
-        private Vector2[] inLineWaypoints;
-        private Vector2[] cashierWaypoints;
-        private Vector2 exitWaypoint;
+        public Vector2 InitialOutsideWaypoint { get; private set; }
+        public Vector2[] InLineWaypoints { get; private set; }
+        public Vector2[] CashierWaypoints { get; private set; }
+        public Vector2 ExitWaypoint { get; private set; }
 
         
         /// <summary>
