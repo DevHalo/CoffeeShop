@@ -34,7 +34,7 @@ namespace CoffeeShopSimulation
         /// </summary>
         public WaypointManager()
         {
-            // Initialize Vectors
+            // Initialize Vector waypoints
         }
 
 
