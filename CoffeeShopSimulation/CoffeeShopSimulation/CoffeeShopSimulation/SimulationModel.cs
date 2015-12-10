@@ -13,7 +13,8 @@ namespace CoffeeShopSimulation
     {
         private InputManager inputManager = new InputManager();  // Controller Class
 
-        private Queue<Vector2> waypoints; // Locations that allow the customer to follow a certain path
+        private WaypointManager waypointManager;    // Manages waypoints
+
 
         /// <summary>
         /// Queue that stores every customer that has entered the store
@@ -92,40 +93,26 @@ namespace CoffeeShopSimulation
                             break;
                     }
                     
-                    Customers.Enqueue(new Node<CustomerModel>(CustomersInStore, new CustomerModel(waypoints, customerType, numCustomers)));
+                    Customers.Enqueue(new Node<CustomerModel>(CustomersInStore, new CustomerModel(customerType, numCustomers)));
                 }
 
-                // Get the next customer in the queue
-                Node<CustomerModel> curCustomer = Customers.Peek();
-
-                // Update each customer
-                for (int i = 0; i < Customers.Size; i++)
+                // If the customer at the front of the queue is at the front of the line
+                if (Customers.Peek().Value.Postion == waypointManager.InLineWaypoints[0])
                 {
-                    
-                    curCustomer.Value.Update(gameTime);
-
-                    switch (curCustomer.Value.CurrentState)
+                    // Check if any cashiers are available
+                    for (int j = 0; j < cashiers.Length; j++)
                     {
-                        case CustomerModel.CustomerState.Outside:
-                            break;
-                        case CustomerModel.CustomerState.InLine:
-                            break;
-                        case CustomerModel.CustomerState.AtCashier:
-                            break;
-                        case CustomerModel.CustomerState.ExitStore:
-                            // If the customer has made it to the final waypoint
-                            if (curCustomer.Value.Waypoints.Size == 1 &&
-                                curCustomer.Value.Postion == curCustomer.Value.Waypoints.Peek().Value)
-                            {
-                                
-                                // Dequeue the current customer
-                                Customers.Dequeue();
-                            }
-                            break;
+                        // If a cashier is empty
+                        if (cashiers[j] == null)
+                        {
+                            // Dequeue them from the line and pass it onto the cashier
+                            cashiers[j] = Customers.Dequeue().Value;
+                            // Set the waypoint to the cashier
+                            cashiers[j].CurrWaypoint = waypointManager.CashierWaypoints[0];
+                        }
                     }
-
-                    curCustomer = curCustomer.GetNext();
                 }
+
             }
         }
     }
