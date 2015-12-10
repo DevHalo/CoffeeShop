@@ -79,16 +79,13 @@ namespace CoffeeShopSimulation
         /// <summary>
         /// Used to create an instance of a customer
         /// </summary>
-        /// <param name="waypoints">
-        /// Passes through the waypoints in order to set the location of the customer
-        /// </param>
         /// <param name="customerType">
         /// Used to specify what type of customer to create
         /// </param>
         /// <param name="customerNumber">
         /// Used to store the customers current postion in the Queue
         /// </param>
-        public CustomerModel(Queue<Vector2> waypoints, CustomerType customerType, int customerNumber)
+        public CustomerModel(CustomerType customerType, int customerNumber)
         {
             // Sets the class level variables values to the ones obtained from the constructor
             this.Type = customerType;
@@ -130,7 +127,7 @@ namespace CoffeeShopSimulation
         {
             // Adds the elasped time to the customers wait time
             WaitTime += gameTimeInMilliSeconds;
-            
+
             // If the customer is not at the waypoint it will calulate the angle towards it and move it towards the waypoint
             if (Postion != CurrWaypoint)
             {
@@ -152,6 +149,15 @@ namespace CoffeeShopSimulation
                     angleToDestination = 0;
                 }
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="newWaypoint"></param>
+        public void ChangeCurrWaypoint(Vector2 newWaypoint)
+        {
+            CurrWaypoint = newWaypoint;
         }
 
 
