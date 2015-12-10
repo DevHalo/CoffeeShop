@@ -8,7 +8,7 @@
 using Microsoft.Xna.Framework.Graphics;
 namespace CoffeeShopSimulation
 {
-    class Statistics
+    class StatisticsModel
     {
         //Stores the minimum, maximum, total, and average wait time from all customers
         private float minWaitTime;

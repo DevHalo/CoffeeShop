@@ -35,7 +35,7 @@ namespace CoffeeShopSimulation
         /// <summary>
         /// Stores all statistics that are tracked during the simulation
         /// </summary>
-        public Statistics Statistics { get; private set; } 
+        public StatisticsModel Statistics { get; private set; } 
 
         /// <summary>
         /// Returns whether or not the simulation is paused
