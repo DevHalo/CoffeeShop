@@ -6,6 +6,7 @@
 //              average wait time, number of visits, and top 5 longest wait times
 
 using Microsoft.Xna.Framework.Graphics;
+using System;
 namespace CoffeeShopSimulation
 {
     class StatisticsModel
@@ -31,7 +32,31 @@ namespace CoffeeShopSimulation
             //Variable used to store the current customer node
             Node<CustomerModel> curCustomer = customers.Peek();
 
-            //Goes throught every customer
+
+            string[] data;
+            string[] tempData;
+
+            data = ToStringArray(customers);
+            double[] customerWaitTime = new double[data.Length];
+            string[] customerName = new string[data.Length];
+
+            for(int i = 0; i < data.Length; i++)
+            {
+                tempData = (data[i].Split(','));
+                customerWaitTime[i] = Convert.ToDouble(tempData[0]);
+                customerName [i] = tempData[1];
+            }
+            
+            //Goes through every customer
+            for (int i = 0; i < data.Length; i++)
+            {
+                if (curCustomer.Value.WaitTime > longestWaitTimes[longestWaitTimes.Length - 1])
+                {
+
+                }
+            }
+            
+            //Goes through every customer
             for(int i = 0; i < customers.Size; i++)
             {
                 //If the the current customer has waited longer than the shortest wait time from the top 5 longest wait times
