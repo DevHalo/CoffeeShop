@@ -65,7 +65,26 @@ namespace CoffeeShopSimulation
                 default:
                     return Vector2.Zero;
             }
-
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="customerNumber"></param>
+        public void ChangeFirstInLine(int customerNumber)
+        {
+            firstCustomerInLine = customerNumber;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="customerNumber"></param>
+        public void ChangeFirstOutside(int customerNumber)
+        {
+            firstCustomerOutside = customerNumber;
+        }
+
+
     }
 }

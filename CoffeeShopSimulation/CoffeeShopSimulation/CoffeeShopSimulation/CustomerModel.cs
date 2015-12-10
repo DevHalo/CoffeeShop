@@ -23,6 +23,7 @@ namespace CoffeeShopSimulation
         // Constant used to store the customers movement speed
         const int MOVEMENT_SPEED = 10;
 
+        // 
         public CustomerView View { get; private set; }
 
         // Bool is set to true to when the customer leaves the shop
@@ -95,7 +96,7 @@ namespace CoffeeShopSimulation
             // Sets the customer name by converting the customer type enum to a string and adding the customer
             // number to the end
             CustomerName = Type.ToString() + " " + CustomerNumber;
-
+            
             // Switch statement used to set the customers order time based upon its Type
             switch (Type)
             {
@@ -159,7 +160,5 @@ namespace CoffeeShopSimulation
         {
             CurrWaypoint = newWaypoint;
         }
-
-
     }
 }
