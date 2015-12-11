@@ -55,7 +55,7 @@ namespace CoffeeShopSimulation
             for (int i = 0; i < model.Customers.Size; i++)
             {
                 // Draw the customer stored in the node
-                curNode.Value.View.Draw(sb);
+                curNode.Value.View.Draw(sb, pixelTexture, mainFont);
                 // Iterate to the next node
                 curNode = curNode.GetNext();
             }
