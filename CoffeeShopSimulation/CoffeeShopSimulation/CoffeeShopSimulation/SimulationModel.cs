@@ -52,12 +52,19 @@ namespace CoffeeShopSimulation
             private set { simTime = value; }
         }
 
+        /// <summary>
+        /// Initializes the simulation. This is called once at load
+        /// </summary>
         public void Initialize()
         {
             Customers = new Queue<CustomerModel>();
             // Initialize Waypoints
         }
 
+        /// <summary>
+        /// Updates all logic in the simulation
+        /// </summary>
+        /// <param name="gameTime"></param>
         public void Update(float gameTime)
         {
 
@@ -77,6 +84,8 @@ namespace CoffeeShopSimulation
                     CustomerModel.CustomerType customerType;
                     int randType = rand.Next(0, 3);
 
+                    // Randomly select the type of customer that will be spawned.
+                    // If somehow the integer is not between 0-2, the default customer will be Coffee
                     switch (randType)
                     {
                         case 0:
@@ -93,27 +102,110 @@ namespace CoffeeShopSimulation
                             break;
                     }
                     
-                    Customers.Enqueue(new Node<CustomerModel>(CustomersInStore, new CustomerModel(customerType, numCustomers)));
+                    // Add it to the queue
+                    Customers.Enqueue(new Node<CustomerModel>(CustomersInStore, new CustomerModel(customerType, numCustomers, CustomersInStore)));
                 }
 
-                // If the customer at the front of the queue is at the front of the line
-                if (Customers.Peek().Value.Postion == waypointManager.InLineWaypoints[0])
+                // If there are any customers that are coming to the shop
+                if (Customers.Size > 0)
                 {
-                    // Check if any cashiers are available
-                    for (int j = 0; j < cashiers.Length; j++)
+                    // If the customer at the front of the queue is at the front of the line
+                    if (Customers.Peek().Value.Position == waypointManager.InLineWaypoints[0])
                     {
-                        // If a cashier is empty
-                        if (cashiers[j] == null)
+                        // Check if any cashiers are available
+                        for (int j = 0; j < cashiers.Length; j++)
                         {
-                            // Dequeue them from the line and pass it onto the cashier
-                            cashiers[j] = Customers.Dequeue().Value;
-                            // Set the waypoint to the cashier
-                            cashiers[j].CurrWaypoint = waypointManager.CashierWaypoints[0];
+                            // If a cashier is empty
+                            if (cashiers[j] == null)
+                            {
+                                // Dequeue them from the line and pass it onto the cashier
+                                cashiers[j] = Customers.Dequeue().Value;
+                                // Set the waypoint to the cashier
+                                cashiers[j].ChangeCurrWaypoint(waypointManager.CashierWaypoints[0]);
+
+                                // Move every person up one space
+                                Node<CustomerModel> curCustomer = Customers.Peek();
+                                bool moveOutsideLine = false;   // Should the outside line advance
+                                for (int k = 0; k < Customers.Size; k++)
+                                {
+                                    // If the customer is currently inside the building, advance them one space
+                                    // Else if the customer is just outside the building, check to see if there is room inside
+                                    if (curCustomer.Value.PositionInLine <= 16)
+                                    {
+                                        curCustomer.Value.Advance(waypointManager.InLineWaypoints);
+                                    }
+                                    else if (curCustomer.Value.CurrWaypoint == waypointManager.InitialOutsideWaypoint)
+                                    {
+                                        // If there is room in the building, move everyone
+                                        if (CheckNumberOfCustomers())
+                                        {
+                                            // Move every customer that is outside one space forward
+                                            moveOutsideLine = true;
+                                        }
+                                    }
+                                    else if (curCustomer.Value.PositionInLine >= 18)
+                                    {
+                                        if (moveOutsideLine)
+                                        {
+                                            // TODO: ADD OUTSIDE LINE WAYPOINTS
+                                            curCustomer.Value.Advance(waypointManager.way);
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
 
             }
+        }
+
+        /// <summary>
+        /// Checks if the number of customers inside the building 
+        /// </summary>
+        /// <returns>Returns true if there are 16 or less customers in the store</returns>
+        public bool CheckNumberOfCustomers()
+        {
+            // Check each cashier to verify where the customer is if they are being processed or
+            // leaving the store
+            int customersInStore = 0;   // Number of customers in store
+            foreach (CustomerModel customer in cashiers)
+            {
+                if (customer.Position.X > 0 &&
+                    customer.Position.Y > 0 &&
+                    customer.Position.X < 1366 &&
+                    customer.Position.Y < // HEIGHT OF STORE IN PIXELS)
+                {
+                    customersInStore++;
+                }
+            }
+
+            // Go through everyone in the queue and see if they are
+            // inside the building (True if they are the 12th customer
+            // in line. Don't bother checking if there are more than 12 customers
+            // in the queue (4 with cashiers/leaving + 12 in the line = 16)
+            Node<CustomerModel> curCustomer = Customers.Peek();
+            for (int i = 0; i < Customers.Size; i++)
+            {
+                // If the number of customers in line is greater than 12,
+                // There are customers waiting outside therefore there are too many
+                // customers in the store
+                if (i > 12)
+                {
+                    return false;
+                }
+                
+                // If the customer is or is in front of the 12th customer,
+                // They are in the store
+                if (curCustomer.Value.PositionInLine <= 12)
+                {
+                    customersInStore++;
+                }
+
+            }
+
+            // If there are 16 or less customers in the store, return true
+            return customersInStore <= 16;
         }
     }
 }
