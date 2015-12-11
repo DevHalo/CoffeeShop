@@ -22,6 +22,7 @@ namespace CoffeeShopSimulation
         
         //Stores the top 5 longest wait time for the customers still waiting
         private float[] longestWaitTimes = new float[5];
+        private string[] longestWaitCustomer = new string[5];
 
         /// <summary>
         /// Updates the longest wait times according to the current customers in the store
@@ -32,29 +33,43 @@ namespace CoffeeShopSimulation
             //Variable used to store the current customer node
             Node<CustomerModel> curCustomer = customers.Peek();
 
-
-            string[] data;
+            string[] data = ToStringArray(customers);
             string[] tempData;
-
-            data = ToStringArray(customers);
+            
             double[] customerWaitTime = new double[data.Length];
             string[] customerName = new string[data.Length];
+            CustomerInfo[] customerS = new CustomerInfo[customers.Size];
 
-            for(int i = 0; i < data.Length; i++)
+            for (int i = 0; i < customers.Size; i++)
+            {
+                customerS[i] = new CustomerInfo(curCustomer.Value.WaitTime, curCustomer.Value.CustomerName);
+                curCustomer = curCustomer.GetNext();
+            }
+
+
+
+
+            for (int i = 0; i < data.Length; i++)
             {
                 tempData = (data[i].Split(','));
                 customerWaitTime[i] = Convert.ToDouble(tempData[0]);
-                customerName [i] = tempData[1];
+                customerName[i] = tempData[1];
+
             }
-            
-            //Goes through every customer
+
+
+            MergeSort(customerS);
+
+
+
+            //Goes through every customer            
             for (int i = 0; i < data.Length; i++)
             {
                 if (customerWaitTime[i] > longestWaitTimes[longestWaitTimes.Length - 1])
                 {
                     longestWaitTimes[longestWaitTimes.Length - 1] = (float)customerWaitTime[i];
-
-                    Sort();
+                    longestWaitCustomer[longestWaitTimes.Length - 1] = customerName[i];
+                    BubbleSort();
                 }
             }
             
@@ -68,7 +83,7 @@ namespace CoffeeShopSimulation
                     longestWaitTimes[longestWaitTimes.Length - 1] = curCustomer.Value.WaitTime;
 
                     //Sort the top 5 longest wait times
-                    Sort();
+                    BubbleSort();
                 }
 
                 //Set the current customer to the next customer
@@ -79,7 +94,7 @@ namespace CoffeeShopSimulation
         /// <summary>
         /// Sorts the longest wait times array using bubble sort method
         /// </summary>
-        private void Sort()
+        private void BubbleSort()
         {
             //Holds temp data of the next index of the array
             float temp;
@@ -100,6 +115,11 @@ namespace CoffeeShopSimulation
                     longestWaitTimes[i] = temp;
                 }
             }
+        }
+
+        private void MergeSort()
+        {
+
         }
 
         /// <summary>
@@ -163,6 +183,19 @@ namespace CoffeeShopSimulation
 
             //Return the data of all the customers
             return data;
+        }
+    }
+
+    class CustomerInfo
+    {
+        public string CustomerName { get; private set; }
+        public float CustomerWaitTime { get; private set; }
+
+        public CustomerInfo(float customerWaitTime, string customerName )
+        {
+            this.CustomerName = customerName;
+            this.CustomerWaitTime = customerWaitTime;
+        
         }
     }
 }
