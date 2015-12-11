@@ -121,6 +121,20 @@ namespace CoffeeShopSimulation
             // Sets the initial state of the customer to outside the coffee shop
             CurrentState = CustomerState.Outside;
 
+            // Set the default position
+            Position = new Vector2(1400, 600);
+            // Set up the first waypoint
+            // Adjust their position in line if there are more than
+            // 12 people trying to enter the store
+            if (positionInLine > 12)
+            {
+                CurrWaypoint = new Vector2(100 + ((16 - positionInLine) * 50), 600);
+            }
+            else
+            {
+                CurrWaypoint = new Vector2(100, 600);
+            }
+
             // Intializes the Customer view instance and passes through the current customer model class
             View = new CustomerView(this);
         }
@@ -141,7 +155,7 @@ namespace CoffeeShopSimulation
                 // the angle hasnt been calulated or if the customer is at the waypoint
                 if (angleToDestination == 0)
                 {
-                    angleToDestination = Math.Atan2(CurrWaypoint.Y - Position.Y, CurrWaypoint.X - Position.X);
+                    angleToDestination = Math.Atan2((int)(CurrWaypoint.Y - Position.Y), (int)(CurrWaypoint.X - Position.X));
 
                     customerDirection = new Vector2((float)Math.Cos(angleToDestination), (float)Math.Sin(angleToDestination));
                 }
@@ -150,8 +164,10 @@ namespace CoffeeShopSimulation
                 Position += (customerDirection) * MOVEMENT_SPEED;
 
                 // Sets the angle to zero when the customer is at the waypoint
-                if (Position == CurrWaypoint)
+                float distance = Vector2.Distance(Position, CurrWaypoint);
+                if (distance < 0.5f)
                 {
+                    Position = CurrWaypoint;
                     angleToDestination = 0;
                 }
             }
@@ -183,9 +199,8 @@ namespace CoffeeShopSimulation
                 // TODO: FORMULA SHOULD BE
                 // (12 - positionInLine) * (Distance in pixels between customers),
                 // Constant Y (Wherever the outside line starts)
-                CurrWaypoint = new Vector2(
-                    
-                    );
+                CurrWaypoint = new Vector2((12 - PositionInLine) * 50,
+                    600);
             }
             else
             {

@@ -35,8 +35,17 @@ namespace CoffeeShopSimulation
         public WaypointManager()
         {
             // Initialize Vector waypoints
-        }
+            InitialOutsideWaypoint = new Vector2(25, 600);
+            InLineWaypoints = new Vector2[12];
 
+            for (int y = 0; y < 2; y++)
+            {
+                for (int x = 0; x < InLineWaypoints.Length / 2; x++)
+                {
+                    InLineWaypoints[(y * 6) + x] = new Vector2(125 + (x * 50), 200 + (y * 50));
+                }
+            }
+        }
 
         public Vector2 ReturnWaypoint(int customerNumber, CustomerModel.CustomerState customerState)
         {
