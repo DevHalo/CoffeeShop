@@ -22,7 +22,7 @@ namespace CoffeeShopSimulation
         public Queue<CustomerModel> Customers { get; private set; }
 
         private const int MAX_CUSTOMERS = 16;   // Maximum number of customers inside the store
-        public int CustomersInStore = 0;        // Number of customers inside the store
+        public int CustomersInStore { get; private set; }        // Number of customers inside the store
         private int numCustomers = 0;           // Number of customers that have visited the store
 
         CustomerModel[] cashiers = new CustomerModel[4];  // Cashiers which serve the customers
@@ -48,7 +48,7 @@ namespace CoffeeShopSimulation
         /// </summary>
         public float SimTime
         {
-            get { return (float)Math.Round(simTime, 2); }
+            get { return (float)Math.Round(simTime, 3); }
             private set { simTime = value; }
         }
 
@@ -59,6 +59,7 @@ namespace CoffeeShopSimulation
         {
             Customers = new Queue<CustomerModel>();
             // Initialize Waypoints
+            waypointManager = new WaypointManager();
         }
 
         /// <summary>
@@ -104,6 +105,13 @@ namespace CoffeeShopSimulation
                     
                     // Add it to the queue
                     Customers.Enqueue(new Node<CustomerModel>(CustomersInStore, new CustomerModel(customerType, numCustomers, CustomersInStore)));
+                    respawnTimer = 0;
+                }
+
+                Node<CustomerModel> curCustomer = Customers.Peek();
+                for (int i = 0; i < Customers.Size; i++)
+                {
+                    curCustomer.Value.Update(gameTime);
                 }
 
                 // If there are any customers that are coming to the shop
@@ -124,13 +132,13 @@ namespace CoffeeShopSimulation
                                 cashiers[j].ChangeCurrWaypoint(waypointManager.CashierWaypoints[0]);
 
                                 // Move every person up one space
-                                Node<CustomerModel> curCustomer = Customers.Peek();
+                                curCustomer = Customers.Peek();
                                 bool moveOutsideLine = false;   // Should the outside line advance
                                 for (int k = 0; k < Customers.Size; k++)
                                 {
                                     // If the customer is currently inside the building, advance them one space
                                     // Else if the customer is just outside the building, check to see if there is room inside
-                                    if (curCustomer.Value.PositionInLine <= 16)
+                                    if (curCustomer.Value.PositionInLine <= 12)
                                     {
                                         curCustomer.Value.Advance(waypointManager.InLineWaypoints);
                                     }
@@ -143,12 +151,12 @@ namespace CoffeeShopSimulation
                                             moveOutsideLine = true;
                                         }
                                     }
-                                    else if (curCustomer.Value.PositionInLine >= 18)
+                                    else if (curCustomer.Value.PositionInLine >= 13)
                                     {
                                         if (moveOutsideLine)
                                         {
                                             // TODO: ADD OUTSIDE LINE WAYPOINTS
-                                            curCustomer.Value.Advance(waypointManager.way);
+                                            curCustomer.Value.Advance(waypointManager.InLineWaypoints);
                                         }
                                     }
                                 }
@@ -156,7 +164,6 @@ namespace CoffeeShopSimulation
                         }
                     }
                 }
-
             }
         }
 
@@ -174,7 +181,7 @@ namespace CoffeeShopSimulation
                 if (customer.Position.X > 0 &&
                     customer.Position.Y > 0 &&
                     customer.Position.X < 1366 &&
-                    customer.Position.Y < // HEIGHT OF STORE IN PIXELS)
+                    customer.Position.Y < 600)
                 {
                     customersInStore++;
                 }
@@ -205,7 +212,7 @@ namespace CoffeeShopSimulation
             }
 
             // If there are 16 or less customers in the store, return true
-            return customersInStore <= 16;
+            return customersInStore <= MAX_CUSTOMERS;
         }
     }
 }
