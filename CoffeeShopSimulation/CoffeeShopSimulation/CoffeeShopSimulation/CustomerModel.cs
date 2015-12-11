@@ -42,13 +42,16 @@ namespace CoffeeShopSimulation
         public float WaitTime { get; private set; }
 
         // Stores the cusotmers position on the screen
-        public Vector2 Postion { get; private set; }
+        public Vector2 Position { get; private set; }
 
         // Stores the location on the current waypoint
         public Vector2 CurrWaypoint { get; private set; }
 
         // Stores the location of all the waypoints in the coffee shop
         public Queue<Vector2> Waypoints { get; private set; }
+
+        // Stores the position of the customer in the line
+        public int PositionInLine { get; private set; }
 
         // Used to store the angle and direction between the destination point and the customers current position
         private double angleToDestination;
@@ -86,11 +89,13 @@ namespace CoffeeShopSimulation
         /// <param name="customerNumber">
         /// Used to store the customers current postion in the Queue
         /// </param>
-        public CustomerModel(CustomerType customerType, int customerNumber)
+        /// <param name="positionInLine">
+        /// Used to store the customer's current position in the line
+        /// </param>
+        public CustomerModel(CustomerType customerType, int customerNumber, int positionInLine)
         {
             // Sets the class level variables values to the ones obtained from the constructor
             this.Type = customerType;
-            this.Waypoints = waypoints;
             this.CustomerNumber = customerNumber;
 
             // Sets the customer name by converting the customer type enum to a string and adding the customer
@@ -130,22 +135,22 @@ namespace CoffeeShopSimulation
             WaitTime += gameTimeInMilliSeconds;
 
             // If the customer is not at the waypoint it will calulate the angle towards it and move it towards the waypoint
-            if (Postion != CurrWaypoint)
+            if (Position != CurrWaypoint)
             {
                 // Calculates the angle and direction from the customer to the waypoint. angleToDestination is only 0 when
                 // the angle hasnt been calulated or if the customer is at the waypoint
                 if (angleToDestination == 0)
                 {
-                    angleToDestination = Math.Atan2(CurrWaypoint.Y - Postion.Y, CurrWaypoint.X - Postion.X);
+                    angleToDestination = Math.Atan2(CurrWaypoint.Y - Position.Y, CurrWaypoint.X - Position.X);
 
                     customerDirection = new Vector2((float)Math.Cos(angleToDestination), (float)Math.Sin(angleToDestination));
                 }
 
                 // Adds the customer direction to the customers position  in order to move it towards the waypoint
-                Postion += (customerDirection) * MOVEMENT_SPEED;
+                Position += (customerDirection) * MOVEMENT_SPEED;
 
                 // Sets the angle to zero when the customer is at the waypoint
-                if (Postion == CurrWaypoint)
+                if (Position == CurrWaypoint)
                 {
                     angleToDestination = 0;
                 }
@@ -159,6 +164,34 @@ namespace CoffeeShopSimulation
         public void ChangeCurrWaypoint(Vector2 newWaypoint)
         {
             CurrWaypoint = newWaypoint;
+        }
+
+        /// <summary>
+        /// Advances the customer up one space in the line
+        /// </summary>
+        /// <param name="waypoints"></param>
+        public void Advance(Vector2[] waypoints)
+        {
+            // Moves the customer up one space in the queue
+            PositionInLine--;
+            
+            // Sets the new waypoint (One space ahead of the current waypoint)
+            // If the customer is outside, offset their position in line by 12 (0 is now the front),
+            // then multiply their position in the outside line by the distance between each customer
+            if (PositionInLine > 12)
+            {
+                // TODO: FORMULA SHOULD BE
+                // (12 - positionInLine) * (Distance in pixels between customers),
+                // Constant Y (Wherever the outside line starts)
+                CurrWaypoint = new Vector2(
+                    
+                    );
+            }
+            else
+            {
+                // If the customer is inside, advance the waypoint as normal
+                CurrWaypoint = waypoints[PositionInLine];
+            }
         }
     }
 }
