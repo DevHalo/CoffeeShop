@@ -36,7 +36,7 @@ namespace CoffeeShopSimulation
         {
             // Draws the customer image onto the screen
             sb.Draw(customerImg,
-                customerModel.Postion,
+                customerModel.Position,
                 null,
                 Color.White,
                 0f,
@@ -48,7 +48,7 @@ namespace CoffeeShopSimulation
             // Draws the customer name above the customer image
             sb.DrawString(labelFont,
                 customerModel.CustomerName,
-                new Vector2(customerModel.Postion.X - 50, customerModel.Postion.Y - 50),
+                new Vector2(customerModel.Position.X - 50, customerModel.Position.Y - 50),
                 Color.White);
         }
     }
