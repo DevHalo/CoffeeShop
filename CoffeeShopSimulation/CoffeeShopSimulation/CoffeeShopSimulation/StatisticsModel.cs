@@ -50,9 +50,11 @@ namespace CoffeeShopSimulation
             //Goes through every customer
             for (int i = 0; i < data.Length; i++)
             {
-                if (curCustomer.Value.WaitTime > longestWaitTimes[longestWaitTimes.Length - 1])
+                if (customerWaitTime[i] > longestWaitTimes[longestWaitTimes.Length - 1])
                 {
+                    longestWaitTimes[longestWaitTimes.Length - 1] = (float)customerWaitTime[i];
 
+                    Sort();
                 }
             }
             
