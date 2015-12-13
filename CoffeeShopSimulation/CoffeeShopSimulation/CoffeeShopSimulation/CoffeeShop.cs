@@ -2,12 +2,12 @@
 // Class Name: CoffeeShop.cs
 // Project Name: A5
 // Date Created: Dec 5th 2015
-// Date Modified: Dec 5th 2015
+// Date Modified: Dec 13th 2015
 // Description: A simulation involving processing customers orders as they enter a coffee shop.
-// The customer has the ability to 
+// The customer has the ability to purchase food, coffee, or a combination of the two.
+// The simulation tracks how long each customer is waiting up until they leave the store
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace CoffeeShopSimulation
 {
@@ -19,29 +19,18 @@ namespace CoffeeShopSimulation
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        private SimulationModel simulationModel = new SimulationModel();        // Model Class
-        private SimulationView simulationView;                                  // View Class
+        private SimulationModel simulationModel;        // Model Class
+        private SimulationView simulationView;          // View Class
 
         public CoffeeShop()
         {
             graphics = new GraphicsDeviceManager(this);
+
+            // Dimensions of the screen
             graphics.PreferredBackBufferWidth = 1366;
             graphics.PreferredBackBufferHeight = 768;
 
             Content.RootDirectory = "Content";
-        }
-
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
-        protected override void Initialize()
-        {
-            // TODO: Add your initialization logic here
-
-            base.Initialize();
         }
 
         /// <summary>
@@ -51,18 +40,10 @@ namespace CoffeeShopSimulation
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            simulationModel.Initialize();
+            simulationModel = new SimulationModel();
             simulationView = new SimulationView(GraphicsDevice, Content);
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        }
-
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// all content.
-        /// </summary>
-        protected override void UnloadContent()
-        {
         }
 
         /// <summary>
@@ -87,13 +68,14 @@ namespace CoffeeShopSimulation
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            // Clear the screen and begin spritebatch
             GraphicsDevice.Clear(Color.Black);
-
             spriteBatch.Begin();
             
             // Draw the simulation
             simulationView.Draw(spriteBatch, simulationModel);
             
+            // End draw call
             spriteBatch.End();
 
             base.Draw(gameTime);
