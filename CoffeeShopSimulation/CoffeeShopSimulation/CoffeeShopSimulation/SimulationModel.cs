@@ -48,7 +48,7 @@ namespace CoffeeShopSimulation
         /// </summary>
         public float SimTime
         {
-            get { return (float)Math.Round(simTime, 3); }
+            get { return (float)Math.Round(simTime, 2); }
             private set { simTime = value; }
         }
 
@@ -72,7 +72,7 @@ namespace CoffeeShopSimulation
             if (!Paused)
             {
                 // Advance simulation time
-                SimTime += gameTime;
+                simTime += gameTime;
 
                 // Advance respawn timer
                 respawnTimer += gameTime;
@@ -82,6 +82,7 @@ namespace CoffeeShopSimulation
                 {
                     // Restart the respawn timer
                     CustomersInStore++;
+                    numCustomers++;
                     CustomerModel.CustomerType customerType;
                     int randType = rand.Next(0, 3);
 
@@ -108,23 +109,25 @@ namespace CoffeeShopSimulation
                     respawnTimer = 0;
                 }
 
-                Node<CustomerModel> curCustomer = Customers.Peek();
-                for (int i = 0; i < Customers.Size; i++)
-                {
-                    curCustomer.Value.Update(gameTime);
-                }
-
-                // If there are any customers that are coming to the shop
                 if (Customers.Size > 0)
                 {
-                    // If the customer at the front of the queue is at the front of the line
-                    if (Customers.Peek().Value.Position == waypointManager.InLineWaypoints[0])
+                    Node<CustomerModel> curCustomer = Customers.Peek();
+                    for (int i = 0; i < Customers.Size; i++)
                     {
-                        // Check if any cashiers are available
-                        for (int j = 0; j < cashiers.Length; j++)
+                        curCustomer.Value.Update(gameTime);
+                        curCustomer = curCustomer.Next;
+                    }
+
+                    /*
+                    for (int i = 0; i < cashiers.Length; i++)
+                    {
+                        if (cashiers[i] == null)
                         {
+                            cashiers[i] = Customers.Dequeue().Value;
+                            break;
                         }
                     }
+                    */
                 }
             }
         }
