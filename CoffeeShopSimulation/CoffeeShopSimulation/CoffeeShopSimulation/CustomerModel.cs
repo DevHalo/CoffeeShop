@@ -234,5 +234,15 @@ namespace CoffeeShopSimulation
                 CurrWaypoint = new Vector2(frontVector.X, (frontVector.Y + (PositionInLine * 50)));
             }
         }
+
+
+        /// <summary>
+        /// Used to update the current customer state
+        /// </summary>
+        /// <param name="newCustomerState"> Passes through the new customer state </param>
+        public void ChangeCustomerState(CustomerState newCustomerState)
+        {
+            CurrentState = newCustomerState;
+        }
     }
 }
