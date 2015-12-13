@@ -48,7 +48,7 @@ namespace CoffeeShopSimulation
             sb.Draw(pixelTexture, new Rectangle(0, 0, 420, 100), Color.White * 0.8f);
             sb.DrawString(mainFont, "Tim Hortons Simulator 2015", Vector2.Zero, Color.Blue);
             sb.DrawString(mainFont, "Simulation Time: " + model.SimTime + " Seconds", new Vector2(0, 25), Color.Blue);
-            sb.DrawString(mainFont, "Number of Customers: " + model.CustomersInStore, new Vector2(0, 50), Color.Blue);
+            sb.DrawString(mainFont, "Number of outsideLine: " + model.CustomersOutsideStore, new Vector2(0, 50), Color.Blue);
 
             if (model.Paused)
             {
@@ -56,12 +56,20 @@ namespace CoffeeShopSimulation
             }
 
             // Get the head of the queue to draw all the customers in the queue
-            Node<CustomerModel> curNode = model.Customers.Peek();
-            for (int i = 0; i < model.Customers.Size; i++)
+            Node<CustomerModel> curNode = model.outsideLine.Peek();
+            for (int i = 0; i < model.outsideLine.Size; i++)
             {
                 // Draw the customer stored in the node
                 curNode.Value.View.Draw(sb, pixelTexture, smallFont);
                 // Iterate to the next node
+                curNode = curNode.GetNext();
+            }
+
+            curNode = model.insideLine.Peek();
+            for (int i = 0; i < model.insideLine.Size; i++)
+            {
+                curNode.Value.View.Draw(sb, pixelTexture, smallFont);
+
                 curNode = curNode.GetNext();
             }
 

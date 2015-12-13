@@ -203,5 +203,16 @@ namespace CoffeeShopSimulation
         {
             CurrWaypoint = newWaypoint;
         }
+
+        public void ChangePositionInLine(int newPositionInLine)
+        {
+            PositionInLine = newPositionInLine;
+        }
+
+        public void GoInside(int newPositionInLine)
+        {
+            PositionInLine = newPositionInLine;
+            CurrWaypoint = new Vector2(700 - (newPositionInLine * 50), 400);
+        }
     }
 }

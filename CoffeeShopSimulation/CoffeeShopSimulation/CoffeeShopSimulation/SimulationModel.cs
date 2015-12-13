@@ -13,17 +13,19 @@ namespace CoffeeShopSimulation
     {
         private InputManager inputManager = new InputManager();  // Controller Class
 
-        private WaypointManager waypointManager;    // Manages waypoints
-
-
         /// <summary>
         /// Queue that stores every customer that has entered the store
         /// </summary>
-        public Queue<CustomerModel> Customers { get; private set; }
+        public Queue<CustomerModel> outsideLine { get; private set; }
+
+        public Queue<CustomerModel> insideLine { get; private set; }
+
+        private Vector2 doorVector = new Vector2(50, 400);
 
         private const int MAX_CUSTOMERS = 16;   // Maximum number of customers inside the store
-        public int CustomersInStore { get; private set; }        // Number of customers inside the store
-        private int numCustomers = 0;           // Number of customers that have visited the store
+        public int CustomersOutsideStore { get; private set; }        // Number of customers inside the store
+        public int CustomersInStore { get; private set; }
+        private int numCustomers;           // Number of customers that have visited the store
 
         CustomerModel[] cashiers = new CustomerModel[4];  // Cashiers which serve the customers
 
@@ -31,7 +33,7 @@ namespace CoffeeShopSimulation
         private float respawnTimer;                // Timer used to delay time between customer spawning
         private const float SPAWN_TIME = 1.0f;     // Time in seconds between each customer attempting to enter the store
         private const float SIM_DURATION = 300.0f; // Time in seconds for how long the simulation should run
-        private Random rand = new Random();         // Used to determine what type of customer to generate
+        private Random rand = new Random();        // Used to determine what type of customer to generate
 
         /// <summary>
         /// Stores all statistics that are tracked during the simulation
@@ -49,7 +51,6 @@ namespace CoffeeShopSimulation
         public float SimTime
         {
             get { return (float)Math.Round(simTime, 2); }
-            private set { simTime = value; }
         }
 
         /// <summary>
@@ -57,9 +58,8 @@ namespace CoffeeShopSimulation
         /// </summary>
         public void Initialize()
         {
-            Customers = new Queue<CustomerModel>();
-            // Initialize Waypoints
-            waypointManager = new WaypointManager();
+            outsideLine = new Queue<CustomerModel>();
+            insideLine = new Queue<CustomerModel>();
         }
 
         /// <summary>
@@ -68,66 +68,109 @@ namespace CoffeeShopSimulation
         /// <param name="gameTime"></param>
         public void Update(float gameTime)
         {
-
-            if (!Paused)
+            if (simTime <= SIM_DURATION)
             {
-                // Advance simulation time
-                simTime += gameTime;
-
-                // Advance respawn timer
-                respawnTimer += gameTime;
-
-                // If the required amount of time has passed to spawn another customer
-                if (respawnTimer >= SPAWN_TIME)
+                if (!Paused)
                 {
-                    // Restart the respawn timer
-                    CustomersInStore++;
-                    numCustomers++;
-                    CustomerModel.CustomerType customerType;
-                    int randType = rand.Next(0, 3);
+                    // Advance simulation time
+                    simTime += gameTime;
 
-                    // Randomly select the type of customer that will be spawned.
-                    // If somehow the integer is not between 0-2, the default customer will be Coffee
-                    switch (randType)
-                    {
-                        case 0:
-                            customerType = CustomerModel.CustomerType.Coffee;
-                            break;
-                        case 1:
-                            customerType = CustomerModel.CustomerType.Food;
-                            break;
-                        case 2:
-                            customerType = CustomerModel.CustomerType.Both;
-                            break;
-                        default:
-                            customerType = CustomerModel.CustomerType.Coffee;
-                            break;
-                    }
-                    
-                    // Add it to the queue
-                    Customers.Enqueue(new Node<CustomerModel>(CustomersInStore, new CustomerModel(customerType, numCustomers, CustomersInStore)));
-                    respawnTimer = 0;
-                }
+                    // Advance respawn timer
+                    respawnTimer += gameTime;
 
-                if (Customers.Size > 0)
-                {
-                    Node<CustomerModel> curCustomer = Customers.Peek();
-                    for (int i = 0; i < Customers.Size; i++)
+                    // If the required amount of time has passed to spawn another customer
+                    if (respawnTimer >= SPAWN_TIME)
                     {
-                        curCustomer.Value.Update(gameTime);
-                        curCustomer = curCustomer.Next;
+                        // Restart the respawn timer
+                        CustomersOutsideStore++;
+                        numCustomers++;
+                        CustomerModel.CustomerType customerType;
+                        int randType = rand.Next(0, 3);
+
+                        // Randomly select the type of customer that will be spawned.
+                        // If somehow the integer is not between 0-2, the default customer will be Coffee
+                        switch (randType)
+                        {
+                            case 0:
+                                customerType = CustomerModel.CustomerType.Coffee;
+                                break;
+                            case 1:
+                                customerType = CustomerModel.CustomerType.Food;
+                                break;
+                            case 2:
+                                customerType = CustomerModel.CustomerType.Both;
+                                break;
+                            default:
+                                customerType = CustomerModel.CustomerType.Coffee;
+                                break;
+                        }
+
+                        // Add it to the queue
+                        outsideLine.Enqueue(new Node<CustomerModel>(CustomersOutsideStore,
+                            new CustomerModel(customerType, numCustomers, CustomersOutsideStore)));
+                        respawnTimer = 0;
                     }
 
-                    /*
+                    if (outsideLine.Size > 0)
+                    {
+                        Node<CustomerModel> curCustomer = outsideLine.Peek();
+                        for (int i = 0; i < outsideLine.Size; i++)
+                        {
+                            curCustomer.Value.Update(gameTime);
+                            curCustomer = curCustomer.Next;
+                        }
+
+
+                        bool advanceAll;
+                        curCustomer = outsideLine.Peek();
+                        for (int i = 0; i < outsideLine.Size; i++)
+                        {
+                            if (curCustomer.Value.Position == doorVector)
+                            {
+                                if (CustomersInStore <= 16)
+                                {
+                                    CustomersInStore++;
+                                    Node<CustomerModel> dequeuedCustomer = outsideLine.Dequeue();
+                                    dequeuedCustomer.Value.ChangePositionInLine(CustomersInStore);
+                                    dequeuedCustomer.Value.ChangeCurrWaypoint(new Vector2(700, 400));
+                                    insideLine.Enqueue(dequeuedCustomer);
+                                    CustomersOutsideStore--;
+                                    advanceAll = true;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (advanceAll)
+                        {
+                            curCustomer = outsideLine.Peek();
+                            for (int i = 0; i < outsideLine.Size; i++)
+                            {
+                                curCustomer.Value.ChangeCurrWaypoint();
+                            }
+                        }
+
+                        /*
                     for (int i = 0; i < cashiers.Length; i++)
                     {
                         if (cashiers[i] == null)
                         {
-                            cashiers[i] = Customers.Dequeue().Value;
+                            cashiers[i] = outsideLine.Dequeue().Value;
                             break;
                         }
                     }
                     */
+                    }
+
+                    if (insideLine.Size > 0)
+                    {
+                        Node<CustomerModel> curCustomer = insideLine.Peek();
+                        for (int i = 0; i < insideLine.Size; i++)
+                        {
+                            curCustomer.Value.Update(gameTime);
+                            curCustomer = curCustomer.Next;
+                        }
+                    }
                 }
             }
         }
@@ -156,8 +199,8 @@ namespace CoffeeShopSimulation
             // inside the building (True if they are the 12th customer
             // in line. Don't bother checking if there are more than 12 customers
             // in the queue (4 with cashiers/leaving + 12 in the line = 16)
-            Node<CustomerModel> curCustomer = Customers.Peek();
-            for (int i = 0; i < Customers.Size; i++)
+            Node<CustomerModel> curCustomer = outsideLine.Peek();
+            for (int i = 0; i < outsideLine.Size; i++)
             {
                 // If the number of customers in line is greater than 12,
                 // There are customers waiting outside therefore there are too many
