@@ -121,23 +121,18 @@ namespace CoffeeShopSimulation
                         }
 
 
-                        bool advanceAll;
-                        curCustomer = outsideLine.Peek();
-                        for (int i = 0; i < outsideLine.Size; i++)
+                        bool advanceAll = false;
+                        if (outsideLine.Peek().Value.Position == doorVector)
                         {
-                            if (curCustomer.Value.Position == doorVector)
+                            if (CustomersInStore < 16)
                             {
-                                if (CustomersInStore <= 16)
-                                {
-                                    CustomersInStore++;
-                                    Node<CustomerModel> dequeuedCustomer = outsideLine.Dequeue();
-                                    dequeuedCustomer.Value.ChangePositionInLine(CustomersInStore);
-                                    dequeuedCustomer.Value.ChangeCurrWaypoint(new Vector2(700, 400));
-                                    insideLine.Enqueue(dequeuedCustomer);
-                                    CustomersOutsideStore--;
-                                    advanceAll = true;
-                                    break;
-                                }
+                                CustomersInStore++;
+                                Node<CustomerModel> dequeuedCustomer = outsideLine.Dequeue();
+                                dequeuedCustomer.SetNext(null);
+                                dequeuedCustomer.Value.GoInside(CustomersInStore);
+                                insideLine.Enqueue(dequeuedCustomer);
+                                CustomersOutsideStore--;
+                                advanceAll = true;
                             }
                         }
 
@@ -146,7 +141,7 @@ namespace CoffeeShopSimulation
                             curCustomer = outsideLine.Peek();
                             for (int i = 0; i < outsideLine.Size; i++)
                             {
-                                curCustomer.Value.ChangeCurrWaypoint();
+                                curCustomer.Value.Advance();
                             }
                         }
 

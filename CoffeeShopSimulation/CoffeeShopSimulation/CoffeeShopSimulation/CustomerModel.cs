@@ -212,7 +212,22 @@ namespace CoffeeShopSimulation
         public void GoInside(int newPositionInLine)
         {
             PositionInLine = newPositionInLine;
-            CurrWaypoint = new Vector2(700 - (newPositionInLine * 50), 400);
+            CurrWaypoint = new Vector2(1100 - (newPositionInLine * 50), 400);
+            CurrentState = CustomerState.InLine;
+        }
+
+        public void Advance()
+        {
+            PositionInLine--;
+
+            if (CurrentState == CustomerState.InLine)
+            {
+                CurrWaypoint = new Vector2(1100 - (PositionInLine * 50), 400);
+            }
+            else if (CurrentState == CustomerState.Outside)
+            {
+                CurrWaypoint = new Vector2(50, (350 + (PositionInLine * 50)));
+            }
         }
     }
 }
