@@ -36,12 +36,12 @@ namespace CoffeeShopSimulation
         {
             // Draws the customer image onto the screen
             sb.Draw(customerImg,
-                new Rectangle((int) customerModel.Position.X - 10, (int) customerModel.Position.Y - 10, 20, 20), Color.Red);
+                new Rectangle((int)customerModel.Position.X - 10, (int)customerModel.Position.Y - 10, 20, 20), Color.Red);
 
             // Draws the customer name above the customer image
             sb.DrawString(labelFont,
                 customerModel.CustomerName,
-                new Vector2(customerModel.Position.X - 40, customerModel.Position.Y - 25),
+                new Vector2(customerModel.Position.X - (labelFont.MeasureString(customerModel.CustomerName).X) * 0.5f, customerModel.Position.Y - 25),
                 Color.White);
         }
     }

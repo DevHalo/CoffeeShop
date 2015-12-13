@@ -12,17 +12,25 @@ namespace CoffeeShopSimulation
     class StatisticsModel
     {
         //Stores the minimum, maximum, total, and average wait time from all customers
-        private float minWaitTime;
-        private float maxWaitTime;
         private float totalWaitTime;
-        private float avgWaitTime;
+        public float MinWaitTime { get; private set; }
+        public float MaxWaitTime { get; private set; }
+        public float AvgWaitTime { get; private set; }
 
         //Stores the number of visits
         private float visits;
         
+        // 
+        CustomerInfo[] LongestWaitTimes = new CustomerInfo[5];
+
         //Stores the top 5 longest wait time for the customers still waiting
         private float[] longestWaitTimes = new float[5];
         private string[] longestWaitCustomer = new string[5];
+
+        public StatisticsModel()
+        {
+
+        }
 
         /// <summary>
         /// Updates the longest wait times according to the current customers in the store
@@ -135,26 +143,26 @@ namespace CoffeeShopSimulation
             visits++;
 
             //Calculate the average wait time
-            avgWaitTime = (totalWaitTime / visits);
+            AvgWaitTime = (totalWaitTime / visits);
 
             //if the current customer being checked has a greater wait time than the max wait time
-            if (maxWaitTime < customer.Value.OrderTime)
+            if (MaxWaitTime < customer.Value.OrderTime)
             {
                 //set the max wait time to the current customer wait time
-                maxWaitTime = customer.Value.WaitTime;
+                MaxWaitTime = customer.Value.WaitTime;
             }
 
             //If minimum wait time is zero
-            if (minWaitTime <= 0)
+            if (MinWaitTime <= 0)
             {
                 //set the minimum wait time to the customer wait time
-                minWaitTime = customer.Value.WaitTime;
+                MinWaitTime = customer.Value.WaitTime;
             }
             // If minimum wait time is greater than the customer wait time
-            else if (minWaitTime > customer.Value.WaitTime)
+            else if (MinWaitTime > customer.Value.WaitTime)
             {
                 //Set minimum wait time to customer wait time
-                minWaitTime = customer.Value.WaitTime;
+                MinWaitTime = customer.Value.WaitTime;
             }
         }
 
