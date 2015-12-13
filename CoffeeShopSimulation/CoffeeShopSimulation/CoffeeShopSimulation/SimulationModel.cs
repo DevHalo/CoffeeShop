@@ -5,6 +5,7 @@
 // Description: Handles all simulation logic of the coffee shop
 
 using System;
+using System.Collections.Generic;
 using System.Dynamic;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.Xna.Framework;
@@ -25,6 +26,11 @@ namespace CoffeeShopSimulation
         /// </summary>
         public Queue<CustomerModel> InsideLine { get; private set; }
 
+        /// <summary>
+        /// Queue that handles every customer that is leaving the store
+        /// </summary>
+        public Queue<CustomerModel> ExitQueue { get; private set; }  
+
         private const int MAX_CUSTOMERS = 16;                               // Maximum number of customers inside the store
         private Random rand = new Random();                                 // Used to determine what type of customer to generate
         public int CustomersOutsideStore { get; private set; }              // Number of customers outside the store
@@ -33,6 +39,7 @@ namespace CoffeeShopSimulation
         private int numCustomers;                                           // Number of customers that have visited the store
         private Vector2 doorVector = new Vector2(50, 400);                  // Vector that is at the front of the store
         private Vector2 frontInsideLineVector = new Vector2(1150, 400);     // Vector that is at the front of the line inside the store 
+        private Vector2 exitVector = new Vector2(1260, 800);                // Vector that is at the exit of the store
         public CustomerModel[] Cashiers { get; private set; }               // Cashiers which serve the customers
         public Vector2[] CashierVectors { get; private set; }               // Vectors at which each the customer will goto to be served by the cashier
 
@@ -65,11 +72,16 @@ namespace CoffeeShopSimulation
         /// </summary>
         public void Initialize()
         {
+            // Initialize queues
             OutsideLine = new Queue<CustomerModel>();
             InsideLine = new Queue<CustomerModel>();
+            ExitQueue = new Queue<CustomerModel>();
+            
+            // Initialize cashier and vectors
             Cashiers = new CustomerModel[4];
             CashierVectors = new Vector2[4];
 
+            // Set vectors for cashiers
             for (int i = 0; i < CashierVectors.Length; i++)
             {
                 CashierVectors[i] = new Vector2(1280, 220 + (95 * i));
@@ -120,8 +132,7 @@ namespace CoffeeShopSimulation
                         }
 
                         // Add it to the queue
-                        OutsideLine.Enqueue(new Node<CustomerModel>(CustomersOutsideStore,
-                            new CustomerModel(customerType, numCustomers, CustomersOutsideStore)));
+                        OutsideLine.Enqueue(new Node<CustomerModel>(new CustomerModel(customerType, numCustomers, CustomersOutsideStore)));
                         respawnTimer = 0;
                     }
 
@@ -193,9 +204,16 @@ namespace CoffeeShopSimulation
                             Cashiers[i].Update(gameTime);
 
                             if (Cashiers[i].Position == CashierVectors[i] &&
-                                Cashiers[i].CurrentState != CustomerModel.CustomerState.AtCashier)
+                                Cashiers[i].CurrentState == CustomerModel.CustomerState.InLine)
                             {
                                 Cashiers[i].ChangeCustomerState(CustomerModel.CustomerState.AtCashier);
+                            }
+
+                            if (Cashiers[i].CurrentState == CustomerModel.CustomerState.ExitStore)
+                            {
+                                Cashiers[i].ChangeCurrWaypoint(exitVector);
+                                ExitQueue.Enqueue(new Node<CustomerModel>(Cashiers[i]));
+                                Cashiers[i] = null;
                             }
                         }
                     }

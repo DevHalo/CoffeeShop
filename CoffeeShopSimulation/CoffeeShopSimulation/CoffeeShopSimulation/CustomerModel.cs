@@ -17,9 +17,9 @@ namespace CoffeeShopSimulation
     class CustomerModel
     {
         // Creates constants for the order times in seconds
-        const float ORDER_TIME_COFFEE = 12.0f;
-        const float ORDER_TIME_FOOD = 18.0f;
-        const float ORDER_TIME_BOTH = 30.0f;
+        const float ORDER_TIME_COFFEE = 0.5f;//12.0f;
+        const float ORDER_TIME_FOOD = 1f;//18.0f;
+        const float ORDER_TIME_BOTH = 2f;//30.0f;
         // Constant used to store the customers movement speed
         const int MOVEMENT_SPEED = 10;
 

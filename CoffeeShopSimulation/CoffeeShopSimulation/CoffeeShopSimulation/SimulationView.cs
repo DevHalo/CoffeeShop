@@ -4,6 +4,7 @@
 // Date Modified: Dec 6th 2015
 // Description: Handles all rendering of the simulation
 
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -84,6 +85,11 @@ namespace CoffeeShopSimulation
                 {
                     customer.View.Draw(sb, pixelTexture, smallFont);
                 }
+            }
+
+            for (int i = 0; i < model.ExitQueue.Size; i++)
+            {
+                
             }
         }
     }

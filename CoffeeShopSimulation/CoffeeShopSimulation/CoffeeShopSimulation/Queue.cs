@@ -100,20 +100,15 @@ namespace CoffeeShopSimulation
         //Stores the value
         public T Value { get; private set; }
 
-        //Stores the index of the current node
-        public int Index { get; private set; }
-
         //Stores the next node
         public Node<T> Next { get; private set; }
 
         /// <summary>
         /// Creates a node with the specified type
         /// </summary>
-        /// <param name="index">the index of the node</param>
         /// <param name="value">the cargo of the node</param>
-        public Node(int index, T value)
+        public Node(T value)
         {
-            Index = index;
             Value = value;
         }
 
