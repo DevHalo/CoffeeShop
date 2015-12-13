@@ -33,7 +33,7 @@ namespace CoffeeShopSimulation
             pixelTexture.SetData(new [] {Color.White});
 
             // Load the rest of the textures
-            backgroundTexture = content.Load<Texture2D>("Images/background");
+            backgroundTexture = content.Load<Texture2D>("Images/background2");
 
             // Load fonts
             mainFont = content.Load<SpriteFont>("Fonts/bigFont");
