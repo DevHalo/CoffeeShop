@@ -56,8 +56,8 @@ namespace CoffeeShopSimulation
             }
 
             // Get the head of the queue to draw all the customers in the queue
-            Node<CustomerModel> curNode = model.outsideLine.Peek();
-            for (int i = 0; i < model.outsideLine.Size; i++)
+            Node<CustomerModel> curNode = model.OutsideLine.Peek();
+            for (int i = 0; i < model.OutsideLine.Size; i++)
             {
                 // Draw the customer stored in the node
                 curNode.Value.View.Draw(sb, pixelTexture, smallFont);
@@ -65,17 +65,25 @@ namespace CoffeeShopSimulation
                 curNode = curNode.GetNext();
             }
 
-            curNode = model.insideLine.Peek();
-            for (int i = 0; i < model.insideLine.Size; i++)
+            curNode = model.InsideLine.Peek();
+            for (int i = 0; i < model.InsideLine.Size; i++)
             {
                 curNode.Value.View.Draw(sb, pixelTexture, smallFont);
 
                 curNode = curNode.GetNext();
             }
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < model.Cashiers.Length; i++)
             {
-                sb.Draw(pixelTexture, new Rectangle(1300, 200 + (100 * i), 20, 20), Color.Brown);
+                sb.Draw(pixelTexture, new Rectangle((int)model.CashierVectors[i].X + 25, (int)model.CashierVectors[i].Y - 10, 20, 20), Color.Brown);
+            }
+
+            foreach (CustomerModel customer in model.Cashiers)
+            {
+                if (customer != null)
+                {
+                    customer.View.Draw(sb, pixelTexture, smallFont);
+                }
             }
         }
     }

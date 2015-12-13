@@ -123,7 +123,7 @@ namespace CoffeeShopSimulation
             CurrentState = CustomerState.Outside;
 
             // Set the default position
-            Position = new Vector2(50, 1400);
+            Position = new Vector2(50, 780);
             // Set up the first waypoint
             // Adjust their position in line if there are more than
             // 12 people trying to enter the store

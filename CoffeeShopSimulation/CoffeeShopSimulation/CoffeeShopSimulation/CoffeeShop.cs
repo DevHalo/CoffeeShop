@@ -73,7 +73,7 @@ namespace CoffeeShopSimulation
         protected override void Update(GameTime gameTime)
         {
             // Get wall time in seconds
-            float gTime = gameTime.ElapsedGameTime.Milliseconds / 1000f;
+            float gTime = (float)gameTime.ElapsedGameTime.TotalMilliseconds / 1000f;
 
             // Simulate
             simulationModel.Update(gTime);
