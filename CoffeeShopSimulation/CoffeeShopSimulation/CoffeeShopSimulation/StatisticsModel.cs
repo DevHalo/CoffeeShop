@@ -58,7 +58,7 @@ namespace CoffeeShopSimulation
             }
 
 
-            MergeSort(customerS);
+            //MergeSort(customerS);
 
 
 

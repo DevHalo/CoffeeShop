@@ -29,7 +29,7 @@ namespace CoffeeShopSimulation
 
         private float simTime;                     // Total time the simulation has run
         private float respawnTimer;                // Timer used to delay time between customer spawning
-        private const float SPAWN_TIME = 6.0f;     // Time in seconds between each customer attempting to enter the store
+        private const float SPAWN_TIME = 1.0f;     // Time in seconds between each customer attempting to enter the store
         private const float SIM_DURATION = 300.0f; // Time in seconds for how long the simulation should run
         private Random rand = new Random();         // Used to determine what type of customer to generate
 
@@ -123,44 +123,6 @@ namespace CoffeeShopSimulation
                         // Check if any cashiers are available
                         for (int j = 0; j < cashiers.Length; j++)
                         {
-                            // If a cashier is empty
-                            if (cashiers[j] == null)
-                            {
-                                // Dequeue them from the line and pass it onto the cashier
-                                cashiers[j] = Customers.Dequeue().Value;
-                                // Set the waypoint to the cashier
-                                cashiers[j].ChangeCurrWaypoint(waypointManager.CashierWaypoints[0]);
-
-                                // Move every person up one space
-                                curCustomer = Customers.Peek();
-                                bool moveOutsideLine = false;   // Should the outside line advance
-                                for (int k = 0; k < Customers.Size; k++)
-                                {
-                                    // If the customer is currently inside the building, advance them one space
-                                    // Else if the customer is just outside the building, check to see if there is room inside
-                                    if (curCustomer.Value.PositionInLine <= 12)
-                                    {
-                                        curCustomer.Value.Advance(waypointManager.InLineWaypoints);
-                                    }
-                                    else if (curCustomer.Value.CurrWaypoint == waypointManager.InitialOutsideWaypoint)
-                                    {
-                                        // If there is room in the building, move everyone
-                                        if (CheckNumberOfCustomers())
-                                        {
-                                            // Move every customer that is outside one space forward
-                                            moveOutsideLine = true;
-                                        }
-                                    }
-                                    else if (curCustomer.Value.PositionInLine >= 13)
-                                    {
-                                        if (moveOutsideLine)
-                                        {
-                                            // TODO: ADD OUTSIDE LINE WAYPOINTS
-                                            curCustomer.Value.Advance(waypointManager.InLineWaypoints);
-                                        }
-                                    }
-                                }
-                            }
                         }
                     }
                 }

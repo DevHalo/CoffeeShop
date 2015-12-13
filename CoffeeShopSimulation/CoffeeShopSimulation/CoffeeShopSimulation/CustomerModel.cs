@@ -97,6 +97,7 @@ namespace CoffeeShopSimulation
             // Sets the class level variables values to the ones obtained from the constructor
             this.Type = customerType;
             this.CustomerNumber = customerNumber;
+            PositionInLine = positionInLine;
 
             // Sets the customer name by converting the customer type enum to a string and adding the customer
             // number to the end
@@ -122,18 +123,11 @@ namespace CoffeeShopSimulation
             CurrentState = CustomerState.Outside;
 
             // Set the default position
-            Position = new Vector2(1400, 600);
+            Position = new Vector2(1400, 750);
             // Set up the first waypoint
             // Adjust their position in line if there are more than
             // 12 people trying to enter the store
-            if (positionInLine > 12)
-            {
-                CurrWaypoint = new Vector2(100 + ((16 - positionInLine) * 50), 600);
-            }
-            else
-            {
-                CurrWaypoint = new Vector2(100, 600);
-            }
+            CurrWaypoint = new Vector2(100 + (positionInLine * 50), 750);
 
             // Intializes the Customer view instance and passes through the current customer model class
             View = new CustomerView(this);
@@ -180,33 +174,6 @@ namespace CoffeeShopSimulation
         public void ChangeCurrWaypoint(Vector2 newWaypoint)
         {
             CurrWaypoint = newWaypoint;
-        }
-
-        /// <summary>
-        /// Advances the customer up one space in the line
-        /// </summary>
-        /// <param name="waypoints"></param>
-        public void Advance(Vector2[] waypoints)
-        {
-            // Moves the customer up one space in the queue
-            PositionInLine--;
-            
-            // Sets the new waypoint (One space ahead of the current waypoint)
-            // If the customer is outside, offset their position in line by 12 (0 is now the front),
-            // then multiply their position in the outside line by the distance between each customer
-            if (PositionInLine > 12)
-            {
-                // TODO: FORMULA SHOULD BE
-                // (12 - positionInLine) * (Distance in pixels between customers),
-                // Constant Y (Wherever the outside line starts)
-                CurrWaypoint = new Vector2((12 - PositionInLine) * 50,
-                    600);
-            }
-            else
-            {
-                // If the customer is inside, advance the waypoint as normal
-                CurrWaypoint = waypoints[PositionInLine];
-            }
         }
     }
 }

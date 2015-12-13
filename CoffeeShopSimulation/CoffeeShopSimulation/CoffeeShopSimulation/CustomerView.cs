@@ -47,7 +47,7 @@ namespace CoffeeShopSimulation
 
             // Draws the customer name above the customer image
             sb.DrawString(labelFont,
-                customerModel.CustomerName,
+                customerModel.CustomerName + ", " + customerModel.PositionInLine,
                 new Vector2(customerModel.Position.X - 50, customerModel.Position.Y - 50),
                 Color.White);
         }
