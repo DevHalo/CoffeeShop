@@ -72,7 +72,7 @@ namespace CoffeeShopSimulation
 
             for (int i = 0; i < CashierVectors.Length; i++)
             {
-                CashierVectors[i] = new Vector2(1280, 200 + (100 * i));
+                CashierVectors[i] = new Vector2(1280, 220 + (95 * i));
             }
         }
 
@@ -186,11 +186,17 @@ namespace CoffeeShopSimulation
                         }
                     }
 
-                    foreach (CustomerModel customer in Cashiers)
+                    for (int i = 0; i < Cashiers.Length; i++)
                     {
-                        if (customer != null)
+                        if (Cashiers[i] != null)
                         {
-                            customer.Update(gameTime);
+                            Cashiers[i].Update(gameTime);
+
+                            if (Cashiers[i].Position == CashierVectors[i] &&
+                                Cashiers[i].CurrentState != CustomerModel.CustomerState.AtCashier)
+                            {
+                                Cashiers[i].ChangeCustomerState(CustomerModel.CustomerState.AtCashier);
+                            }
                         }
                     }
                 }

@@ -38,6 +38,9 @@ namespace CoffeeShopSimulation
         // Stores the customers order time and is based on what they ordered
         public float OrderTime { get; private set; }
 
+        // Stores the customers time that has passed when they reached the cashier
+        public float OrderProcessTime { get; private set; }
+
         // Used to record the amount of time that has passed since the customer was initialized
         public float WaitTime { get; private set; }
 
@@ -78,7 +81,13 @@ namespace CoffeeShopSimulation
             AtCashier,
             ExitStore
         };
+
         public CustomerState CurrentState { get; private set; }
+
+        /// <summary>
+        /// Returns the percentage
+        /// </summary>
+        public float PercentageFinished { get { return OrderProcessTime/OrderTime; } }
 
         /// <summary>
         /// Used to create an instance of a customer
@@ -144,27 +153,40 @@ namespace CoffeeShopSimulation
 
             if (Position != CurrWaypoint)
             {
-                if (Vector2.Distance(Position, CurrWaypoint) < 20)
+                if (Vector2.Distance(Position, CurrWaypoint) > MOVEMENT_SPEED)
+                {
+                    if (CurrWaypoint.X > Position.X)
+                    {
+                        Position += new Vector2(MOVEMENT_SPEED, 0);
+                    }
+                    else if (CurrWaypoint.X < Position.X)
+                    {
+                        Position -= new Vector2(MOVEMENT_SPEED, 0);
+                    }
+
+                    if (CurrWaypoint.Y > Position.Y)
+                    {
+                        Position += new Vector2(0, MOVEMENT_SPEED);
+                    }
+                    else if (CurrWaypoint.Y < Position.Y)
+                    {
+                        Position -= new Vector2(0, MOVEMENT_SPEED);
+                    }
+                }
+                else
                 {
                     Position += new Vector2(CurrWaypoint.X - Position.X, CurrWaypoint.Y - Position.Y);
                 }
 
-                if (CurrWaypoint.X - Position.X > 0)
-                {
-                    Position += new Vector2(MOVEMENT_SPEED, 0);
-                }
-                else if (CurrWaypoint.X - Position.X < 0)
-                {
-                    Position -= new Vector2(MOVEMENT_SPEED, 0);
-                }
+            }
 
-                if (CurrWaypoint.Y - Position.Y > 0)
+            if (CurrentState == CustomerState.AtCashier)
+            {
+                OrderProcessTime += gameTimeInMilliSeconds;
+
+                if (OrderProcessTime >= OrderTime)
                 {
-                    Position += new Vector2(0, MOVEMENT_SPEED);
-                }
-                else if (CurrWaypoint.Y - Position.Y < 0)
-                {
-                    Position -= new Vector2(0, MOVEMENT_SPEED);
+                    CurrentState = CustomerState.ExitStore;
                 }
             }
 
