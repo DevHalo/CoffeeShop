@@ -32,7 +32,7 @@ namespace CoffeeShopSimulation
         public int CustomersInStore { get; private set; }                   // Number of customers inside the store
         private int numCustomers;                                           // Number of customers that have visited the store
         private Vector2 doorVector = new Vector2(50, 400);                  // Vector that is at the front of the store
-        private Vector2 frontInsideLineVector = new Vector2(1050, 400);     // Vector that is at the front of the line inside the store 
+        private Vector2 frontInsideLineVector = new Vector2(1150, 400);     // Vector that is at the front of the line inside the store 
         public CustomerModel[] Cashiers { get; private set; }               // Cashiers which serve the customers
         public Vector2[] CashierVectors { get; private set; }               // Vectors at which each the customer will goto to be served by the cashier
 
@@ -142,14 +142,14 @@ namespace CoffeeShopSimulation
                                 CustomersInStoreLine++;
                                 Node<CustomerModel> dequeuedCustomer = OutsideLine.Dequeue();
                                 dequeuedCustomer.SetNext(null);
-                                dequeuedCustomer.Value.GoInside(CustomersInStoreLine);
+                                dequeuedCustomer.Value.GoInside(CustomersInStoreLine, frontInsideLineVector);
                                 InsideLine.Enqueue(dequeuedCustomer);
                                 CustomersOutsideStore--;
 
                                 curCustomer = OutsideLine.Peek();
                                 for (int i = 0; i < OutsideLine.Size; i++)
                                 {
-                                    curCustomer.Value.Advance();
+                                    curCustomer.Value.Advance(doorVector);
                                 }
                             }
                         }
@@ -177,7 +177,7 @@ namespace CoffeeShopSimulation
                                     curCustomer = InsideLine.Peek();
                                     for (int j = 0; j < InsideLine.Size; j++)
                                     {
-                                        curCustomer.Value.Advance();
+                                        curCustomer.Value.Advance(frontInsideLineVector);
                                         curCustomer = curCustomer.Next;
                                     }
                                     break;
