@@ -123,11 +123,11 @@ namespace CoffeeShopSimulation
             CurrentState = CustomerState.Outside;
 
             // Set the default position
-            Position = new Vector2(1400, 750);
+            Position = new Vector2(50, 1400);
             // Set up the first waypoint
             // Adjust their position in line if there are more than
             // 12 people trying to enter the store
-            CurrWaypoint = new Vector2(100 + (positionInLine * 50), 750);
+            CurrWaypoint = new Vector2(50, 350 + (positionInLine * 50));
 
             // Intializes the Customer view instance and passes through the current customer model class
             View = new CustomerView(this);
@@ -142,6 +142,33 @@ namespace CoffeeShopSimulation
             // Adds the elasped time to the customers wait time
             WaitTime += gameTimeInMilliSeconds;
 
+            if (Position != CurrWaypoint)
+            {
+                if (Vector2.Distance(Position, CurrWaypoint) < 20)
+                {
+                    Position += new Vector2(CurrWaypoint.X - Position.X, CurrWaypoint.Y - Position.Y);
+                }
+
+                if (CurrWaypoint.X - Position.X > 0)
+                {
+                    Position += new Vector2(MOVEMENT_SPEED, 0);
+                }
+                else if (CurrWaypoint.X - Position.X < 0)
+                {
+                    Position -= new Vector2(MOVEMENT_SPEED, 0);
+                }
+
+                if (CurrWaypoint.Y - Position.Y > 0)
+                {
+                    Position += new Vector2(0, MOVEMENT_SPEED);
+                }
+                else if (CurrWaypoint.Y - Position.Y < 0)
+                {
+                    Position -= new Vector2(0, MOVEMENT_SPEED);
+                }
+            }
+
+            /*
             // If the customer is not at the waypoint it will calulate the angle towards it and move it towards the waypoint
             if (Position != CurrWaypoint)
             {
@@ -165,6 +192,7 @@ namespace CoffeeShopSimulation
                     angleToDestination = 0;
                 }
             }
+            */
         }
 
         /// <summary>
