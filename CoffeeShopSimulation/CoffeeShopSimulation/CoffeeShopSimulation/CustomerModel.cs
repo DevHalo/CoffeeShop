@@ -2,15 +2,9 @@
 // File Name: CoffeeShopSimulation.sln
 // Project Name: A5 Data Manipulation Assignment
 // Creation Date: Dec 5, 2015
-// Modified Date:
+// Modified Date: Dec 13th, 2015
 // Description:
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace CoffeeShopSimulation
 {
@@ -20,10 +14,11 @@ namespace CoffeeShopSimulation
         const float ORDER_TIME_COFFEE = 0.5f;//12.0f;
         const float ORDER_TIME_FOOD = 1f;//18.0f;
         const float ORDER_TIME_BOTH = 2f;//30.0f;
+
         // Constant used to store the customers movement speed
         const int MOVEMENT_SPEED = 10;
 
-        // 
+        // View class that implements the drawing function of the customer
         public CustomerView View { get; private set; }
 
         // Bool is set to true to when the customer leaves the shop
@@ -56,10 +51,6 @@ namespace CoffeeShopSimulation
         // Stores the position of the customer in the line
         public int PositionInLine { get; private set; }
 
-        // Used to store the angle and direction between the destination point and the customers current position
-        private double angleToDestination;
-        private Vector2 customerDirection;
-
         /// <summary>
         /// Used to specify what type of customer will be initialized
         /// </summary>
@@ -72,7 +63,7 @@ namespace CoffeeShopSimulation
         public CustomerType Type { get; private set; }
 
         /// <summary>
-        /// Used to store the current state of the customer
+        /// Different states of the customer
         /// </summary>
         public enum CustomerState
         {
@@ -82,6 +73,9 @@ namespace CoffeeShopSimulation
             ExitStore
         };
 
+        /// <summary>
+        /// The current state of the customer
+        /// </summary>
         public CustomerState CurrentState { get; private set; }
 
         /// <summary>
@@ -104,13 +98,13 @@ namespace CoffeeShopSimulation
         public CustomerModel(CustomerType customerType, int customerNumber, int positionInLine)
         {
             // Sets the class level variables values to the ones obtained from the constructor
-            this.Type = customerType;
-            this.CustomerNumber = customerNumber;
+            Type = customerType;
+            CustomerNumber = customerNumber;
             PositionInLine = positionInLine;
 
             // Sets the customer name by converting the customer type enum to a string and adding the customer
             // number to the end
-            CustomerName = Type.ToString() + " " + CustomerNumber;
+            CustomerName = Type + " " + CustomerNumber;
             
             // Switch statement used to set the customers order time based upon its Type
             switch (Type)
@@ -189,46 +183,15 @@ namespace CoffeeShopSimulation
                     CurrentState = CustomerState.ExitStore;
                 }
             }
-
-            /*
-            // If the customer is not at the waypoint it will calulate the angle towards it and move it towards the waypoint
-            if (Position != CurrWaypoint)
-            {
-                // Calculates the angle and direction from the customer to the waypoint. angleToDestination is only 0 when
-                // the angle hasnt been calulated or if the customer is at the waypoint
-                if (angleToDestination == 0)
-                {
-                    angleToDestination = Math.Atan2((int)(CurrWaypoint.Y - Position.Y), (int)(CurrWaypoint.X - Position.X));
-
-                    customerDirection = new Vector2((float)Math.Cos(angleToDestination), (float)Math.Sin(angleToDestination));
-                }
-
-                // Adds the customer direction to the customers position  in order to move it towards the waypoint
-                Position += (customerDirection) * MOVEMENT_SPEED;
-
-                // Sets the angle to zero when the customer is at the waypoint
-                float distance = Vector2.Distance(Position, CurrWaypoint);
-                if (distance < 0.5f)
-                {
-                    Position = CurrWaypoint;
-                    angleToDestination = 0;
-                }
-            }
-            */
         }
 
         /// <summary>
-        /// 
+        /// Changes the current waypoint of the customer to the specified one
         /// </summary>
-        /// <param name="newWaypoint"></param>
+        /// <param name="newWaypoint">Target waypoint</param>
         public void ChangeCurrWaypoint(Vector2 newWaypoint)
         {
             CurrWaypoint = newWaypoint;
-        }
-
-        public void ChangePositionInLine(int newPositionInLine)
-        {
-            PositionInLine = newPositionInLine;
         }
 
         public void GoInside(int newPositionInLine, Vector2 frontOfLineVector)
@@ -242,7 +205,7 @@ namespace CoffeeShopSimulation
         /// Advances the customer up one space using the location of the
         /// front of the line as a reference
         /// </summary>
-        /// <param name="keyPoint"></param>
+        /// <param name="frontVector">Coordinate at the front of the line</param>
         public void Advance(Vector2 frontVector)
         {
             PositionInLine--;
@@ -256,7 +219,6 @@ namespace CoffeeShopSimulation
                 CurrWaypoint = new Vector2(frontVector.X, (frontVector.Y + (PositionInLine * 50)));
             }
         }
-
 
         /// <summary>
         /// Used to update the current customer state
