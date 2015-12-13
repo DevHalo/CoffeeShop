@@ -3,11 +3,8 @@
 // Date Created: Dec 5th 2015
 // Date Modified: Dec 6th 2015
 // Description: Handles all simulation logic of the coffee shop
-
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
-using System.Security.Cryptography.X509Certificates;
 using Microsoft.Xna.Framework;
 
 namespace CoffeeShopSimulation
@@ -29,10 +26,10 @@ namespace CoffeeShopSimulation
         /// <summary>
         /// Queue that handles every customer that is leaving the store
         /// </summary>
-        public Queue<CustomerModel> ExitQueue { get; private set; }  
+        public List<CustomerModel> ExitList { get; private set; }  
 
         private const int MAX_CUSTOMERS = 16;                               // Maximum number of customers inside the store
-        private Random rand = new Random();                                 // Used to determine what type of customer to generate
+        private readonly Random rand = new Random();                                 // Used to determine what type of customer to generate
         public int CustomersOutsideStore { get; private set; }              // Number of customers outside the store
         public int CustomersInStoreLine { get; private set; }               // Number of customers in the line inside the store
         public int CustomersInStore { get; private set; }                   // Number of customers inside the store
@@ -44,10 +41,12 @@ namespace CoffeeShopSimulation
         public Vector2[] CashierVectors { get; private set; }               // Vectors at which each the customer will goto to be served by the cashier
 
         // Simulation Variables
-        private float simTime;                     // Total time the simulation has run
-        private float respawnTimer;                // Timer used to delay time between customer spawning
-        private const float SPAWN_TIME = 1.0f;     // Time in seconds between each customer attempting to enter the store
-        private const float SIM_DURATION = 300.0f; // Time in seconds for how long the simulation should run
+        private const float SPAWN_TIME = 1.0f;          // Time in seconds between each customer attempting to enter the store
+        private const float SIM_DURATION = 300.0f;      // Time in seconds for how long the simulation should run
+        private const float STAT_UPDATE_TIME = 1.0f;    // How often should the simulation update the statistics
+        private float simTime;                          // Total time the simulation has run
+        private float respawnTimer;                     // Timer used to delay time between customer spawning
+        private float updateTimer;                      // Timer used to track how long between each statistic update
 
         /// <summary>
         /// Stores all statistics that are tracked during the simulation
@@ -70,12 +69,12 @@ namespace CoffeeShopSimulation
         /// <summary>
         /// Initializes the simulation. This is called once at load
         /// </summary>
-        public void Initialize()
+        public SimulationModel()
         {
             // Initialize queues
             OutsideLine = new Queue<CustomerModel>();
             InsideLine = new Queue<CustomerModel>();
-            ExitQueue = new Queue<CustomerModel>();
+            ExitList = new List<CustomerModel>();
             
             // Initialize cashier and vectors
             Cashiers = new CustomerModel[4];
@@ -103,6 +102,9 @@ namespace CoffeeShopSimulation
 
                     // Advance respawn timer
                     respawnTimer += gameTime;
+
+                    // Advance statistics timer
+                    updateTimer += gameTime;
 
                     // If the required amount of time has passed to spawn another customer
                     if (respawnTimer >= SPAWN_TIME)
@@ -134,6 +136,12 @@ namespace CoffeeShopSimulation
                         // Add it to the queue
                         OutsideLine.Enqueue(new Node<CustomerModel>(new CustomerModel(customerType, numCustomers, CustomersOutsideStore)));
                         respawnTimer = 0;
+                    }
+
+                    if (updateTimer >= STAT_UPDATE_TIME)
+                    {
+
+                        updateTimer = 0;
                     }
 
                     if (OutsideLine.Size > 0)
@@ -212,8 +220,21 @@ namespace CoffeeShopSimulation
                             if (Cashiers[i].CurrentState == CustomerModel.CustomerState.ExitStore)
                             {
                                 Cashiers[i].ChangeCurrWaypoint(exitVector);
-                                ExitQueue.Enqueue(new Node<CustomerModel>(Cashiers[i]));
+                                ExitList.Add(Cashiers[i]);
                                 Cashiers[i] = null;
+                            }
+                        }
+                    }
+
+                    if (ExitList.Count > 0)
+                    {
+                        for (int i = 0; i < ExitList.Count; i++)
+                        {
+                            ExitList[i].Update(gameTime);
+
+                            if (ExitList[i].Position == exitVector)
+                            {
+                                ExitList.RemoveAt(i);
                             }
                         }
                     }

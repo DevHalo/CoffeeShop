@@ -1,10 +1,8 @@
-﻿// Author: SimulationModel
+﻿// Author: Sanjay Paraboo
 // Class Name: SimulationView.cs
 // Date Created: Dec 5th 2015
 // Date Modified: Dec 6th 2015
 // Description: Handles all rendering of the simulation
-
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -25,7 +23,7 @@ namespace CoffeeShopSimulation
         /// <summary>
         /// Initializes the view and loads all assets into memory
         /// </summary>
-        /// <param name="device"></param>
+        /// <param name="device">Graphics device used to generate the texture</param>
         /// <param name="content"></param>
         public SimulationView(GraphicsDevice device, ContentManager content)
         {
@@ -87,9 +85,9 @@ namespace CoffeeShopSimulation
                 }
             }
 
-            for (int i = 0; i < model.ExitQueue.Size; i++)
+            foreach (CustomerModel customer in model.ExitList)
             {
-                
+                customer.View.Draw(sb, pixelTexture, smallFont);
             }
         }
     }
