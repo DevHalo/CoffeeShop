@@ -54,10 +54,10 @@ namespace CoffeeShopSimulation
             sb.Draw(backgroundTexture, Vector2.Zero, Color.White);
 
             // Draw statistics and other important information
-            sb.Draw(pixelTexture, new Rectangle(0, 0, 420, 100), Color.White * 0.8f);
+            sb.Draw(pixelTexture, new Rectangle(0, 0, 420, 102), Color.White * 0.8f);
             sb.DrawString(mainFont, "Tim Hortons Simulator 2015", Vector2.Zero, Color.Blue);
             sb.DrawString(mainFont, "Simulation Time: " + model.SimTime + " Seconds", new Vector2(0, 25), Color.Blue);
-            sb.DrawString(mainFont, "Number of outsideLine: " + model.CustomersInStore, new Vector2(0, 50), Color.Blue);
+            sb.DrawString(mainFont, "Number of Served Customers: " + model.NumCustomers, new Vector2(0, 50), Color.Blue);
 
             // When paused it will display Simulation paused
             if (model.Paused)
@@ -97,7 +97,7 @@ namespace CoffeeShopSimulation
                         Color.Brown);                                              // Overlay color is brown
             }
 
-            // Draws
+            // Draws customers at the cashiers
             foreach (CustomerModel customer in model.Cashiers)
             {
                 if (customer != null)
@@ -106,6 +106,7 @@ namespace CoffeeShopSimulation
                 }
             }
 
+            // Draws customers that are leaving the store
             foreach (CustomerModel customer in model.ExitList)
             {
                 customer.View.Draw(sb, pixelTexture, smallFont);
