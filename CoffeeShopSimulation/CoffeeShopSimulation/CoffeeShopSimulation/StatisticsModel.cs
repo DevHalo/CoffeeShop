@@ -23,10 +23,6 @@ namespace CoffeeShopSimulation
         // 
         public CustomerInfo[] LongestWaitTimes = new CustomerInfo[5];
 
-        //Stores the top 5 longest wait time for the customers still waiting
-        private float[] longestWaitTimes = new float[5];
-        private string[] longestWaitCustomer = new string[5];
-
         /// <summary>
         /// Updates the longest wait times according to the current customers in the store
         /// </summary>
@@ -35,13 +31,6 @@ namespace CoffeeShopSimulation
         {
             //Variable used to store the current customer node
             Node<CustomerModel> curCustomer = customers.Peek();
-
-            string[] data = ToStringArray(customers);
-            string[] tempData;
-            
-            double[] customerWaitTime = new double[data.Length];
-
-            string[] customerName = new string[customers.Size];
             CustomerInfo[] customerInfo = new CustomerInfo[customers.Size];
 
             for (int i = 0; i < customers.Size; i++)
@@ -58,15 +47,7 @@ namespace CoffeeShopSimulation
                 LongestWaitTimes[i] = customerInfo[customerInfo.Length - i - 1];
             }
 
-
             //InsertionSort(customerInfo);
-
-            for (int i = 0; i < data.Length; i++)
-            {
-                tempData = (data[i].Split(','));
-                customerWaitTime[i] = Convert.ToDouble(tempData[0]);
-                customerName[i] = tempData[1];
-            }
         }
         private static void InsertionSort(CustomerInfo[] customerInfo)
         {
@@ -87,31 +68,31 @@ namespace CoffeeShopSimulation
                 sorted++;
             }
         }
-        /// <summary>
-        /// Sorts the longest wait times array using bubble sort method
-        /// </summary>
-        private void BubbleSort()
-        {
-            //Holds temp data of the next index of the array
-            float temp;
+        ///// <summary>
+        ///// Sorts the longest wait times array using bubble sort method
+        ///// </summary>
+        //private void BubbleSort()
+        //{
+        //    //Holds temp data of the next index of the array
+        //    float temp;
 
-            //Goes through every index of the longest wait time array
-            for (int i = longestWaitTimes.Length - 1; i > 0; i++)
-            {
-                //
-                if (longestWaitTimes[i] > longestWaitTimes[i - 1])
-                {
-                    //Set the temporary variable to the longest wait time being replaced
-                    temp = longestWaitTimes[i - 1];
+        //    //Goes through every index of the longest wait time array
+        //    for (int i = longestWaitTimes.Length - 1; i > 0; i++)
+        //    {
+        //        //
+        //        if (longestWaitTimes[i] > longestWaitTimes[i - 1])
+        //        {
+        //            //Set the temporary variable to the longest wait time being replaced
+        //            temp = longestWaitTimes[i - 1];
 
-                    //Replace
-                    longestWaitTimes[i - 1] = longestWaitTimes[i];
+        //            //Replace
+        //            longestWaitTimes[i - 1] = longestWaitTimes[i];
 
-                    //Set
-                    longestWaitTimes[i] = temp;
-                }
-            }
-        }
+        //            //Set
+        //            longestWaitTimes[i] = temp;
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// This is step 1 of a Merge Sort.  This subprogram will check for an array of 
@@ -244,33 +225,6 @@ namespace CoffeeShopSimulation
                 //Set minimum wait time to customer wait time
                 MinWaitTime = customer.Value.WaitTime;
             }
-        }
-
-        /// <summary>
-        /// Saves each customer's wait time and name in an array that is comma deliminated
-        /// </summary>
-        /// <param name="customers"></param>
-        /// <returns>comma deliminated array that holds the customer wait time and name</returns>
-        public string[] ToStringArray(Queue<CustomerModel> customers)
-        {
-            //Stores the data of the customer
-            string[] data = new string[customers.Size];
-
-            //Variable used to store the current customer node
-            Node<CustomerModel> curCustomer = customers.Peek();
-
-            //Itterates through each customer
-            for (int i = 0; i < customers.Size; i++)
-            {
-                //Saves the customer data with a comma inbetween the wait time and the customer name
-                data[i] = curCustomer.Value.WaitTime.ToString() + "," + curCustomer.Value.CustomerName;
-
-                //Set the current customer to the next customer
-                curCustomer = curCustomer.GetNext();
-            }
-
-            //Return the data of all the customers
-            return data;
         }
     }
 
