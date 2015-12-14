@@ -16,11 +16,8 @@ namespace CoffeeShopSimulation
         private const int CUSTOMER_SIDE_LENGTH = 20;
 
         // Used to store textures for the simulation
-        private Texture2D customerTexture;
-        private Texture2D cashierTexture;
         private Texture2D backgroundTexture;
         private Texture2D pixelTexture;
-        private Texture2D counterTexture;
 
         // Used to store fonts
         private SpriteFont mainFont;
@@ -117,6 +114,7 @@ namespace CoffeeShopSimulation
                 customer.View.Draw(sb, pixelTexture, smallFont);
             }
 
+            // Runs the Draw method from the statistics view class
             model.Statistics.View.Draw(sb, mainFont);
         }
     }

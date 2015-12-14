@@ -23,7 +23,7 @@ namespace CoffeeShopSimulation
 
         // 
         public CustomerInfo[] LongestWaitTimes { get; private set; }
-        List<CustomerInfo> customerInfo {get; private set;}
+        public List<CustomerInfo> customerInfo {get; private set;}
         // 
         public StatisticsView View { get; private set; }
 
