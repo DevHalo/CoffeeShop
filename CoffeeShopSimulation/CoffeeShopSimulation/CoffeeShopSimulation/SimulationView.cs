@@ -77,7 +77,7 @@ namespace CoffeeShopSimulation
                 // Draw the customer stored in the node
                 curNode.Value.View.Draw(sb, pixelTexture, smallFont);
                 // Iterate to the next node
-                curNode = curNode.GetNext();
+                curNode = curNode.Next;
             }
 
             // Sets the current node to the head node in the inside line
@@ -89,7 +89,7 @@ namespace CoffeeShopSimulation
                 curNode.Value.View.Draw(sb, pixelTexture, smallFont);
 
                 // Gets the next node in the queue
-                curNode = curNode.GetNext();
+                curNode = curNode.Next;
             }
 
             // Draws the cashiers at their positions

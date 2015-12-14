@@ -82,6 +82,9 @@ namespace CoffeeShopSimulation
             Cashiers = new CustomerModel[4];
             CashierVectors = new Vector2[4];
 
+            // Initialize statistics class
+            Statistics = new StatisticsModel();
+
             // Set vectors for cashiers
             for (int i = 0; i < CashierVectors.Length; i++)
             {
@@ -152,6 +155,7 @@ namespace CoffeeShopSimulation
                     // TODO: STATISTICS UPDATE
                     if (updateTimer >= STAT_UPDATE_TIME )
                     {
+                        Statistics.Update(OutsideLine, InsideLine, Cashiers, ExitList);
                         updateTimer = 0;
                     }
 
@@ -290,6 +294,7 @@ namespace CoffeeShopSimulation
                             // delete them from the simulation
                             if (ExitList[i].Position == exitVector)
                             {
+                                Statistics.ProcessExitingCustomer(ExitList[i]);
                                 ExitList.RemoveAt(i);
                                 CustomersServed++;
                             }
