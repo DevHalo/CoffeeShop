@@ -23,7 +23,7 @@ namespace CoffeeShopSimulation
 
         // 
         public CustomerInfo[] LongestWaitTimes { get; private set; }
-        List<CustomerInfo> customerInfo = new List<CustomerInfo>();
+        List<CustomerInfo> customerInfo {get; private set;}
         // 
         public StatisticsView View { get; private set; }
 
@@ -33,6 +33,7 @@ namespace CoffeeShopSimulation
         public StatisticsModel()
         {
             LongestWaitTimes = new CustomerInfo[5];
+            customerInfo = new List<CustomerInfo>();
 
             View = new StatisticsView(this);
         }
