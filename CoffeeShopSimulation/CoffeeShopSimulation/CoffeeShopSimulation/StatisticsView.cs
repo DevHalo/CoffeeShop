@@ -18,7 +18,7 @@ namespace CoffeeShopSimulation
     {
         // Used to store instance of statistics model
         StatisticsModel statisticsData;
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -38,12 +38,16 @@ namespace CoffeeShopSimulation
                           new Vector2(500, 0),
                           Color.White);
 
-            for (int i = 0; i< statisticsData.LongestWaitTimes.Length; i++)
+            for (int i = 0; i < statisticsData.LongestWaitTimes.Length; i++)
             {
-                sb.DrawString(font,
-                              Convert.ToString(statisticsData.LongestWaitTimes[i]),
-                              new Vector2(0, 0),
-                              Color.AliceBlue);
+                if (statisticsData.LongestWaitTimes[i] != null)
+                {
+                    sb.DrawString(font,
+                                  Convert.ToString(statisticsData.LongestWaitTimes[i].CustomerName +
+                                  " " + statisticsData.LongestWaitTimes[i].CustomerWaitTime),
+                                  new Vector2(1100, 5 + (i * 20)),
+                                  Color.White);
+                }
             }
 
 
