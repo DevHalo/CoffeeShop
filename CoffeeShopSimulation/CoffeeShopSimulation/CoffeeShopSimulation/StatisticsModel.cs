@@ -33,10 +33,9 @@ namespace CoffeeShopSimulation
         public StatisticsModel()
         {
             LongestWaitTimes = new CustomerInfo[5];
+
             View = new StatisticsView(this);
         }
-
-
 
         /// <summary>
         /// Updates the longest wait times according to the current customers in the store
@@ -47,16 +46,25 @@ namespace CoffeeShopSimulation
             List<CustomerInfo> customerInfo = ToCustomerInfo(outsideLine, insideLine, cashiers, exitList);
 
             //Perform the Merge Sort and store the result back in the original array
-            //customerInfo = MergeSort(customerInfo, 0, customerInfo.Count - 1);
+            //if (customerInfo.Count > 0)
+            //{
+            //    customerInfo = MergeSort(customerInfo, 0, customerInfo.Count - 1);
+            //}
+            List<float> stuff = new List <float>();
+            
+            for(int i = 0; i < customerInfo.Count; i++)
+            {
+                stuff.Add(customerInfo[i].CustomerWaitTime);
+            }
+
+            stuff.Sort();
+
             int length = customerInfo.Count < 5 ? customerInfo.Count : LongestWaitTimes.Length;
 
             for (int i = 0; i < length; i++)
             {
                 LongestWaitTimes[i] = customerInfo[(customerInfo.Count - 1) - i];
             }
-
-
-            //InsertionSort(customerInfo);
         }
         private static void InsertionSort(CustomerInfo[] customerInfo)
         {
@@ -87,7 +95,7 @@ namespace CoffeeShopSimulation
         /// <param name="left">A pointer to the starting index of the nums array to consider</param>
         /// <param name="right">A pointer to the starting index of the nums array to consider</param>
         /// <returns>A sorted array of integers or null if the array empty</returns>
-        private CustomerInfo[] MergeSort(CustomerInfo[] customerInfo, int left, int right)
+        private List<CustomerInfo> MergeSort(List<CustomerInfo> customerInfo, int left, int right)
         {
             //Base Case 1: The array passed in was empty, return null
             if (customerInfo == null)
@@ -99,7 +107,7 @@ namespace CoffeeShopSimulation
             else if (right - left < 1)
             {
                 //Create a new array of 1 element
-                return new CustomerInfo[] { customerInfo[left] };
+                return new List<CustomerInfo>() { customerInfo[left] };
             }
 
             //Calculate the midpoint index of the range to be considered
@@ -117,7 +125,7 @@ namespace CoffeeShopSimulation
         /// <param name="right">A second sorted array of integers to be merged</param>
         /// <returns>An array with size equivalent to the sum of the lengths of 
         /// the two given arrays that holds the merged sorted data of the two arrays</returns>
-        private CustomerInfo[] Merge(CustomerInfo[] left, CustomerInfo[] right)
+        private List<CustomerInfo> Merge(List<CustomerInfo> left, List<CustomerInfo> right)
         {
             //Base Case 0: the left array has no elements, return the right array automatically
             //Similarly for the right array
@@ -131,7 +139,7 @@ namespace CoffeeShopSimulation
             }
 
             //Create a new array of size equal to the sum of the lengths of the two given arrays
-            CustomerInfo[] result = new CustomerInfo[left.Length + right.Length];
+            List<CustomerInfo> result = new List<CustomerInfo>();
 
             //integers pointing to the currently considered element of each given array
             int leftIndex = 0;
@@ -139,34 +147,34 @@ namespace CoffeeShopSimulation
 
             //For each element in the merged array, get the next 
             //smallest element between the two given arrays
-            for (int i = 0; i < result.Length; i++)
+            for (int i = 0; i < result.Count; i++)
             {
                 //If both index values are valid
-                if (leftIndex < left.Length && rightIndex < right.Length)
+                if (leftIndex < left.Count && rightIndex < right.Count)
                 {
                     //Insert the next lowest value of the two given arrays 
                     //into the merged array and move the index pointer
                     if (left[leftIndex].CustomerWaitTime <= right[rightIndex].CustomerWaitTime)
                     {
-                        result[i] = left[leftIndex];
+                        result.Add(left[leftIndex]);
                         leftIndex++;
                     }
                     else
                     {
-                        result[i] = right[rightIndex];
+                        result.Add(right[rightIndex]);
                         rightIndex++;
                     }
                 }
                 //If the left array is all used up, use the next right array element
-                else if (leftIndex == left.Length)
+                else if (leftIndex == left.Count)
                 {
-                    result[i] = right[rightIndex];
+                    result.Add(right[rightIndex]);
                     rightIndex++;
                 }
                 //If the right array is all used up, use the next left array element
                 else
                 {
-                    result[i] = left[leftIndex];
+                    result.Add(left[leftIndex]);
                     leftIndex++;
                 }
             }
