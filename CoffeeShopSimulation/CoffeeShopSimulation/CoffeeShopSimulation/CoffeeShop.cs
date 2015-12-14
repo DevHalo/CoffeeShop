@@ -1,11 +1,12 @@
 // Authors: Mark Voong, Sanjay Paraboo, Shawn Verma
 // Class Name: CoffeeShop.cs
-// Project Name: A5
+// Project Name: A5_DataManipulation
 // Date Created: Dec 5th 2015
 // Date Modified: Dec 13th 2015
 // Description: A simulation involving processing customers orders as they enter a coffee shop.
 // The customer has the ability to purchase food, coffee, or a combination of the two.
 // The simulation tracks how long each customer is waiting up until they leave the store
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 

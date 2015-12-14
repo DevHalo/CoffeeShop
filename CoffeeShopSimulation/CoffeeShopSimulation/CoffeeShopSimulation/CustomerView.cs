@@ -1,9 +1,10 @@
 ﻿// Author: Sanjay Paraboo
 // File Name: CustomerView.cs
 // Project Name: A5 Data Manipulation Assignment
-// Creation Date: Dec 5, 2015
-// Modified Date: Dec 13th, 2015
-// Description:
+// Creation Date: Dec 5th, 2015
+// Modified Date: Dec 14th, 2015
+// Description: Used to handle draw data for each customer model instance
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -11,7 +12,6 @@ namespace CoffeeShopSimulation
 {
     class CustomerView
     {
-
         // Stores an instance of Customer Model
         CustomerModel customerModel;
 
@@ -35,11 +35,18 @@ namespace CoffeeShopSimulation
 
             // Draws the customer name above the customer image
             sb.DrawString(labelFont,
-                customerModel.CustomerName,
-                new Vector2((int)(customerModel.Position.X - labelFont.MeasureString(customerModel.CustomerName).X *0.5f), customerModel.Position.Y - 25),
-                Color.Blue);
+                          customerModel.CustomerName,
+                          new Vector2((int)(customerModel.Position.X - labelFont.MeasureString(customerModel.CustomerName).X *0.5f),
+                                      customerModel.Position.Y - 25),
+                          Color.Blue);
 
-            sb.Draw(customerImg, new Rectangle((int)customerModel.Position.X - 10, (int)customerModel.Position.Y - 10, (int)(customerModel.PercentageFinished * 20f), 20), Color.Green);
+            
+            sb.Draw(customerImg,                                            //
+                new Rectangle((int)customerModel.Position.X - 10,           //
+                              (int)customerModel.Position.Y - 10,           //
+                              (int)(customerModel.PercentageFinished * 20f),//
+                              20),                                          //
+                    Color.Green);
         }
     }
 }

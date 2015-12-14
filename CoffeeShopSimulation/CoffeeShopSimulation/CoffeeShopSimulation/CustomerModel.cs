@@ -12,6 +12,7 @@ namespace CoffeeShopSimulation
 {
     class CustomerModel
     {
+        // Constants
         // Creates constants for the order times in seconds
         const float ORDER_TIME_COFFEE = 12.0f;
         const float ORDER_TIME_FOOD = 18.0f;
@@ -21,29 +22,26 @@ namespace CoffeeShopSimulation
         // Distance between each customer
         private const int CUSTOMER_DISTANCE = 50;
         
+        // Customer Draw Data
         // View class that implements the drawing function of the customer
         public CustomerView View { get; private set; }
-
         // Integer that stores the customers number
         private int customerNumber;
-
         // Used to store the customers name which will be displayed when the customer is drawn onto the screen
         public string CustomerName { get; private set; }
 
-        // Stores the customers order time and is based on what they ordered
+        // Customer Time Data
+        // Stores the customers order time based on what they ordered
         private float orderTime;
-
         // Stores the customers time that has passed when they reached the cashier
         private float orderProcessTime; 
-
         // Used to record the amount of time that has passed since the customer was initialized
         public float WaitTime { get; private set; }
 
-        // Stores the cusotmers position on the screen
+        // Customer Position Data
+        // Stores the customer position on the screen and the position of their current waypoint
         public Vector2 Position { get; private set; }
-        // Stores the location on the current waypoint
         public Vector2 CurrWaypoint { get; private set; }
-
         // Stores the position of the customer in the line
         public int PositionInLine { get; private set; }
 
@@ -120,14 +118,11 @@ namespace CoffeeShopSimulation
                     break;
             }
 
-            // Sets the initial state of the customer to outside the coffee shop
+            // Sets the initial state and location of the customer to outside the coffee shop
             CurrentState = CustomerState.Outside;
-
-            // Set the default position
             Position = new Vector2(doorVector.X, 800);
-            // Set up the first waypoint
-            // Adjust their position in line if there are more than
-            // 12 people trying to enter the store
+
+            // Set up the first waypoint Adjust their position in line if there are more than 12 people trying to enter the store
             CurrWaypoint = new Vector2(doorVector.X, doorVector.Y + (positionInLine * CUSTOMER_DISTANCE));
 
             // Intializes the Customer view instance and passes through the current customer model class
@@ -169,13 +164,16 @@ namespace CoffeeShopSimulation
                         Position -= new Vector2(0, MOVEMENT_SPEED);
                     }
                 }
-                else
+                else // If the distance between the position and waypoint is less than the movement speed radius
+                     // It will adjust the poistion to the waypoint
                 {
                     Position += new Vector2(CurrWaypoint.X - Position.X, CurrWaypoint.Y - Position.Y);
                 }
 
             }
 
+            // If the customers at the cashier it will incriment the order processing time and change
+            // the state to exit store when the order is finished
             if (CurrentState == CustomerState.AtCashier)
             {
                 orderProcessTime += gameTimeInMilliSeconds;
@@ -196,23 +194,33 @@ namespace CoffeeShopSimulation
             CurrWaypoint = newWaypoint;
         }
 
+        /// <summary>
+        /// Used to change the customers position from outside to inside. Its called when there is room inside the store
+        /// </summary>
+        /// <param name="newPositionInLine"> Specifies the new position in the in store line </param>
+        /// <param name="frontOfLineVector"> Specifies the location of the front of the in store line  </param>
         public void GoInside(int newPositionInLine, Vector2 frontOfLineVector)
         {
+            // Updates the new position
             PositionInLine = newPositionInLine;
+
+            // Updates the current locaiton in the line by offsetting the position from the front of the line by their poition in the line
             CurrWaypoint = new Vector2(frontOfLineVector.X - ((PositionInLine - 1) * CUSTOMER_DISTANCE), frontOfLineVector.Y);
+
+            // Updates Customer State enum
             CurrentState = CustomerState.InLine;
         }
 
         /// <summary>
-        /// Advances the customer up one space using the location of the
-        /// front of the line as a reference
+        /// Runs when the customers position needs to me moved up in the line
         /// </summary>
-        /// <param name="newPositionInLine"></param>
-        /// <param name="frontVector">Coordinate at the front of the line</param>
+        /// <param name="frontVector"> Specifies the front vector of the cusotmers current line </param>
         public void Advance(Vector2 frontVector)
         {
+            // Decrements position in the line
             PositionInLine--;
 
+            // Updates CurrWaypoint vector based on their location in the simulation
             switch (CurrentState)
             {
                 case CustomerState.InLine:
@@ -222,7 +230,6 @@ namespace CoffeeShopSimulation
                 case CustomerState.Outside:
                     CurrWaypoint = new Vector2(frontVector.X, (frontVector.Y + ((PositionInLine) * 50)));
                     break;
-
             }
         }
 
