@@ -11,12 +11,17 @@ namespace CoffeeShopSimulation
 {
     class SimulationView
     { 
-        // Assets
+        // Used to specify the side length of the customer and cashier sprites
+        private const int CUSTOMER_SIDE_LENGTH = 20;
+
+        // Used to store textures for the simulation
         private Texture2D customerTexture;
         private Texture2D cashierTexture;
         private Texture2D backgroundTexture;
         private Texture2D pixelTexture;
         private Texture2D counterTexture;
+
+        // Used to store fonts
         private SpriteFont mainFont;
         private SpriteFont smallFont;
 
@@ -24,21 +29,26 @@ namespace CoffeeShopSimulation
         /// Initializes the view and loads all assets into memory
         /// </summary>
         /// <param name="device">Graphics device used to generate the texture</param>
-        /// <param name="content"></param>
+        /// <param name="content"> Used to load content </param>
         public SimulationView(GraphicsDevice device, ContentManager content)
         {
             // Create a 1x1 pixel texture
             pixelTexture = new Texture2D(device, 1, 1);
             pixelTexture.SetData(new [] {Color.White});
 
-            // Load the rest of the textures
+            // Loads the background Texture
             backgroundTexture = content.Load<Texture2D>("Images/background2");
 
-            // Load fonts
+            // Load Spritefonts
             mainFont = content.Load<SpriteFont>("Fonts/bigFont");
             smallFont = content.Load<SpriteFont>("Fonts/smallFont");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sb"> Passes through SpriteBatch in order to use its Draw commands </param>
+        /// <param name="model"> Passes thorugh SimulationModel in order to draw the models data </param>
         public void Draw(SpriteBatch sb, SimulationModel model)
         {
             sb.Draw(backgroundTexture, Vector2.Zero, Color.White);
@@ -49,6 +59,7 @@ namespace CoffeeShopSimulation
             sb.DrawString(mainFont, "Simulation Time: " + model.SimTime + " Seconds", new Vector2(0, 25), Color.Blue);
             sb.DrawString(mainFont, "Number of outsideLine: " + model.CustomersOutsideStore, new Vector2(0, 50), Color.Blue);
 
+            // When paused it will display Simulation paused
             if (model.Paused)
             {
                 sb.DrawString(mainFont, "Simulation Paused", new Vector2(0, 50), Color.Red);
@@ -64,19 +75,29 @@ namespace CoffeeShopSimulation
                 curNode = curNode.GetNext();
             }
 
+            // Sets the current node to the head node in the inside line
             curNode = model.InsideLine.Peek();
+
+            // Runs the Draw method for each of the customers inside the inside store queue
             for (int i = 0; i < model.InsideLine.Size; i++)
             {
                 curNode.Value.View.Draw(sb, pixelTexture, smallFont);
 
+                // Gets the next node in the queue
                 curNode = curNode.GetNext();
             }
 
+            // Draws the cashiers at their positions
             for (int i = 0; i < model.Cashiers.Length; i++)
             {
-                sb.Draw(pixelTexture, new Rectangle((int)model.CashierVectors[i].X + 25, (int)model.CashierVectors[i].Y - 10, 20, 20), Color.Brown);
+                sb.Draw(pixelTexture,                                               // Uses 1x1 pixel texture
+                        new Rectangle((int)model.CashierVectors[i].X + 25,          // Draws it at the cashier vectors obtained from SimulationModel
+                                      (int)model.CashierVectors[i].Y - 10,
+                                      CUSTOMER_SIDE_LENGTH, CUSTOMER_SIDE_LENGTH), // Has a width and length of 25 pixels
+                        Color.Brown);                                              // Overlay color is brown
             }
 
+            // Draws
             foreach (CustomerModel customer in model.Cashiers)
             {
                 if (customer != null)

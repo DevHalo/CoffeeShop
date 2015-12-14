@@ -21,7 +21,17 @@ namespace CoffeeShopSimulation
         private float visits;
         
         // 
-        public CustomerInfo[] LongestWaitTimes = new CustomerInfo[5];
+        public CustomerInfo[] LongestWaitTimes;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public StatisticsModel()
+        {
+            LongestWaitTimes = new CustomerInfo[5];
+        }
+
+        
 
         /// <summary>
         /// Updates the longest wait times according to the current customers in the store
