@@ -61,7 +61,7 @@ namespace CoffeeShopSimulation
 
             if (model.OutsideLine.Size > 6)
             {
-                sb.DrawString(mainFont, "+" + (model.OutsideLine.Size - 6), new Vector2(330, 730), Color.Blue);
+                sb.DrawString(mainFont, "+" + (model.OutsideLine.Size - 6), new Vector2(330, 730), Color.AliceBlue);
             }
             // When paused it will display Simulation paused
             if (model.Paused)
