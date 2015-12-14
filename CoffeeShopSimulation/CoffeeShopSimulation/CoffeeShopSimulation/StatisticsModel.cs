@@ -21,7 +21,7 @@ namespace CoffeeShopSimulation
         private float visits;
         
         // 
-        CustomerInfo[] LongestWaitTimes = new CustomerInfo[5];
+        public CustomerInfo[] LongestWaitTimes = new CustomerInfo[5];
 
         //Stores the top 5 longest wait time for the customers still waiting
         private float[] longestWaitTimes = new float[5];
@@ -52,8 +52,13 @@ namespace CoffeeShopSimulation
 
             //Perform the Merge Sort and store the result back in the original array
             customerInfo = MergeSort(customerInfo, 0, customerInfo.Length - 1);
+            for (int i = 0; i < longestWaitTimes.Length; i++ )
+            {
 
-            InsertionSort(customerInfo);
+            }
+
+
+            //InsertionSort(customerInfo);
 
             for (int i = 0; i < data.Length; i++)
             {
