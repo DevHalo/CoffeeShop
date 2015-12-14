@@ -117,7 +117,7 @@ namespace CoffeeShopSimulation
                 customer.View.Draw(sb, pixelTexture, smallFont);
             }
 
-            model.Statistics.View.Draw(sb, smallFont);
+            model.Statistics.View.Draw(sb, mainFont);
         }
     }
 }

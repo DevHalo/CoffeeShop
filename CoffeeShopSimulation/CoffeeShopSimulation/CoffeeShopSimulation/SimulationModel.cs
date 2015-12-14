@@ -319,7 +319,7 @@ namespace CoffeeShopSimulation
         {
             CustomersInStore = 0;   // Number of customers in store
 
-            // Check each customer at the cashiers.
+            // Check each customer at the cashiers
             // A customer who is part of the cashier array will either be
             // walking to the cashier, or at the cashier. Therefore only increment
             // if the cashier is not null
