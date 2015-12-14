@@ -29,15 +29,15 @@ namespace CoffeeShopSimulation
         public List<CustomerModel> ExitList { get; private set; }  
 
         private const int MAX_CUSTOMERS = 16;                               // Maximum number of customers inside the store
-        private readonly Random rand = new Random();                                 // Used to determine what type of customer to generate
+        private readonly Random rand = new Random();                        // Used to determine what type of customer to generate
         public int CustomersOutsideStore { get; private set; }              // Number of customers outside the store
         public int CustomersInStoreLine { get; private set; }               // Number of customers in the line inside the store
         public int CustomersInStore { get; private set; }                   // Number of customers inside the store
-        private int numCustomers;                                           // Number of customers that have visited the store
-        private Vector2 doorVector = new Vector2(450, 500);                  // Vector that is at the front of the store
+        public int NumCustomers { get; private set; }                       // Number of customers that have visited the store
+        private Vector2 doorVector = new Vector2(420, 500);                 // Vector that is at the front of the store
         private Vector2 frontInsideLineVector = new Vector2(1150, 500);     // Vector that is at the front of the line inside the store 
         private Vector2 exitVector = new Vector2(1260, 800);                // Vector that is at the exit of the store
-        public Rectangle ShopBorder = new Rectangle(100, 200, 800, 700);    // Dimensions of the shop
+        private Rectangle shopBorder = new Rectangle(452, 333, 914, 355);   // Dimensions of the shop
         public CustomerModel[] Cashiers { get; private set; }               // Cashiers which serve the customers
         public Vector2[] CashierVectors { get; private set; }               // Vectors at which each the customer will goto to be served by the cashier
 
@@ -112,7 +112,7 @@ namespace CoffeeShopSimulation
                     {
                         // Restart the respawn timer
                         CustomersOutsideStore++;
-                        numCustomers++;
+                        NumCustomers++;
                         CustomerModel.CustomerType customerType;
                         int randType = rand.Next(0, 3);
 
@@ -135,7 +135,7 @@ namespace CoffeeShopSimulation
                         }
 
                         // Add it to the queue
-                        OutsideLine.Enqueue(new Node<CustomerModel>(new CustomerModel(customerType, numCustomers, CustomersOutsideStore, doorVector)));
+                        OutsideLine.Enqueue(new Node<CustomerModel>(new CustomerModel(customerType, NumCustomers, CustomersOutsideStore - 1, doorVector)));
 
                         // Reset the timer
                         respawnTimer = 0;
@@ -185,7 +185,8 @@ namespace CoffeeShopSimulation
                                 curCustomer = OutsideLine.Peek();
                                 for (int i = 0; i < OutsideLine.Size; i++)
                                 {
-                                    curCustomer.Value.Advance(i, doorVector);
+                                    curCustomer.Value.Advance(doorVector);
+                                    curCustomer = curCustomer.Next;
                                 }
                             }
                         }
@@ -212,14 +213,23 @@ namespace CoffeeShopSimulation
                             {
                                 if (Cashiers[i] == null)
                                 {
+                                    // Dequeue the customer from the inside line
                                     Node<CustomerModel> deqeuedCustomer = InsideLine.Dequeue();
+
+                                    // Change the customer's waypoint to an empty customer
                                     deqeuedCustomer.Value.ChangeCurrWaypoint(CashierVectors[i]);
+
+                                    // Transfer the customer to the cashier
                                     Cashiers[i] = deqeuedCustomer.Value;
+
+                                    // Subtract the number of customers in the store line
                                     CustomersInStoreLine--;
+
+                                    // Move every customer in line up one space
                                     curCustomer = InsideLine.Peek();
                                     for (int j = 0; j < InsideLine.Size; j++)
                                     {
-                                        curCustomer.Value.Advance(j, frontInsideLineVector);
+                                        curCustomer.Value.Advance(frontInsideLineVector);
                                         curCustomer = curCustomer.Next;
                                     }
                                     break;
@@ -231,8 +241,6 @@ namespace CoffeeShopSimulation
                         {
                             if (Cashiers[i] != null)
                             {
-                                checkStore = true;
-
                                 Cashiers[i].Update(gameTime);
 
                                 if (Cashiers[i].Position == CashierVectors[i] &&
@@ -286,10 +294,10 @@ namespace CoffeeShopSimulation
             foreach (CustomerModel customer in Cashiers)
             {
                 if (customer != null &&
-                    customer.Position.X > 0 &&
-                    customer.Position.Y > 0 &&
-                    customer.Position.X < 1366 &&
-                    customer.Position.Y < 600)
+                    customer.Position.X > shopBorder.Left &&
+                    customer.Position.Y > shopBorder.Top &&
+                    customer.Position.X < shopBorder.Right &&
+                    customer.Position.Y < shopBorder.Bottom)
                 {
                     customersInStore++;
 
@@ -303,10 +311,10 @@ namespace CoffeeShopSimulation
             Node<CustomerModel> curCustomer = InsideLine.Peek();
             for (int i = 0; i < InsideLine.Size; i++)
             {
-                if (curCustomer.Value.Position.X > 0 &&
-                    curCustomer.Value.Position.Y > 0 &&
-                    curCustomer.Value.Position.X < 1366 &&
-                    curCustomer.Value.Position.Y < 600)
+                if (curCustomer.Value.Position.X > shopBorder.Left &&
+                    curCustomer.Value.Position.Y > shopBorder.Top &&
+                    curCustomer.Value.Position.X < shopBorder.Right &&
+                    curCustomer.Value.Position.Y < shopBorder.Bottom)
                 {
                     customersInStore++;
                 }
@@ -319,10 +327,10 @@ namespace CoffeeShopSimulation
 
             foreach (CustomerModel customer in ExitList)
             {
-                if (customer.Position.X > 0 &&
-                    customer.Position.Y > 0 &&
-                    customer.Position.X < 1366 &&
-                    customer.Position.Y < 600)
+                if (customer.Position.X > shopBorder.Left &&
+                    customer.Position.Y > shopBorder.Top &&
+                    customer.Position.X < shopBorder.Right &&
+                    customer.Position.Y < shopBorder.Bottom)
                 {
                     customersInStore++;
                 }
