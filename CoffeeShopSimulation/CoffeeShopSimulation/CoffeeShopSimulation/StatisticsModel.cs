@@ -209,10 +209,10 @@ namespace CoffeeShopSimulation
         /// Calculates the average wait time, checks to change max and minimum wait times
         /// </summary>
         /// <param name="customer">stores the customer that exited the store</param>
-        public void ProcessExitingCustomer(Node<CustomerModel> customer)
+        public void ProcessExitingCustomer(CustomerModel customer)
         {
             //add the customer wait time the the total wait time
-            totalWaitTime += (customer.Value.WaitTime);
+            totalWaitTime += (customer.WaitTime);
 
             //Increment the number of visits
             visits++;
@@ -221,23 +221,23 @@ namespace CoffeeShopSimulation
             AvgWaitTime = (totalWaitTime / visits);
 
             //if the current customer being checked has a greater wait time than the max wait time
-            if (MaxWaitTime < customer.Value.OrderTime)
+            if (MaxWaitTime < customer.OrderTime)
             {
                 //set the max wait time to the current customer wait time
-                MaxWaitTime = customer.Value.WaitTime;
+                MaxWaitTime = customer.WaitTime;
             }
 
             //If minimum wait time is zero
             if (MinWaitTime <= 0)
             {
                 //set the minimum wait time to the customer wait time
-                MinWaitTime = customer.Value.WaitTime;
+                MinWaitTime = customer.WaitTime;
             }
             // If minimum wait time is greater than the customer wait time
-            else if (MinWaitTime > customer.Value.WaitTime)
+            else if (MinWaitTime > customer.WaitTime)
             {
                 //Set minimum wait time to customer wait time
-                MinWaitTime = customer.Value.WaitTime;
+                MinWaitTime = customer.WaitTime;
             }
         }
     }
