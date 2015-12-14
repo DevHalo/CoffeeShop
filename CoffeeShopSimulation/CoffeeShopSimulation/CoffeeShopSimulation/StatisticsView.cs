@@ -16,14 +16,7 @@ namespace CoffeeShopSimulation
 {
     class StatisticsView
     {
-        private SpriteFont font;
-
-        public StatisticsView(SpriteFont font)
-        {
-            this.font = font;
-        }
-
-        public void Draw(SpriteBatch sb, StatisticsModel statisticsData)
+        public void Draw(SpriteBatch sb, StatisticsModel statisticsData, SpriteFont font)
         {
             // Longest, min, max and average wait times
             sb.DrawString(font,

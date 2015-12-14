@@ -21,7 +21,10 @@ namespace CoffeeShopSimulation
         private float visits;
         
         // 
-        public CustomerInfo[] LongestWaitTimes;
+        public CustomerInfo[] LongestWaitTimes { get; private set; }
+
+        // 
+        public StatisticsView View { get; private set; }
 
         /// <summary>
         /// 
@@ -29,6 +32,7 @@ namespace CoffeeShopSimulation
         public StatisticsModel()
         {
             LongestWaitTimes = new CustomerInfo[5];
+            View = new StatisticsView();
         }
 
         
