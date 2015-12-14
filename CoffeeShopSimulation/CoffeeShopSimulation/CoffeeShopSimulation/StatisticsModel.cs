@@ -237,7 +237,6 @@ namespace CoffeeShopSimulation
         {
             this.CustomerName = customerName;
             this.CustomerWaitTime = customerWaitTime;
-        
         }
     }
 }
