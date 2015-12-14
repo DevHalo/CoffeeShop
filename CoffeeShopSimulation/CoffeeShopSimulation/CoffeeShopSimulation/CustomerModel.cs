@@ -2,8 +2,9 @@
 // File Name: CoffeeShopSimulation.sln
 // Project Name: A5 Data Manipulation Assignment
 // Creation Date: Dec 5, 2015
-// Modified Date: Dec 13th, 2015
-// Description:
+// Modified Date: Dec 14th, 2015
+// Description: A customer instance stores tehir current location, next waypoint, Order time, current wait time and
+
 using Microsoft.Xna.Framework;
 using System;
 
@@ -15,30 +16,25 @@ namespace CoffeeShopSimulation
         const float ORDER_TIME_COFFEE = 12.0f;
         const float ORDER_TIME_FOOD = 18.0f;
         const float ORDER_TIME_BOTH = 30.0f;
-
-        // Distance between each customer
-        private const int CUSTOMER_DISTANCE = 50;
-
         // Constant used to store the customers movement speed
         const int MOVEMENT_SPEED = 10;
-
+        // Distance between each customer
+        private const int CUSTOMER_DISTANCE = 50;
+        
         // View class that implements the drawing function of the customer
         public CustomerView View { get; private set; }
 
-        // Bool is set to true to when the customer leaves the shop
-        public bool IsDone { get; private set; }
-
         // Integer that stores the customers number
-        public int CustomerNumber { get; private set; }
+        private int customerNumber;
 
         // Used to store the customers name which will be displayed when the customer is drawn onto the screen
         public string CustomerName { get; private set; }
 
         // Stores the customers order time and is based on what they ordered
-        public float OrderTime { get; private set; }
+        private float orderTime;
 
         // Stores the customers time that has passed when they reached the cashier
-        public float OrderProcessTime { get; private set; }
+        private float orderProcessTime; 
 
         // Used to record the amount of time that has passed since the customer was initialized
         public float WaitTime { get; private set; }
@@ -47,9 +43,6 @@ namespace CoffeeShopSimulation
         public Vector2 Position { get; private set; }
         // Stores the location on the current waypoint
         public Vector2 CurrWaypoint { get; private set; }
-
-        // Stores the location of all the waypoints in the coffee shop
-        public Queue<Vector2> Waypoints { get; private set; }
 
         // Stores the position of the customer in the line
         public int PositionInLine { get; private set; }
@@ -84,7 +77,7 @@ namespace CoffeeShopSimulation
         /// <summary>
         /// Returns the percentage
         /// </summary>
-        public float PercentageFinished { get { return OrderProcessTime / OrderTime; } }
+        public float PercentageFinished { get { return orderProcessTime / orderTime; } }
 
         /// <summary>
         /// Used to create an instance of a customer
@@ -105,26 +98,25 @@ namespace CoffeeShopSimulation
         {
             // Sets the class level variables values to the ones obtained from the constructor
             Type = customerType;
-            CustomerNumber = customerNumber;
+            this.customerNumber = customerNumber;
             PositionInLine = positionInLine;
 
-            // Sets the customer name by converting the customer type enum to a string and adding the customer
-            // number to the end
-            CustomerName = Type + String.Empty + CustomerNumber;
+            // Sets the customer name by converting the customer type enum to a string and adding the customer number to the end
+            CustomerName = Type + String.Empty + customerNumber;
 
             // Switch statement used to set the customers order time based upon its Type
             switch (Type)
             {
                 case CustomerType.Coffee:
-                    OrderTime = ORDER_TIME_COFFEE;
+                    orderTime = ORDER_TIME_COFFEE;
                     break;
 
                 case CustomerType.Food:
-                    OrderTime = ORDER_TIME_FOOD;
+                    orderTime = ORDER_TIME_FOOD;
                     break;
 
                 case CustomerType.Both:
-                    OrderTime = ORDER_TIME_BOTH;
+                    orderTime = ORDER_TIME_BOTH;
                     break;
             }
 
@@ -186,9 +178,9 @@ namespace CoffeeShopSimulation
 
             if (CurrentState == CustomerState.AtCashier)
             {
-                OrderProcessTime += gameTimeInMilliSeconds;
+                orderProcessTime += gameTimeInMilliSeconds;
 
-                if (OrderProcessTime >= OrderTime)
+                if (orderProcessTime >= orderTime)
                 {
                     CurrentState = CustomerState.ExitStore;
                 }

@@ -20,9 +20,9 @@ namespace CoffeeShopSimulation
         StatisticsModel statisticsData;
 
         /// <summary>
-        /// 
+        /// Creates an instance of StatisticsView
         /// </summary>
-        /// <param name="statisticsData"></param>
+        /// <param name="statisticsData"> Passes through an instance of StatisticsModel </param>
         public StatisticsView(StatisticsModel statisticsData)
         {
             this.statisticsData = statisticsData;
@@ -36,7 +36,7 @@ namespace CoffeeShopSimulation
                           "\nFastest Wait Time: " + statisticsData.MinWaitTime +
                           "\nAverage Wait Time: " + statisticsData.AvgWaitTime,
                           new Vector2(500, 0),
-                          Color.White);
+                          Color.Blue);
 
             for (int i = 0; i < statisticsData.LongestWaitTimes.Length; i++)
             {
@@ -46,7 +46,7 @@ namespace CoffeeShopSimulation
                                   Convert.ToString(statisticsData.LongestWaitTimes[i].CustomerName +
                                   " " + statisticsData.LongestWaitTimes[i].CustomerWaitTime),
                                   new Vector2(1100, 5 + (i * 20)),
-                                  Color.White);
+                                  Color.Blue);
                 }
             }
 

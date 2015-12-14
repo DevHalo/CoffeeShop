@@ -54,10 +54,9 @@ namespace CoffeeShopSimulation
             sb.Draw(backgroundTexture, Vector2.Zero, Color.White);
 
             // Draws title, statistics and other important information
-            sb.Draw(pixelTexture, new Rectangle(0, 0, 440, 102), Color.White * 0.8f);
+            sb.Draw(pixelTexture, new Rectangle(0, 0, 1366, 102), Color.White * 0.8f);
             sb.DrawString(mainFont, "Tim Hortons Simulator 2015", Vector2.Zero, Color.Blue);
-            sb.DrawString(mainFont, "Simulation Time: " + model.SimTime, new Vector2(0, 25), Color.Blue);
-            sb.DrawString(mainFont, " Seconds", new Vector2(275, 25), Color.Blue);
+            sb.DrawString(mainFont, "Simulation Time: " + model.SimTime + " Seconds", new Vector2(0, 25), Color.Blue);
             sb.DrawString(mainFont, "Number of Served Customers: " + model.CustomersServed, new Vector2(0, 50), Color.Blue);
 
             if (model.OutsideLine.Size > 6)
