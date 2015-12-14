@@ -65,7 +65,7 @@ namespace CoffeeShopSimulation
         /// </summary>
         public float SimTime
         {
-            get { return (simTime - (simTime % 0.01f)) ; }
+            get { return (float)Math.Round((simTime - (simTime % 0.01f)),2) ; }
         }
 
         /// <summary>
