@@ -63,7 +63,7 @@ namespace CoffeeShopSimulation
 
             for (int i = 0; i < length; i++)
             {
-                LongestWaitTimes[i] = customerInfo[(customerInfo.Count - 1) - i];
+                LongestWaitTimes[i].CustomerWaitTime = stuff[(customerInfo.Count - 1) - i];
             }
         }
         private static void InsertionSort(CustomerInfo[] customerInfo)
@@ -260,7 +260,7 @@ namespace CoffeeShopSimulation
     class CustomerInfo
     {
         public string CustomerName { get; private set; }
-        public float CustomerWaitTime { get; private set; }
+        public float CustomerWaitTime { get; set; }
 
         public CustomerInfo(float customerWaitTime, string customerName)
         {
