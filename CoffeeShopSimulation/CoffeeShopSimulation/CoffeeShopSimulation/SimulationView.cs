@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace CoffeeShopSimulation
 {
     class SimulationView
-    { 
+    {
         // Used to specify the side length of the customer and cashier sprites
         private const int CUSTOMER_SIDE_LENGTH = 20;
 
@@ -34,7 +34,7 @@ namespace CoffeeShopSimulation
         {
             // Create a 1x1 pixel texture
             pixelTexture = new Texture2D(device, 1, 1);
-            pixelTexture.SetData(new [] {Color.White});
+            pixelTexture.SetData(new[] { Color.White });
 
             // Loads the background Texture
             backgroundTexture = content.Load<Texture2D>("Images/background2");
@@ -57,7 +57,7 @@ namespace CoffeeShopSimulation
             sb.Draw(pixelTexture, new Rectangle(0, 0, 440, 102), Color.White * 0.8f);
             sb.DrawString(mainFont, "Tim Hortons Simulator 2015", Vector2.Zero, Color.Blue);
             sb.DrawString(mainFont, "Simulation Time: " + model.SimTime, new Vector2(0, 25), Color.Blue);
-            sb.DrawString(mainFont, " Seconds", new Vector2(270, 25), Color.Blue);
+            sb.DrawString(mainFont, " Seconds", new Vector2(275, 25), Color.Blue);
             sb.DrawString(mainFont, "Number of Served Customers: " + model.CustomersServed, new Vector2(0, 50), Color.Blue);
 
             if (model.OutsideLine.Size > 6)

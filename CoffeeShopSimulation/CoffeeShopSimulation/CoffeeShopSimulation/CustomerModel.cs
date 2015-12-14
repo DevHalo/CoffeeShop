@@ -5,6 +5,7 @@
 // Modified Date: Dec 13th, 2015
 // Description:
 using Microsoft.Xna.Framework;
+using System;
 
 namespace CoffeeShopSimulation
 {
@@ -109,8 +110,8 @@ namespace CoffeeShopSimulation
 
             // Sets the customer name by converting the customer type enum to a string and adding the customer
             // number to the end
-            CustomerName = Type + " " + CustomerNumber;
-            
+            CustomerName = Type + String.Empty + CustomerNumber;
+
             // Switch statement used to set the customers order time based upon its Type
             switch (Type)
             {
