@@ -41,9 +41,9 @@ namespace CoffeeShopSimulation
                     break;
                 default:
                     //Loops through the linked list until it reaches the tail
-                    while (curNode.GetNext() != null)
+                    while (curNode.Next != null)
                     {
-                        curNode = curNode.GetNext();
+                        curNode = curNode.Next;
                     }
 
                     //Adds in the new node as the tail
@@ -65,7 +65,7 @@ namespace CoffeeShopSimulation
             Node<T> tempHead = head;
 
             //Set the head to the next node in the linked list
-            head = tempHead.GetNext();
+            head = tempHead.Next;
 
             //Decrement the size of the queue
             Size--;
@@ -100,9 +100,6 @@ namespace CoffeeShopSimulation
         //Stores the value
         public T Value { get; private set; }
 
-        //Stores the next node
-        public Node<T> Next { get; private set; }
-
         /// <summary>
         /// Creates a node with the specified type
         /// </summary>
@@ -116,11 +113,7 @@ namespace CoffeeShopSimulation
         /// Gets the next node 
         /// </summary>
         /// <returns>next node</returns>
-        public Node<T> GetNext()
-        {
-            //Returns the next node
-            return Next;
-        }
+        public Node<T> Next { get; private set; }
 
         /// <summary>
         /// Sets the next node

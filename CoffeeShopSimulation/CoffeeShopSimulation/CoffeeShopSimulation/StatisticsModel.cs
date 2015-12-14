@@ -33,7 +33,7 @@ namespace CoffeeShopSimulation
         public StatisticsModel()
         {
             LongestWaitTimes = new CustomerInfo[5];
-            View = new StatisticsView();
+            View = new StatisticsView(this);
         }
        
         

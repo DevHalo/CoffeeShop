@@ -16,7 +16,19 @@ namespace CoffeeShopSimulation
 {
     class StatisticsView
     {
-        public void Draw(SpriteBatch sb, StatisticsModel statisticsData, SpriteFont font)
+        // Used to store instance of statistics model
+        StatisticsModel statisticsData;
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="statisticsData"></param>
+        public StatisticsView(StatisticsModel statisticsData)
+        {
+            this.statisticsData = statisticsData;
+        }
+
+        public void Draw(SpriteBatch sb, SpriteFont font)
         {
             // Longest, min, max and average wait times
             sb.DrawString(font,
@@ -28,7 +40,10 @@ namespace CoffeeShopSimulation
 
             for (int i = 0; i< statisticsData.LongestWaitTimes.Length; i++)
             {
-
+                sb.DrawString(font,
+                              Convert.ToString(statisticsData.LongestWaitTimes[i]),
+                              new Vector2(0, 0),
+                              Color.AliceBlue);
             }
 
 
