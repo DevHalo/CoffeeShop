@@ -23,7 +23,7 @@ namespace CoffeeShopSimulation
 
         // 
         public CustomerInfo[] LongestWaitTimes { get; private set; }
-
+        List<CustomerInfo> customerInfo = new List<CustomerInfo>();
         // 
         public StatisticsView View { get; private set; }
 
@@ -43,7 +43,7 @@ namespace CoffeeShopSimulation
         /// <param name="customers">stores the queue of customers</param>
         public void Update(Queue<CustomerModel> outsideLine, Queue<CustomerModel> insideLine, CustomerModel[] cashiers, List<CustomerModel> exitList)
         {
-            List<CustomerInfo> customerInfo = ToCustomerInfo(outsideLine, insideLine, cashiers, exitList);
+            customerInfo = ToCustomerInfo(outsideLine, insideLine, cashiers, exitList);
 
             //Perform the Merge Sort and store the result back in the original array
             //if (customerInfo.Count > 0)
@@ -53,12 +53,12 @@ namespace CoffeeShopSimulation
 
             InsertionSort(customerInfo);
 
-            int length = customerInfo.Count < 5 ? customerInfo.Count : LongestWaitTimes.Length;
+            //int length = customerInfo.Count < 5 ? customerInfo.Count : LongestWaitTimes.Length;
 
-            for (int i = 0; i < length; i++)
-            {
-                LongestWaitTimes[i] = customerInfo[(customerInfo.Count - 1) - i];
-            }
+            //for (int i = 0; i < length; i++)
+            //{
+            //    LongestWaitTimes[i] = customerInfo[(customerInfo.Count - 1) - i];
+            //}
         }
         private static void InsertionSort(List<CustomerInfo> customerInfo)
         {
