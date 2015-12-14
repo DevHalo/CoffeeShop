@@ -50,28 +50,22 @@ namespace CoffeeShopSimulation
             //{
             //    customerInfo = MergeSort(customerInfo, 0, customerInfo.Count - 1);
             //}
-            List<float> stuff = new List <float>();
-            
-            for(int i = 0; i < customerInfo.Count; i++)
-            {
-                stuff.Add(customerInfo[i].CustomerWaitTime);
-            }
 
-            stuff.Sort();
+            InsertionSort(customerInfo);
 
             int length = customerInfo.Count < 5 ? customerInfo.Count : LongestWaitTimes.Length;
 
             for (int i = 0; i < length; i++)
             {
-                LongestWaitTimes[i].CustomerWaitTime = stuff[(customerInfo.Count - 1) - i];
+                LongestWaitTimes[i] = customerInfo[(customerInfo.Count - 1) - i];
             }
         }
-        private static void InsertionSort(CustomerInfo[] customerInfo)
+        private static void InsertionSort(List<CustomerInfo> customerInfo)
         {
             CustomerInfo temp;
             int sorted = 1;
 
-            for (int i = 0; i < customerInfo.Length - 1; i++)
+            for (int i = 0; i < customerInfo.Count - 1; i++)
             {
                 for (int j = sorted; j > 0; j--)
                 {
@@ -259,7 +253,7 @@ namespace CoffeeShopSimulation
 
     class CustomerInfo
     {
-        public string CustomerName { get; private set; }
+        public string CustomerName { get; set; }
         public float CustomerWaitTime { get; set; }
 
         public CustomerInfo(float customerWaitTime, string customerName)
