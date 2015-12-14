@@ -11,9 +11,9 @@ namespace CoffeeShopSimulation
     class CustomerModel
     {
         // Creates constants for the order times in seconds
-        const float ORDER_TIME_COFFEE = 0.5f;//12.0f;
-        const float ORDER_TIME_FOOD = 1f;//18.0f;
-        const float ORDER_TIME_BOTH = 2f;//30.0f;
+        const float ORDER_TIME_COFFEE = 12.0f;
+        const float ORDER_TIME_FOOD = 18.0f;
+        const float ORDER_TIME_BOTH = 30.0f;
 
         // Distance between each customer
         private const int CUSTOMER_DISTANCE = 50;
@@ -131,7 +131,7 @@ namespace CoffeeShopSimulation
             CurrentState = CustomerState.Outside;
 
             // Set the default position
-            Position = new Vector2(50, 780);
+            Position = new Vector2(doorVector.X, 800);
             // Set up the first waypoint
             // Adjust their position in line if there are more than
             // 12 people trying to enter the store
@@ -214,19 +214,18 @@ namespace CoffeeShopSimulation
         /// Advances the customer up one space using the location of the
         /// front of the line as a reference
         /// </summary>
+        /// <param name="newPositionInLine"></param>
         /// <param name="frontVector">Coordinate at the front of the line</param>
-        public void Advance(Vector2 frontVector)
+        public void Advance(int newPositionInLine, Vector2 frontVector)
         {
-            PositionInLine--;
-
             switch (CurrentState)
             {
                 case CustomerState.InLine:
-                    CurrWaypoint = new Vector2(frontVector.X - ((PositionInLine - 1) * 50), frontVector.Y);
+                    CurrWaypoint = new Vector2(frontVector.X - ((newPositionInLine) * 50), frontVector.Y);
                     break;
 
                 case CustomerState.Outside:
-                    CurrWaypoint = new Vector2(frontVector.X, (frontVector.Y + (PositionInLine * 50)));
+                    CurrWaypoint = new Vector2(frontVector.X, (frontVector.Y + ((newPositionInLine) * 50)));
                     break;
 
             }
