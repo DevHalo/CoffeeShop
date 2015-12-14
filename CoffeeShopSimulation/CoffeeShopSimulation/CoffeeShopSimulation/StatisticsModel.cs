@@ -7,6 +7,7 @@
 
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 namespace CoffeeShopSimulation
 {
     class StatisticsModel
@@ -34,14 +35,14 @@ namespace CoffeeShopSimulation
             LongestWaitTimes = new CustomerInfo[5];
             View = new StatisticsView();
         }
-
+       
         
 
         /// <summary>
         /// Updates the longest wait times according to the current customers in the store
         /// </summary>
         /// <param name="customers">stores the queue of customers</param>
-        public void Update(Queue<CustomerModel> customers)
+        public void Update(Queue<CustomerModel> outsideLine, Queue<CustomerModel> insideline, CustomerModel[] cashier, List<CustomerModel> exitList)
         {
             //Variable used to store the current customer node
             Node<CustomerModel> curCustomer = customers.Peek();
