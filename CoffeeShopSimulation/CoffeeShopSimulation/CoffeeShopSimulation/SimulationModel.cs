@@ -65,7 +65,7 @@ namespace CoffeeShopSimulation
         /// </summary>
         public float SimTime
         {
-            get { return (float)Math.Truncate(simTime * 10f) / 10f ; }
+            get { return (int)simTime; }
         }
 
         /// <summary>
