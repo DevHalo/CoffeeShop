@@ -44,33 +44,7 @@ namespace CoffeeShopSimulation
         /// <param name="customers">stores the queue of customers</param>
         public void Update(Queue<CustomerModel> outsideLine, Queue<CustomerModel> insideLine, CustomerModel[] cashiers, List<CustomerModel> exitList)
         {
-            //Variable used to store the current customer node
-            Node<CustomerModel> curCustomer = outsideLine.Peek();
-            CustomerInfo[] customerInfo = new CustomerInfo[outsideLine.Size + insideLine.Size + cashiers.Length + exitList.Count];
-
-            for (int i = 0; i < outsideLine.Size; i++)
-            {
-                customerInfo[i] = new CustomerInfo(curCustomer.Value.WaitTime, curCustomer.Value.CustomerName);
-                curCustomer = curCustomer.GetNext();
-            }
-
-            curCustomer = insideLine.Peek();
-
-            for (int i = outsideLine.Size; i < outsideLine.Size + insideLine.Size; i++)
-            {
-                customerInfo[i] = new CustomerInfo(curCustomer.Value.WaitTime, curCustomer.Value.CustomerName);
-                curCustomer = curCustomer.GetNext();
-            }
-
-            for (int i = outsideLine.Size + insideLine.Size; i < outsideLine.Size + insideLine.Size + cashiers.Length; i++)
-            {
-                customerInfo[i] = new CustomerInfo(cashiers[i - outsideLine.Size - insideLine.Size].WaitTime, cashiers[i - outsideLine.Size - insideLine.Size].CustomerName);
-            }
-
-            for (int i = outsideLine.Size + insideLine.Size + cashiers.Length; i < outsideLine.Size + insideLine.Size + cashiers.Length + exitList.Count; i++)
-            {
-                customerInfo[i] = new CustomerInfo(exitList[i - outsideLine.Size - insideLine.Size - cashiers.Length].WaitTime, exitList[i - outsideLine.Size - insideLine.Size - cashiers.Length].CustomerName);
-            }
+            List<CustomerInfo> customerInfo = ToCustomerInfo(outsideLine, insideLine, cashiers, exitList);
 
             //Perform the Merge Sort and store the result back in the original array
             customerInfo = MergeSort(customerInfo, 0, customerInfo.Length - 1);
@@ -101,32 +75,7 @@ namespace CoffeeShopSimulation
                 sorted++;
             }
         }
-        ///// <summary>
-        ///// Sorts the longest wait times array using bubble sort method
-        ///// </summary>
-        //private void BubbleSort()
-        //{
-        //    //Holds temp data of the next index of the array
-        //    float temp;
-
-        //    //Goes through every index of the longest wait time array
-        //    for (int i = longestWaitTimes.Length - 1; i > 0; i++)
-        //    {
-        //        //
-        //        if (longestWaitTimes[i] > longestWaitTimes[i - 1])
-        //        {
-        //            //Set the temporary variable to the longest wait time being replaced
-        //            temp = longestWaitTimes[i - 1];
-
-        //            //Replace
-        //            longestWaitTimes[i - 1] = longestWaitTimes[i];
-
-        //            //Set
-        //            longestWaitTimes[i] = temp;
-        //        }
-        //    }
-        //}
-
+        
         /// <summary>
         /// This is step 1 of a Merge Sort.  This subprogram will check for an array of 
         /// 1 or 0 elements and return that as a sorted array, otherwise it will continue
@@ -224,6 +173,38 @@ namespace CoffeeShopSimulation
             return result;
         }
 
+        public List<CustomerInfo> ToCustomerInfo(Queue<CustomerModel> outsideLine, Queue<CustomerModel> insideLine, CustomerModel[] cashiers, List<CustomerModel> exitList)
+        {
+            List<CustomerInfo> customerInfo = new List<CustomerInfo>();
+            //Variable used to store the current customer node
+            Node<CustomerModel> curCustomer = outsideLine.Peek();
+
+            curCustomer = outsideLine.Peek();
+            for (int i = 0; i < outsideLine.Size; i++)
+            {
+                customerInfo.Add(new CustomerInfo(curCustomer.Value.WaitTime, curCustomer.Value.CustomerName));
+                curCustomer = curCustomer.Next;
+            }
+
+            curCustomer = insideLine.Peek();
+            for (int i = 0; i < insideLine.Size; i++)
+            {
+                customerInfo.Add(new CustomerInfo(curCustomer.Value.WaitTime, curCustomer.Value.CustomerName));
+                curCustomer = curCustomer.Next;
+            }
+
+            for (int i = 0; i < cashiers.Length; i++)
+            {
+                customerInfo.Add(new CustomerInfo(cashiers[i].WaitTime, cashiers[i].CustomerName));
+            }
+
+            for (int i = 0; i < exitList.Count; i++)
+            {
+                customerInfo.Add(new CustomerInfo(exitList[i].WaitTime, exitList[i].CustomerName));
+            }
+
+            return customerInfo;
+        }
         /// <summary>
         /// Calculates the average wait time, checks to change max and minimum wait times
         /// </summary>
