@@ -12,6 +12,9 @@ namespace CoffeeShopSimulation
 {
     class CustomerView
     {
+        // Specifies
+        private const int CUSTOMER_SIZE = 20;
+
         // Stores an instance of Customer Model
         CustomerModel customerModel;
 
@@ -41,11 +44,11 @@ namespace CoffeeShopSimulation
                           Color.Blue);
 
             
-            sb.Draw(customerImg,                                            //
-                new Rectangle((int)customerModel.Position.X - 10,           //
-                              (int)customerModel.Position.Y - 10,           //
-                              (int)(customerModel.PercentageFinished * 20f),//
-                              20),                                          //
+            sb.Draw(customerImg,                                            
+                    new Rectangle((int)customerModel.Position.X - 10,           
+                                  (int)customerModel.Position.Y - 10,           
+                                  (int)(customerModel.PercentageFinished * 20f),
+                              20),                                          
                     Color.Green);
         }
     }
