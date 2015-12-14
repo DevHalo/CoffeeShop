@@ -42,16 +42,34 @@ namespace CoffeeShopSimulation
         /// Updates the longest wait times according to the current customers in the store
         /// </summary>
         /// <param name="customers">stores the queue of customers</param>
-        public void Update(Queue<CustomerModel> outsideLine, Queue<CustomerModel> insideline, CustomerModel[] cashier, List<CustomerModel> exitList)
+        public void Update(Queue<CustomerModel> outsideLine, Queue<CustomerModel> insideLine, CustomerModel[] cashiers, List<CustomerModel> exitList)
         {
             //Variable used to store the current customer node
-            Node<CustomerModel> curCustomer = customers.Peek();
-            CustomerInfo[] customerInfo = new CustomerInfo[customers.Size];
+            Node<CustomerModel> curCustomer = outsideLine.Peek();
+            CustomerInfo[] customerInfo = new CustomerInfo[outsideLine.Size + insideLine.Size + cashiers.Length + exitList.Count];
 
-            for (int i = 0; i < customers.Size; i++)
+            for (int i = 0; i < outsideLine.Size; i++)
             {
                 customerInfo[i] = new CustomerInfo(curCustomer.Value.WaitTime, curCustomer.Value.CustomerName);
                 curCustomer = curCustomer.GetNext();
+            }
+
+            curCustomer = insideLine.Peek();
+
+            for (int i = outsideLine.Size; i < outsideLine.Size + insideLine.Size; i++)
+            {
+                customerInfo[i] = new CustomerInfo(curCustomer.Value.WaitTime, curCustomer.Value.CustomerName);
+                curCustomer = curCustomer.GetNext();
+            }
+
+            for (int i = outsideLine.Size + insideLine.Size; i < outsideLine.Size + insideLine.Size + cashiers.Length; i++)
+            {
+                customerInfo[i] = new CustomerInfo(cashiers[i - outsideLine.Size - insideLine.Size].WaitTime, cashiers[i - outsideLine.Size - insideLine.Size].CustomerName);
+            }
+
+            for (int i = outsideLine.Size + insideLine.Size + cashiers.Length; i < outsideLine.Size + insideLine.Size + cashiers.Length + exitList.Count; i++)
+            {
+                customerInfo[i] = new CustomerInfo(exitList[i - outsideLine.Size - insideLine.Size - cashiers.Length].WaitTime, exitList[i - outsideLine.Size - insideLine.Size - cashiers.Length].CustomerName);
             }
 
             //Perform the Merge Sort and store the result back in the original array
