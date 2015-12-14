@@ -248,33 +248,33 @@ namespace CoffeeShopSimulation
                                 }
                             }
                         }
+                    }
 
-                        // Update each cashier
-                        for (int i = 0; i < Cashiers.Length; i++)
+                    // Update each cashier
+                    for (int i = 0; i < Cashiers.Length; i++)
+                    {
+                        // If the cashier is not empty
+                        if (Cashiers[i] != null)
                         {
-                            // If the cashier is not empty
-                            if (Cashiers[i] != null)
+                            // Update the customer at the cashier
+                            Cashiers[i].Update(gameTime);
+
+                            // If the customer's state is not "AtCashier" and is at the counter,
+                            // change the state so that it is
+                            if (Cashiers[i].Position == CashierVectors[i] &&
+                                Cashiers[i].CurrentState == CustomerModel.CustomerState.InLine)
                             {
-                                // Update the customer at the cashier
-                                Cashiers[i].Update(gameTime);
+                                Cashiers[i].ChangeCustomerState(CustomerModel.CustomerState.AtCashier);
+                            }
 
-                                // If the customer's state is not "AtCashier" and is at the counter,
-                                // change the state so that it is
-                                if (Cashiers[i].Position == CashierVectors[i] &&
-                                    Cashiers[i].CurrentState == CustomerModel.CustomerState.InLine)
-                                {
-                                    Cashiers[i].ChangeCustomerState(CustomerModel.CustomerState.AtCashier);
-                                }
-
-                                // If the customer is now leaving the store and has not moved from the cashier,
-                                // set the waypoint to the exit and add it to the list of exiting customers.
-                                // Also set the cashier to null, or empty.
-                                if (Cashiers[i].CurrentState == CustomerModel.CustomerState.ExitStore)
-                                {
-                                    Cashiers[i].ChangeCurrWaypoint(exitVector);
-                                    ExitList.Add(Cashiers[i]);
-                                    Cashiers[i] = null;
-                                }
+                            // If the customer is now leaving the store and has not moved from the cashier,
+                            // set the waypoint to the exit and add it to the list of exiting customers.
+                            // Also set the cashier to null, or empty.
+                            if (Cashiers[i].CurrentState == CustomerModel.CustomerState.ExitStore)
+                            {
+                                Cashiers[i].ChangeCurrWaypoint(exitVector);
+                                ExitList.Add(Cashiers[i]);
+                                Cashiers[i] = null;
                             }
                         }
                     }
