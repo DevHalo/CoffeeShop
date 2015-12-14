@@ -44,7 +44,6 @@ namespace CoffeeShopSimulation
 
         // Stores the cusotmers position on the screen
         public Vector2 Position { get; private set; }
-
         // Stores the location on the current waypoint
         public Vector2 CurrWaypoint { get; private set; }
 
@@ -84,7 +83,7 @@ namespace CoffeeShopSimulation
         /// <summary>
         /// Returns the percentage
         /// </summary>
-        public float PercentageFinished { get { return OrderProcessTime/OrderTime; } }
+        public float PercentageFinished { get { return OrderProcessTime / OrderTime; } }
 
         /// <summary>
         /// Used to create an instance of a customer
@@ -151,10 +150,14 @@ namespace CoffeeShopSimulation
             // Adds the elasped time to the customers wait time
             WaitTime += gameTimeInMilliSeconds;
 
+            // If the customer is not at the current waypoint
             if (Position != CurrWaypoint)
             {
+                // If the customer is 
                 if (Vector2.Distance(Position, CurrWaypoint) > MOVEMENT_SPEED)
                 {
+                    // If the X or Y value of the customer is more or less than the waypoint than
+                    // it will add or subtract to the vector in order to get it to the waypoint
                     if (CurrWaypoint.X > Position.X)
                     {
                         Position += new Vector2(MOVEMENT_SPEED, 0);
@@ -216,13 +219,16 @@ namespace CoffeeShopSimulation
         {
             PositionInLine--;
 
-            if (CurrentState == CustomerState.InLine)
+            switch (CurrentState)
             {
-                CurrWaypoint = new Vector2(frontVector.X - ((PositionInLine - 1) * CUSTOMER_DISTANCE), frontVector.Y);
-            }
-            else if (CurrentState == CustomerState.Outside)
-            {
-                CurrWaypoint = new Vector2(frontVector.X, (frontVector.Y + (PositionInLine * CUSTOMER_DISTANCE)));
+                case CustomerState.InLine:
+                    CurrWaypoint = new Vector2(frontVector.X - ((PositionInLine - 1) * 50), frontVector.Y);
+                    break;
+
+                case CustomerState.Outside:
+                    CurrWaypoint = new Vector2(frontVector.X, (frontVector.Y + (PositionInLine * 50)));
+                    break;
+
             }
         }
 

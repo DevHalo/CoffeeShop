@@ -3,7 +3,7 @@
 // Project Name: A5_DataManipulation
 // Creation Date: Dec 6 2015
 // Modified Date: 
-// Description: This Button class is used to update, check for collision, draw the buttons and change the current screen
+// Description: This Button class is used to control the mouse input for the program
 using System;
 using System.Collections.Generic;
 using System.Linq;

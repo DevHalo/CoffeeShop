@@ -14,24 +14,36 @@ namespace CoffeeShopSimulation
     class InputManager
     {
         // Used to store the previous and current mouse states
-        private MouseState prevMouseState;
-        private MouseState currMouseState;
-
-        // Used to check if the mouse is currently being clicked
-        public bool IsClicked { get; private set; }
+        private KeyboardState currKeyboardState;
+        private KeyboardState prevKeyboardState;
 
         /// <summary>
-        /// Used to create an instance of InstanceManager
+        /// 
         /// </summary>
-        public InputManager()
+        public void Update()
         {
+            currKeyboardState = Keyboard.GetState();
+
+            
+
+            prevKeyboardState = currKeyboardState;
 
         }
 
-        //public bool IsClicked()
-        //{
-
-        //}
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userInput"></param>
+        /// <param name="currKbState"></param>
+        /// <param name="prevKbState"></param>
+        /// <returns></returns>
+        public bool CheckForInput(Keys userInput, KeyboardState currKbState, KeyboardState prevKbState)
+        {
+            if ((currKbState.IsKeyDown(userInput)) && (prevKbState.IsKeyUp(userInput)))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
