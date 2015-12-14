@@ -52,9 +52,10 @@ namespace CoffeeShopSimulation
 
             //Perform the Merge Sort and store the result back in the original array
             customerInfo = MergeSort(customerInfo, 0, customerInfo.Length - 1);
-            for (int i = 0; i < longestWaitTimes.Length; i++ )
-            {
 
+            for (int i = 0; i < LongestWaitTimes.Length; i++ )
+            {
+                LongestWaitTimes[i] = customerInfo[customerInfo.Length - i - 1];
             }
 
 
