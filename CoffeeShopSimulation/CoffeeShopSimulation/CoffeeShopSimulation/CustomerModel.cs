@@ -135,7 +135,7 @@ namespace CoffeeShopSimulation
             // Set up the first waypoint
             // Adjust their position in line if there are more than
             // 12 people trying to enter the store
-            CurrWaypoint = new Vector2(doorVector.X, doorVector.Y + ((positionInLine - 1) * CUSTOMER_DISTANCE));
+            CurrWaypoint = new Vector2(doorVector.X, doorVector.Y + (positionInLine * CUSTOMER_DISTANCE));
 
             // Intializes the Customer view instance and passes through the current customer model class
             View = new CustomerView(this);
@@ -206,7 +206,7 @@ namespace CoffeeShopSimulation
         public void GoInside(int newPositionInLine, Vector2 frontOfLineVector)
         {
             PositionInLine = newPositionInLine;
-            CurrWaypoint = new Vector2(frontOfLineVector.X - ((newPositionInLine - 1) * CUSTOMER_DISTANCE), frontOfLineVector.Y);
+            CurrWaypoint = new Vector2(frontOfLineVector.X - ((PositionInLine - 1) * CUSTOMER_DISTANCE), frontOfLineVector.Y);
             CurrentState = CustomerState.InLine;
         }
 
@@ -216,16 +216,18 @@ namespace CoffeeShopSimulation
         /// </summary>
         /// <param name="newPositionInLine"></param>
         /// <param name="frontVector">Coordinate at the front of the line</param>
-        public void Advance(int newPositionInLine, Vector2 frontVector)
+        public void Advance(Vector2 frontVector)
         {
+            PositionInLine--;
+
             switch (CurrentState)
             {
                 case CustomerState.InLine:
-                    CurrWaypoint = new Vector2(frontVector.X - ((newPositionInLine) * 50), frontVector.Y);
+                    CurrWaypoint = new Vector2(frontVector.X - ((PositionInLine - 1) * 50), frontVector.Y);
                     break;
 
                 case CustomerState.Outside:
-                    CurrWaypoint = new Vector2(frontVector.X, (frontVector.Y + ((newPositionInLine) * 50)));
+                    CurrWaypoint = new Vector2(frontVector.X, (frontVector.Y + ((PositionInLine) * 50)));
                     break;
 
             }
