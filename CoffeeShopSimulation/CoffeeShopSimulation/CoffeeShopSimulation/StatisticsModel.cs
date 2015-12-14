@@ -20,7 +20,7 @@ namespace CoffeeShopSimulation
 
         //Stores the number of visits
         private float visits;
-        
+
         // 
         public CustomerInfo[] LongestWaitTimes { get; private set; }
 
@@ -35,8 +35,8 @@ namespace CoffeeShopSimulation
             LongestWaitTimes = new CustomerInfo[5];
             View = new StatisticsView(this);
         }
-       
-        
+
+
 
         /// <summary>
         /// Updates the longest wait times according to the current customers in the store
@@ -47,12 +47,14 @@ namespace CoffeeShopSimulation
             List<CustomerInfo> customerInfo = ToCustomerInfo(outsideLine, insideLine, cashiers, exitList);
 
             //Perform the Merge Sort and store the result back in the original array
-            customerInfo = MergeSort(customerInfo, 0, customerInfo.Length - 1);
+            //customerInfo = MergeSort(customerInfo, 0, customerInfo.Count - 1);
+            int length = customerInfo.Count < 5 ? customerInfo.Count : LongestWaitTimes.Length;
 
-            for (int i = 0; i < LongestWaitTimes.Length; i++ )
+            for (int i = 0; i < length; i++)
             {
-                LongestWaitTimes[i] = customerInfo[customerInfo.Length - i - 1];
+                LongestWaitTimes[i] = customerInfo[(customerInfo.Count - 1) - i];
             }
+
 
             //InsertionSort(customerInfo);
         }
@@ -75,7 +77,7 @@ namespace CoffeeShopSimulation
                 sorted++;
             }
         }
-        
+
         /// <summary>
         /// This is step 1 of a Merge Sort.  This subprogram will check for an array of 
         /// 1 or 0 elements and return that as a sorted array, otherwise it will continue
@@ -175,6 +177,8 @@ namespace CoffeeShopSimulation
 
         public List<CustomerInfo> ToCustomerInfo(Queue<CustomerModel> outsideLine, Queue<CustomerModel> insideLine, CustomerModel[] cashiers, List<CustomerModel> exitList)
         {
+
+
             List<CustomerInfo> customerInfo = new List<CustomerInfo>();
             //Variable used to store the current customer node
             Node<CustomerModel> curCustomer = outsideLine.Peek();
@@ -195,7 +199,10 @@ namespace CoffeeShopSimulation
 
             for (int i = 0; i < cashiers.Length; i++)
             {
-                customerInfo.Add(new CustomerInfo(cashiers[i].WaitTime, cashiers[i].CustomerName));
+                if (cashiers[i] != null)
+                {
+                    customerInfo.Add(new CustomerInfo(cashiers[i].WaitTime, cashiers[i].CustomerName));
+                }
             }
 
             for (int i = 0; i < exitList.Count; i++)
@@ -221,7 +228,7 @@ namespace CoffeeShopSimulation
             AvgWaitTime = (totalWaitTime / visits);
 
             //if the current customer being checked has a greater wait time than the max wait time
-            if (MaxWaitTime < customer.OrderTime)
+            if (MaxWaitTime < customer.WaitTime)
             {
                 //set the max wait time to the current customer wait time
                 MaxWaitTime = customer.WaitTime;
@@ -247,7 +254,7 @@ namespace CoffeeShopSimulation
         public string CustomerName { get; private set; }
         public float CustomerWaitTime { get; private set; }
 
-        public CustomerInfo(float customerWaitTime, string customerName )
+        public CustomerInfo(float customerWaitTime, string customerName)
         {
             this.CustomerName = customerName;
             this.CustomerWaitTime = customerWaitTime;

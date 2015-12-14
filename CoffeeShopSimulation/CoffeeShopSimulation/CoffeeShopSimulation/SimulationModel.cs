@@ -43,7 +43,7 @@ namespace CoffeeShopSimulation
         public Vector2[] CashierVectors { get; private set; }               // Vectors at which each the customer will goto to be served by the cashier
 
         // Simulation Variables
-        private const float SPAWN_TIME = 1.0f;          // Time in seconds between each customer attempting to enter the store
+        private const float SPAWN_TIME = 6.0f;          // Time in seconds between each customer attempting to enter the store
         private const float SIM_DURATION = 300.0f;      // Time in seconds for how long the simulation should run
         private const float STAT_UPDATE_TIME = 1.0f;    // How often should the simulation update the statistics
         private float simTime;                          // Total time the simulation has run
