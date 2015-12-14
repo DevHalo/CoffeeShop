@@ -15,6 +15,9 @@ namespace CoffeeShopSimulation
         const float ORDER_TIME_FOOD = 1f;//18.0f;
         const float ORDER_TIME_BOTH = 2f;//30.0f;
 
+        // Distance between each customer
+        private const int CUSTOMER_DISTANCE = 50;
+
         // Constant used to store the customers movement speed
         const int MOVEMENT_SPEED = 10;
 
@@ -95,7 +98,10 @@ namespace CoffeeShopSimulation
         /// <param name="positionInLine">
         /// Used to store the customer's current position in the line
         /// </param>
-        public CustomerModel(CustomerType customerType, int customerNumber, int positionInLine)
+        /// <param name= "doorVector">
+        /// Used to store the vector outside the door of the store
+        /// </param>
+        public CustomerModel(CustomerType customerType, int customerNumber, int positionInLine, Vector2 doorVector)
         {
             // Sets the class level variables values to the ones obtained from the constructor
             Type = customerType;
@@ -130,7 +136,7 @@ namespace CoffeeShopSimulation
             // Set up the first waypoint
             // Adjust their position in line if there are more than
             // 12 people trying to enter the store
-            CurrWaypoint = new Vector2(50, 350 + (positionInLine * 50));
+            CurrWaypoint = new Vector2(doorVector.X, doorVector.Y + ((positionInLine - 1) * CUSTOMER_DISTANCE));
 
             // Intializes the Customer view instance and passes through the current customer model class
             View = new CustomerView(this);
@@ -197,7 +203,7 @@ namespace CoffeeShopSimulation
         public void GoInside(int newPositionInLine, Vector2 frontOfLineVector)
         {
             PositionInLine = newPositionInLine;
-            CurrWaypoint = new Vector2(frontOfLineVector.X - ((newPositionInLine - 1) * 50), frontOfLineVector.Y);
+            CurrWaypoint = new Vector2(frontOfLineVector.X - ((newPositionInLine - 1) * CUSTOMER_DISTANCE), frontOfLineVector.Y);
             CurrentState = CustomerState.InLine;
         }
 
@@ -212,11 +218,11 @@ namespace CoffeeShopSimulation
 
             if (CurrentState == CustomerState.InLine)
             {
-                CurrWaypoint = new Vector2(frontVector.X - ((PositionInLine - 1) * 50), frontVector.Y);
+                CurrWaypoint = new Vector2(frontVector.X - ((PositionInLine - 1) * CUSTOMER_DISTANCE), frontVector.Y);
             }
             else if (CurrentState == CustomerState.Outside)
             {
-                CurrWaypoint = new Vector2(frontVector.X, (frontVector.Y + (PositionInLine * 50)));
+                CurrWaypoint = new Vector2(frontVector.X, (frontVector.Y + (PositionInLine * CUSTOMER_DISTANCE)));
             }
         }
 

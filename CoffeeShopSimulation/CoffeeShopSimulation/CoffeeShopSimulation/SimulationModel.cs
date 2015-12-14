@@ -134,7 +134,7 @@ namespace CoffeeShopSimulation
                         }
 
                         // Add it to the queue
-                        OutsideLine.Enqueue(new Node<CustomerModel>(new CustomerModel(customerType, numCustomers, CustomersOutsideStore)));
+                        OutsideLine.Enqueue(new Node<CustomerModel>(new CustomerModel(customerType, numCustomers, CustomersOutsideStore, doorVector)));
                         respawnTimer = 0;
                     }
 
