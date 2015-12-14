@@ -34,8 +34,8 @@ namespace CoffeeShopSimulation
         public int CustomersInStoreLine { get; private set; }               // Number of customers in the line inside the store
         public int CustomersInStore { get; private set; }                   // Number of customers inside the store
         private int numCustomers;                                           // Number of customers that have visited the store
-        private Vector2 doorVector = new Vector2(50, 400);                  // Vector that is at the front of the store
-        private Vector2 frontInsideLineVector = new Vector2(1150, 400);     // Vector that is at the front of the line inside the store 
+        private Vector2 doorVector = new Vector2(50, 500);                  // Vector that is at the front of the store
+        private Vector2 frontInsideLineVector = new Vector2(1150, 500);     // Vector that is at the front of the line inside the store 
         private Vector2 exitVector = new Vector2(1260, 800);                // Vector that is at the exit of the store
         public CustomerModel[] Cashiers { get; private set; }               // Cashiers which serve the customers
         public Vector2[] CashierVectors { get; private set; }               // Vectors at which each the customer will goto to be served by the cashier
@@ -83,7 +83,7 @@ namespace CoffeeShopSimulation
             // Set vectors for cashiers
             for (int i = 0; i < CashierVectors.Length; i++)
             {
-                CashierVectors[i] = new Vector2(1280, 220 + (95 * i));
+                CashierVectors[i] = new Vector2(1280, 400 + (50 * i));
             }
         }
 
