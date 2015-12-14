@@ -1,9 +1,9 @@
 ﻿// Author: Sanjay Paraboo
-// File Name: CoffeeShopSimulation.sln
+// File Name: CustomerModel.cs
 // Project Name: A5 Data Manipulation Assignment
 // Creation Date: Dec 5, 2015
 // Modified Date: Dec 14th, 2015
-// Description: A customer instance stores tehir current location, next waypoint, Order time, current wait time and
+// Description: A customer instance stores their current location, next waypoint, Order time, current wait time and
 
 using Microsoft.Xna.Framework;
 using System;

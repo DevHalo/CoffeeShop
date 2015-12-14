@@ -1,5 +1,5 @@
 ﻿// Author: Sanjay Paraboo
-// File Name: CoffeeShopSimulation.sln
+// File Name: CustomerView.cs
 // Project Name: A5 Data Manipulation Assignment
 // Creation Date: Dec 5, 2015
 // Modified Date: Dec 13th, 2015

@@ -1,7 +1,7 @@
 ﻿// Author: Sanjay Paraboo
 // Class Name: InputManager.cs
 // Date Created: Dec 5th 2015
-// Date Modified: Dec 5th 2015
+// Date Modified: Dec 14th 2015
 // Description: Handles all input by the user
 using System;
 using System.Collections.Generic;
@@ -17,18 +17,15 @@ namespace CoffeeShopSimulation
         private KeyboardState currKeyboardState;
         private KeyboardState prevKeyboardState;
 
-
         /// <summary>
-        /// 
+        /// Used to check for the users keyboard input
         /// </summary>
-        /// <param name="userInput"></param>
-        /// <param name="currKbState"></param>
-        /// <param name="prevKbState"></param>
+        /// <param name="userInput"> Used to specify waht key to check for  </param>
         /// <returns></returns>
-        public bool CheckForInput(Keys userInput, KeyboardState currKbState, KeyboardState prevKbState)
+        public bool IsKeyPressed(Keys userInput)
         {
             // Checks to see if the key to check for has been currently down and previously up
-            return ((currKbState.IsKeyDown(userInput)) && (prevKbState.IsKeyUp(userInput)));
+            return ((currKeyboardState.IsKeyDown(userInput)) && (prevKeyboardState.IsKeyUp(userInput)));
         }
 
         /// <summary>
