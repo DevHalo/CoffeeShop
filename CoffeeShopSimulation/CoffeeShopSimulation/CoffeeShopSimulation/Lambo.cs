@@ -21,6 +21,7 @@ namespace CoffeeShopSimulation
 
         private Vector2 lamboLocal;
 
+
         /// <summary>
         /// 
         /// </summary>
