@@ -49,6 +49,9 @@ namespace CoffeeShopSimulation
             Right
         };
 
+        /// <summary>
+        /// Stores the current direction of the lambo
+        /// </summary>
         public LamboDirection Direction { get; private set; }
 
         /// <summary>

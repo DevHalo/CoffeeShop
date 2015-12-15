@@ -16,6 +16,9 @@ namespace CoffeeShopSimulation
         private const int MAX_LAMBOS = 10;
         private const float MAX_LIFE = 2.0f;
 
+        /// <summary>
+        /// A List that stores all of the instances of the lambos
+        /// </summary>
         public List<LamboModel> Lambos { get; private set; }
 
         /// <summary>
@@ -68,7 +71,7 @@ namespace CoffeeShopSimulation
         /// <param name="randNum"> Passes through random num generator </param>
         public void SpawnLambo(LamboModel.LamboDirection lamboDirection, Random randNum)
         {
-            // If there arn't too many lambos generate a lambo based on its direction
+            // If there arn't too many lambos generate a lambo based on its direction and generate a random color using the Random instance
             if (Lambos.Count < MAX_LAMBOS)
             {
                 switch (lamboDirection)
@@ -98,7 +101,7 @@ namespace CoffeeShopSimulation
         /// <param name="gameTimeInMilliSeconds"></param>
         public void Update(float gameTimeInMilliSeconds)
         {
-            // Update each lambo and remove them if neccessary
+            // Update each lambo and remove them if the life span is more than the max life
             for (int i = 0; i < Lambos.Count; i++)
             {
                 Lambos[i].Update(gameTimeInMilliSeconds);

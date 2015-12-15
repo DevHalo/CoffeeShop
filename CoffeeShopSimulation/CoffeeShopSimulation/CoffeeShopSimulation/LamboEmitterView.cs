@@ -29,6 +29,7 @@ namespace CoffeeShopSimulation
         /// <param name="lamboTexture"> Passes through the lambo texture </param>
         public void Draw(SpriteBatch sb, Texture2D lamboTexture)
         {
+            // Draws the lambo models if theyre not null
             foreach (LamboModel i in lamboModel.Lambos)
             {
                 if (i != null)

@@ -26,7 +26,7 @@ namespace CoffeeShopSimulation
         /// <summary>
         /// Draws the lambo on the screen
         /// </summary>
-        /// <param name="sb"></param>
+        /// <param name="sb"> Passes through the instance of SpriteBatch in order to use its draw commmands </param>
         public void Draw(SpriteBatch sb, Texture2D lamboImg)
         {
             sb.Draw(lamboImg,               // Uses lamboImg texture

@@ -13,7 +13,10 @@ namespace CoffeeShopSimulation
     class StatisticsView
     {
         // Used to store instance of statistics model
-        StatisticsModel statisticsData;
+        private StatisticsModel statisticsData;
+
+        // Stores the longest wait time text location
+        private Vector2 LongestWaitTimeTextVect = new Vector2(470, 535);
 
         /// <summary>
         /// Creates an instance of StatisticsView
@@ -44,8 +47,9 @@ namespace CoffeeShopSimulation
             int end = (int)MathHelper.Clamp(start - 4, 0, start);
 
             // Draws the top 5 longest wait times obtained from the statistics model class
-            sb.DrawString(font, "Longest Wait Times:", new Vector2(470, 535), Color.Blue);
+            sb.DrawString(font, "Longest Wait Times:", LongestWaitTimeTextVect, Color.Blue);
 
+            // If the Customer Info list has a count more than 0 iterate through the top 5 times and display them
             if (statisticsData.CustomerInfo.Count > 0)
             {
                 for (int i = start; i >= end; i--)
@@ -53,11 +57,12 @@ namespace CoffeeShopSimulation
                     // If the value isnt null then draw the value
                     if (statisticsData.CustomerInfo[i] != null)
                     {
-                        // Draws 
+                        // Draws the Customer name and its time
                         sb.DrawString(font,
                             (start - i) + 1 + ". " + statisticsData.CustomerInfo[i].CustomerName +
                             "@ " + Math.Round((statisticsData.CustomerInfo[i].CustomerWaitTime), 1) + " seconds",
-                            new Vector2(480 + ((start - i) *20), 560 + ((start - i)*20)),
+                            new Vector2(LongestWaitTimeTextVect.X + 10 + ((start - i) * 20),
+                                        LongestWaitTimeTextVect.Y + 25 + ((start - i) * 20)),
                             Color.Blue);
                     }
                 }

@@ -1,5 +1,6 @@
 ﻿// Author: Sanjay Paraboo
 // Class Name: SimulationView.cs
+// Project Name: A5_DataManipulation
 // Date Created: Dec 5th 2015
 // Date Modified: Dec 14th 2015
 // Description: Handles all Drawing of the simulation
