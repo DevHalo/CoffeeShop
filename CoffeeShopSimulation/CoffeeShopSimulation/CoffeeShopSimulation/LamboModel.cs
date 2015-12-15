@@ -1,9 +1,10 @@
 ﻿// Author: Sanjay Paraboo, Mark Vuoong, Shawn Verma
-// File Name: CustomerView.cs
+// File Name: LamboModel.cs
 // Project Name: A5 Data Manipulation Assignment
 // Creation Date: Dec 5th, 2015
 // Modified Date: Dec 14th, 2015
-// Description:
+// Description: Used to handle the logic of the lambos
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,8 +20,11 @@ namespace CoffeeShopSimulation
 
         private Texture2D lamboImg;
 
-        private Vector2 lamboLocal;
+        public Vector2 LamboLocal { get; private set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public float LifeSpan { get; private set; }
 
         // Used to specify the locaiton of the lambo
@@ -37,7 +41,6 @@ namespace CoffeeShopSimulation
             Left,
             Right
         };
-
         private LamboDirection Direction { get; private set; }
 
 
@@ -53,19 +56,19 @@ namespace CoffeeShopSimulation
             switch (Direction)
             {
                 case LamboDirection.Up:
-                    lamboLocal.Y -= LAMBO_SPEED;
+                    LamboLocal -= new Vector2(0, LAMBO_SPEED);
                     break;
 
                 case LamboDirection.Down:
-                    lamboLocal.Y += LAMBO_SPEED;
+                    LamboLocal += new Vector2(0, LAMBO_SPEED);
                     break;
 
                 case LamboDirection.Left:
-                    lamboLocal.X -= LAMBO_SPEED;
+                    LamboLocal -= new Vector2(LAMBO_SPEED, 0);
                     break;
 
                 case LamboDirection.Right:
-                    lamboLocal.X += LAMBO_SPEED;
+                    LamboLocal += new Vector2(LAMBO_SPEED, 0);
                     break;
             }
         }
@@ -77,8 +80,9 @@ namespace CoffeeShopSimulation
         /// <param name="direction"> Specifies the lambo direction </param>
         public void Spawn(Vector2 spawnLocal, LamboDirection direction)
         {
+            // Updates the location by setting it to the spawn point
             this.Direction = direction;
-            lamboLocal = spawnLocal;
+            LamboLocal = spawnLocal;
 
             switch (direction)
             {
@@ -97,23 +101,6 @@ namespace CoffeeShopSimulation
                 case LamboDirection.Right:
                     break;
             }
-        }
-
-        /// <summary>
-        /// Draws the lambo on the screen
-        /// </summary>
-        /// <param name="sb"></param>
-        public void Draw(SpriteBatch sb)
-        {
-            sb.Draw(lamboImg,
-                    lamboLocal,
-                    null,
-                    Color.White,
-                    0f,
-                    Vector2.Zero,
-                    1.0f,
-                    SpriteEffects.None, 
-                    0);
         }
     }
 }
