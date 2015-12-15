@@ -3,7 +3,6 @@
 // Date Created: Dec 5th 2015
 // Date Modified: Dec 6th 2015
 // Description: Handles all Drawing of the simulation
-
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,6 +13,8 @@ namespace CoffeeShopSimulation
     {
         // Used to specify the side length of the customer and cashier sprites
         private const int CUSTOMER_SIDE_LENGTH = 20;
+        // Used to specify the max number of visible customers outside in the simulation
+        private const int MAX_VISIBLE_CUSTOMERS_OUTSIDE = 6;
 
         // Used to store textures for the simulation
         private Texture2D backgroundTexture;
@@ -34,7 +35,7 @@ namespace CoffeeShopSimulation
         /// <param name="content"> Used to load content </param>
         public SimulationView(GraphicsDevice device, ContentManager content)
         {
-            // Create a 1x1 pixel texture
+            // Create a 1x1 white pixel texture
             pixelTexture = new Texture2D(device, 1, 1);
             pixelTexture.SetData(new[] { Color.White });
 
@@ -66,9 +67,9 @@ namespace CoffeeShopSimulation
 
 
             // If there are customers in the outside line that are off the screen then it will display the number off screen
-            if (model.OutsideLine.Size > 6)
+            if (model.OutsideLine.Size > MAX_VISIBLE_CUSTOMERS_OUTSIDE)
             {
-                sb.DrawString(mainFont, "+" + (model.OutsideLine.Size - 6), OffScreenCountTextLocal, Color.AliceBlue);
+                sb.DrawString(mainFont, "+" + (model.OutsideLine.Size - MAX_VISIBLE_CUSTOMERS_OUTSIDE), OffScreenCountTextLocal, Color.AliceBlue);
             }
 
             // When paused it will display Simulation paused
@@ -83,7 +84,7 @@ namespace CoffeeShopSimulation
             {
                 // Draw the customer stored in the node
                 curNode.Value.View.Draw(sb, pixelTexture, smallFont);
-                // Iterate to the next node
+                // Gets the next node
                 curNode = curNode.Next;
             }
 
@@ -93,13 +94,14 @@ namespace CoffeeShopSimulation
             // Runs the Draw method for each of the customers inside the inside store queue
             for (int i = 0; i < model.InsideLine.Size; i++)
             {
+                // Passes through the spritebatch instance the pixel texture creates in the constructor and the small font spritefont
                 curNode.Value.View.Draw(sb, pixelTexture, smallFont);
 
                 // Gets the next node in the queue
                 curNode = curNode.Next;
             }
 
-            // Draws the cashiers at their positions
+            // Draws every cashiers at their positions
             for (int i = 0; i < model.Cashiers.Length; i++)
             {
                 sb.Draw(pixelTexture,                                                           // Uses 1x1 pixel texture

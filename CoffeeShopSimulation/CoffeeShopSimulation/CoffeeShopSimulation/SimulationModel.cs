@@ -53,6 +53,8 @@ namespace CoffeeShopSimulation
         private float simTime;                          // Total time the simulation has run
         private float respawnTimer;                     // Timer used to delay time between customer spawning
         private float updateTimer;                      // Timer used to track how long between each statistic update
+        public bool Finished { get; private set; }      // Is the simulation finished
+
 
         /// <summary>
         /// Stores all statistics that are tracked during the simulation
@@ -73,7 +75,7 @@ namespace CoffeeShopSimulation
         }
 
         /// <summary>
-        /// Initializes the simulation. This is called once at load
+        /// Initializes the simulation.
         /// </summary>
         public SimulationModel()
         {
@@ -102,15 +104,19 @@ namespace CoffeeShopSimulation
         /// <param name="gameTime"> Wall time in milliseconds</param>
         public void Update(float gameTime)
         {
+            // Get the current state of inputs
             inputManager.Tick();
 
+            // Pause the simulation if the space key is pressed
             if (inputManager.IsKeyPressed(Keys.Space))
             {
                 Paused = !Paused;
             }
 
-            if (simTime <= SIM_DURATION)
+            // If the simulation has not completed yet
+            if (Finished)
             {
+                // If the simulation was not paused
                 if (!Paused)
                 {
                     // Advance simulation time
@@ -122,6 +128,11 @@ namespace CoffeeShopSimulation
                     // Advance statistics timer
                     updateTimer += gameTime;
 
+                    if (simTime >= SIM_DURATION)
+                    {
+                        Finished = true;
+                    }
+
                     // If the required amount of time has passed to spawn another customer
                     if (respawnTimer >= SPAWN_TIME)
                     {
@@ -131,8 +142,8 @@ namespace CoffeeShopSimulation
                         // Increase the total number of customers
                         totalCustomers++;
 
-                        CustomerModel.CustomerType customerType;    // Stores what type of customer it will be
-                        int randType = rand.Next(0, 3);             // Picks a number between 0 and 2
+                        CustomerModel.CustomerType customerType; // Stores what type of customer it will be
+                        int randType = rand.Next(0, 3); // Picks a number between 0 and 2
 
                         // Randomly select the type of customer that will be spawned.
                         // If somehow the integer is not between 0-2, the default customer will be Coffee
@@ -156,21 +167,22 @@ namespace CoffeeShopSimulation
                         OutsideLine.Enqueue(new Node<CustomerModel>(
                             new CustomerModel(
                                 customerType,
-                                totalCustomers, customersOutsideStore - 1, 
+                                totalCustomers, customersOutsideStore - 1,
                                 frontOutsideLineVector)));
 
                         // Reset the timer
                         respawnTimer = 0;
                     }
 
-                    // TODO: STATISTICS UPDATE
-                    if (updateTimer >= STAT_UPDATE_TIME )
+                    // Every one second, update the statistics and restart the timer
+                    if (updateTimer >= STAT_UPDATE_TIME)
                     {
                         Statistics.Update(OutsideLine, InsideLine, Cashiers, ExitList);
                         updateTimer = 0;
                     }
 
-                    bool checkStore = false; // Whether or not the simulation should check how many people are inside the store
+                    // Whether or not the simulation should check how many people are inside the store
+                    bool checkStore = false;
 
                     // If there is a customer outside the store
                     if (OutsideLine.Size > 0)
@@ -218,7 +230,7 @@ namespace CoffeeShopSimulation
                     // If there is more than one person in the line inside the store
                     if (InsideLine.Size > 0)
                     {
-                        checkStore = true;      // Check the inside of the building for the number of people
+                        checkStore = true; // Check the inside of the building for the number of people
 
                         // Update every customer inside the store that is in the line
                         Node<CustomerModel> curCustomer = InsideLine.Peek();
@@ -267,6 +279,8 @@ namespace CoffeeShopSimulation
                         // If the cashier is not empty
                         if (Cashiers[i] != null)
                         {
+                            checkStore = true;
+
                             // Update the customer at the cashier
                             Cashiers[i].Update(gameTime);
 
@@ -320,6 +334,7 @@ namespace CoffeeShopSimulation
                 }
             }
 
+            // Store the previous state for comparison in the next update
             inputManager.Tock();
         }
 
@@ -382,6 +397,7 @@ namespace CoffeeShopSimulation
                 }
             }
 
+            // Returns true if there are less than the maximum number of customers in the store
             return customersInStore <= MAX_CUSTOMERS;
         }
     }

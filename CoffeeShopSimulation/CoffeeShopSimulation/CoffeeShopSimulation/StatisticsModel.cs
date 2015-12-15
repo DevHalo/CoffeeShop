@@ -6,8 +6,6 @@
 //              average wait time, number of visits, and top 5 longest wait times using the customer info container
 
 using System.Linq;
-using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 namespace CoffeeShopSimulation
 {

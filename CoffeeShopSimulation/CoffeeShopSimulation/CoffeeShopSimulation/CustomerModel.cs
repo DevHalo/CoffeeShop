@@ -3,7 +3,8 @@
 // Project Name: A5 Data Manipulation Assignment
 // Creation Date: Dec 5, 2015
 // Modified Date: Dec 14th, 2015
-// Description: A customer instance stores their current location, next waypoint, Order time, current wait time and
+// Description: A customer instance stores their current location, next waypoint, Order time, current
+// wait time and any other customer related data
 
 using Microsoft.Xna.Framework;
 using System;
@@ -25,8 +26,6 @@ namespace CoffeeShopSimulation
         // Customer Draw Data
         // View class that implements the drawing function of the customer
         public CustomerView View { get; private set; }
-        // Integer that stores the customers number
-        private int customerNumber;
         // Used to store the customers name which will be displayed when the customer is drawn onto the screen
         public string CustomerName { get; private set; }
 
@@ -54,10 +53,13 @@ namespace CoffeeShopSimulation
             Food,
             Both
         };
+        /// <summary>
+        /// Holds the customer type
+        /// </summary>
         public CustomerType Type { get; private set; }
 
         /// <summary>
-        /// Different states of the customer
+        /// Used to specify different states of the customer
         /// </summary>
         public enum CustomerState
         {
@@ -66,9 +68,8 @@ namespace CoffeeShopSimulation
             AtCashier,
             ExitStore
         };
-
         /// <summary>
-        /// The current state of the customer
+        /// Stores current state of the customer
         /// </summary>
         public CustomerState CurrentState { get; private set; }
 
@@ -96,7 +97,6 @@ namespace CoffeeShopSimulation
         {
             // Sets the class level variables values to the ones obtained from the constructor
             Type = customerType;
-            this.customerNumber = customerNumber;
             PositionInLine = positionInLine;
 
             // Sets the customer name by converting the customer type enum to a string and adding the customer number to the end
