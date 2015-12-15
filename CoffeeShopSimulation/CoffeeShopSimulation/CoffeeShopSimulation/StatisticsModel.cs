@@ -46,10 +46,10 @@ namespace CoffeeShopSimulation
             customerInfo = ToCustomerInfo(outsideLine, insideLine, cashiers, exitList);
 
             //Perform the Merge Sort and store the result back in the original array
-            //if (customerInfo.Count > 0)
-            //{
+            if (customerInfo.Count > 0)
+            {
                 customerInfo = MergeSort(customerInfo, 0, customerInfo.Count - 1);
-            //}
+            }
 
             //InsertionSort(customerInfo);
         }
@@ -85,13 +85,13 @@ namespace CoffeeShopSimulation
         private List<CustomerInfo> MergeSort(List<CustomerInfo> customerInfo, int left, int right)
         {
             //Base Case 1: The array passed in was empty, return null
-            if (customerInfo.Count == 0)
-            {
-                return null;
-            }
+            //if (customerInfo.Count == 0)
+            //{
+            //    return new List<CustomerInfo>() {};
+            //}
             //Base Case 2: The number of elements to be considerd is one, return that one element as
             //an array of 1 element for merging
-            else if (right - left < 1)
+            if (right - left < 1)
             {
                 //Create a new array of 1 element
                 return new List<CustomerInfo>() { customerInfo[left] };
