@@ -29,6 +29,11 @@ namespace CoffeeShopSimulation
             this.statisticsData = statisticsData;
         }
 
+        /// <summary>
+        /// Draws the simulation statistics data
+        /// </summary>
+        /// <param name="sb"> Passes through SpriteBatch instance in order to use its draw commands </param>
+        /// <param name="font"> Passes through a SpriteFont instance for DrawString commands </param>
         public void Draw(SpriteBatch sb, SpriteFont font)
         {
             // Longest, min, max and average wait times
@@ -42,7 +47,7 @@ namespace CoffeeShopSimulation
 
             // Used to obtain the length of the Customer Info List.
             int length;
-            // If the count is less than 5 it will display the 
+            // If the count is less than 5 it will change the length
             if (statisticsData.customerInfo.Count < 5)
             {
                 length = statisticsData.customerInfo.Count;
@@ -61,7 +66,7 @@ namespace CoffeeShopSimulation
                 // If the value isnt null then draw the value
                 if (statisticsData.customerInfo[i] != null)
                 {
-                    // 
+                    // Draws 
                     sb.DrawString(font,
                                   i + 1 + ". " + statisticsData.customerInfo[length - i - 1].CustomerName +
                                   "@ " + Math.Round((statisticsData.customerInfo[length - i - 1].CustomerWaitTime), 1) + " seconds",

@@ -23,6 +23,10 @@ namespace CoffeeShopSimulation
         private SpriteFont mainFont;
         private SpriteFont smallFont;
 
+        // Drawing Vectors for Simulation
+        private Vector2 SimulationTextLocal = new Vector2(750, 375);
+        private Vector2 OffScreenCountTextLocal = new Vector2(330, 730);
+
         /// <summary>
         /// Initializes the view and loads all assets into memory
         /// </summary>
@@ -43,7 +47,7 @@ namespace CoffeeShopSimulation
         }
 
         /// <summary>
-        /// 
+        /// Draws Data obtained from the simulation model
         /// </summary>
         /// <param name="sb"> Passes through SpriteBatch in order to use its Draw commands </param>
         /// <param name="model"> Passes thorugh SimulationModel in order to draw the models data </param>
@@ -53,18 +57,24 @@ namespace CoffeeShopSimulation
 
             // Draws title, statistics and other important information
             sb.Draw(pixelTexture, new Rectangle(0, 0, 1366, 102), Color.White * 0.8f);
-            sb.DrawString(mainFont, "Tim Hortons Simulator 2015", Vector2.Zero, Color.Blue);
-            sb.DrawString(mainFont, "Simulation Time: " + model.SimTime + " Seconds", new Vector2(0, 25), Color.Blue);
-            sb.DrawString(mainFont, "Number of Served Customers: " + model.CustomersServed, new Vector2(0, 50), Color.Blue);
+            sb.DrawString(mainFont,
+                          "Tim Hortons Simulator 2015" +
+                          "\nSimulation Time: " + model.SimTime + " Seconds" +
+                          "\nNumber of Served Customers: " + model.CustomersServed,
+                          Vector2.Zero,
+                          Color.Blue);
 
+
+            // If there are customers in the outside line that are off the screen then it will display the number off screen
             if (model.OutsideLine.Size > 6)
             {
-                sb.DrawString(mainFont, "+" + (model.OutsideLine.Size - 6), new Vector2(330, 730), Color.AliceBlue);
+                sb.DrawString(mainFont, "+" + (model.OutsideLine.Size - 6), OffScreenCountTextLocal, Color.AliceBlue);
             }
+
             // When paused it will display Simulation paused
             if (model.Paused)
             {
-                sb.DrawString(mainFont, "Simulation Paused", new Vector2(0, 50), Color.Red);
+                sb.DrawString(mainFont, "Simulation Paused", SimulationTextLocal, Color.Red);
             }
 
             // Get the head of the queue to draw all the customers in the queue
@@ -92,14 +102,14 @@ namespace CoffeeShopSimulation
             // Draws the cashiers at their positions
             for (int i = 0; i < model.Cashiers.Length; i++)
             {
-                sb.Draw(pixelTexture,                                               // Uses 1x1 pixel texture
-                        new Rectangle((int)model.CashierVectors[i].X + 25,          // Draws it at the cashier vectors obtained from SimulationModel
-                                      (int)model.CashierVectors[i].Y - 10,
-                                      CUSTOMER_SIDE_LENGTH, CUSTOMER_SIDE_LENGTH), // Has a width and length of 25 pixels
-                        Color.Brown);                                              // Overlay color is brown
+                sb.Draw(pixelTexture,                                                           // Uses 1x1 pixel texture
+                        new Rectangle((int)model.CashierVectors[i].X + 25,                      // Draws it at the customer waypoint vector at the cahsher and added 25 pixels so 
+                                      (int)model.CashierVectors[i].Y - CUSTOMER_SIDE_LENGTH / 2,// the cashier texture goes behind the counter
+                                      CUSTOMER_SIDE_LENGTH, CUSTOMER_SIDE_LENGTH),              // Has a width and length of 25 pixels
+                        Color.Brown);                                                           // Overlay color is brown
             }
 
-            // Draws customers at the cashiers
+            // Draws customers at the cashiers if they are not null
             foreach (CustomerModel customer in model.Cashiers)
             {
                 if (customer != null)
