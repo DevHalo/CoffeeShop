@@ -3,7 +3,7 @@
 // Project Name: A5 Data Manipulation Assignment
 // Creation Date: Dec 5th, 2015
 // Modified Date: Dec 14th, 2015
-// Description:
+// Description: Handles all of the lambo spawning and removing
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using System;
@@ -68,7 +68,7 @@ namespace CoffeeShopSimulation
         /// <param name="randNum"> Passes through random num generator </param>
         public void SpawnLambo(LamboModel.LamboDirection lamboDirection, Random randNum)
         {
-            // If there arn't too many lambos
+            // If there arn't too many lambos generate a lambo based on its direction
             if (Lambos.Count < MAX_LAMBOS)
             {
                 switch (lamboDirection)

@@ -1,6 +1,6 @@
 ﻿// Author: Mark Voong
 // Class Name: SimulationModel.cs
-// Project Name: A5
+// Project Name: A5_DataManipulation
 // Date Created: Dec 5th 2015
 // Date Modified: Dec 14th 2015
 // Description: Handles all simulation logic of the coffee shop

@@ -1,4 +1,4 @@
-﻿// Author: Sanjay Paraboo, Mark Vuoong, Shawn Verma
+﻿// Author: Sanjay Paraboo, Mark Voong, Shawn Verma
 // File Name: LamboEmitterView.cs
 // Project Name: A5 Data Manipulation Assignment
 // Creation Date: Dec 5th, 2015
@@ -14,7 +14,7 @@ namespace CoffeeShopSimulation
         private LamboEmitterModel lamboModel;
 
         /// <summary>
-        /// 
+        ///  Creates an instance of the Lambo Emitter View and passes through an instance of LamboEmitterModel
         /// </summary>
         /// <param name="lamboModel"></param>
         public LamboEmitterView(LamboEmitterModel lamboModel)
@@ -23,10 +23,10 @@ namespace CoffeeShopSimulation
         }
 
         /// <summary>
-        /// 
+        /// Runs the draw method for every instance of a lambo in lambos
         /// </summary>
-        /// <param name="sb"></param>
-        /// <param name="lamboTexture"></param>
+        /// <param name="sb"> Passes thorugh an instance of spritebatch in order to use its draw commands </param>
+        /// <param name="lamboTexture"> Passes through the lambo texture </param>
         public void Draw(SpriteBatch sb, Texture2D lamboTexture)
         {
             foreach (LamboModel i in lamboModel.Lambos)

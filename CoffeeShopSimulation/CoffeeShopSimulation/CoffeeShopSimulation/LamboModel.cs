@@ -1,9 +1,9 @@
-﻿// Author: Sanjay Paraboo, Mark Vuoong, Shawn Verma
+﻿// Author: Sanjay Paraboo, Mark Voong, Shawn Verma
 // File Name: LamboModel.cs
 // Project Name: A5 Data Manipulation Assignment
 // Creation Date: Dec 5th, 2015
 // Modified Date: Dec 14th, 2015
-// Description:
+// Description: Handles all of the lambo logic
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -20,9 +20,6 @@ namespace CoffeeShopSimulation
         const int ORANGE = 3;
         const int GREEN = 4;
 
-        // Stores the lambo texture
-        private Texture2D lamboImg;
-
         /// <summary>
         /// Used to store the lambo location
         /// </summary>
@@ -36,7 +33,9 @@ namespace CoffeeShopSimulation
         // Used to specify the locaiton of the lambo
         public float Rotation { get; private set; }
 
-
+        /// <summary>
+        /// Stores the lambo color. Will be used when drawn
+        /// </summary>
         public Color LamboColor { get; private set; }
 
         /// <summary>
@@ -91,7 +90,7 @@ namespace CoffeeShopSimulation
             }
 
 
-            // Gets a random integer for lambo color
+            // Gets a random integer from 0-5 and chooses a random color for the LamboColor
             switch (randColor)
             {
                 case RED:
@@ -117,7 +116,7 @@ namespace CoffeeShopSimulation
         }
 
         /// <summary>
-        /// 
+        /// Updates the lambo location vectors depending on the LamboDirection enum
         /// </summary>
         /// <param name="gameTime"></param>
         public void Update(float gameTime)

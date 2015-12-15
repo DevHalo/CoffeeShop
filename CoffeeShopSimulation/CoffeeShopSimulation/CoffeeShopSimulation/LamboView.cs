@@ -29,15 +29,15 @@ namespace CoffeeShopSimulation
         /// <param name="sb"></param>
         public void Draw(SpriteBatch sb, Texture2D lamboImg)
         {
-            sb.Draw(lamboImg,
-                    lamboModel.LamboLocal,
-                    null,
-                    lamboModel.LamboColor,
-                    lamboModel.Rotation,
-                    Vector2.Zero,
-                    1.0f,
-                    SpriteEffects.None,
-                    0);
+            sb.Draw(lamboImg,               // Uses lamboImg texture
+                    lamboModel.LamboLocal,  // Gets Vector location from 
+                    null,                   // No source rectangle
+                    lamboModel.LamboColor,  // Gets random color from lambo model instance
+                    lamboModel.Rotation,    // Gets rotation from lambo model instance
+                    Vector2.Zero,           // No Vector2 origin
+                    1.0f,                   // Use a float scale of 100%
+                    SpriteEffects.None,     // No SpriteEffects used
+                    0);                     // Draws on layer 0
         }
     }
 }
