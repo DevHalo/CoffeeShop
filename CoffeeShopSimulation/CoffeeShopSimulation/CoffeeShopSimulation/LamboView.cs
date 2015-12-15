@@ -1,4 +1,4 @@
-﻿// Author: Sanjay Paraboo, Mark Vuoong, Shawn Verma
+﻿// Author: Sanjay Paraboo, Mark Voong, Shawn Verma
 // File Name: LamboView.cs
 // Project Name: A5 Data Manipulation Assignment
 // Creation Date: Dec 5th, 2015
@@ -16,7 +16,6 @@ namespace CoffeeShopSimulation
 {
     class LamboView
     {
-
         // Stores the instance of LamboModel
         private LamboModel lamboModel;
 
