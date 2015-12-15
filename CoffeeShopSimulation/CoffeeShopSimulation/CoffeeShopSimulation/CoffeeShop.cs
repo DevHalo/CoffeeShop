@@ -43,7 +43,6 @@ namespace CoffeeShopSimulation
             simulationModel = new SimulationModel();
             simulationView = new SimulationView(GraphicsDevice, Content);
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
         }
 
         /// <summary>
