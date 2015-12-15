@@ -12,7 +12,7 @@ namespace CoffeeShopSimulation
 {
     class CustomerView
     {
-        // Specifies
+        // Specifies the side length of the customer when drawn
         private const int CUSTOMER_SIZE = 20;
 
         // Stores an instance of Customer Model
@@ -36,19 +36,19 @@ namespace CoffeeShopSimulation
             sb.Draw(customerImg,
                 new Rectangle((int)customerModel.Position.X - 10, (int)customerModel.Position.Y - 10, 20, 20), Color.Red);
 
-            // Draws the customer name above the customer image
+            // Draws the customer name above the customer image and centres the text by getting the length of the string
             sb.DrawString(labelFont,
                           customerModel.CustomerName,
-                          new Vector2((int)(customerModel.Position.X - labelFont.MeasureString(customerModel.CustomerName).X *0.5f),
+                          new Vector2((int)(customerModel.Position.X - labelFont.MeasureString(customerModel.CustomerName).X * 0.5f),
                                       customerModel.Position.Y - 25),
                           Color.Blue);
 
-            
-            sb.Draw(customerImg,                                            
-                    new Rectangle((int)customerModel.Position.X - 10,           
-                                  (int)customerModel.Position.Y - 10,           
+            //
+            sb.Draw(customerImg,
+                    new Rectangle((int)customerModel.Position.X - 10,
+                                  (int)customerModel.Position.Y - 10,
                                   (int)(customerModel.PercentageFinished * 20f),
-                              20),                                          
+                              20),
                     Color.Green);
         }
     }
