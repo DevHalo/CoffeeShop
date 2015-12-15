@@ -4,12 +4,8 @@
 // Creation Date: Dec 5th, 2015
 // Modified Date: Dec 14th, 2015
 // Description:
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace CoffeeShopSimulation
 {
@@ -19,7 +15,7 @@ namespace CoffeeShopSimulation
 
         private Vector2 emitLocal;
 
-        LamboModel[] Lambos = new LamboModel[MAX_LAMBOS];
+        public List<LamboModel> Lambos { get; private set; }
 
         public Vector2 TopSpawn { get; private set; }
         public Vector2 LeftSpawn { get; private set; }
@@ -28,14 +24,47 @@ namespace CoffeeShopSimulation
 
 
         /// <summary>
+        /// Initialize Lambo spawn positions
+        /// </summary>
+        public LamboEmitterModel()
+        {
+            Lambos = new List<LamboModel>();
+
+            TopSpawn = new Vector2();
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        public void SpawnLambo(LamboModel.LamboDirection lamboDirection)
+        {
+            if (Lambos.Count < MAX_LAMBOS)
+            {
+                switch (lamboDirection)
+                {
+                    case LamboModel.LamboDirection.Up:
+
+                        break;
+                    case LamboModel.LamboDirection.Down:
+                        break;
+                    case LamboModel.LamboDirection.Left:
+                        break;
+                    case LamboModel.LamboDirection.Right:
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="gameTimeInMilliSeconds"></param>
         public void Update(float gameTimeInMilliSeconds)
         {
-
+            foreach (LamboModel lambo in Lambos)
+            {
+                lambo.Update(gameTimeInMilliSeconds);
+            }
         }
-
-
     }
 }

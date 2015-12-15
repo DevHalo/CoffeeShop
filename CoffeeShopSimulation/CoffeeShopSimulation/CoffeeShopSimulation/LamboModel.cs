@@ -4,10 +4,6 @@
 // Creation Date: Dec 5th, 2015
 // Modified Date: Dec 14th, 2015
 // Description:
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -24,8 +20,7 @@ namespace CoffeeShopSimulation
         public float LifeSpan { get; private set; }
 
         // Used to specify the locaiton of the lambo
-        private float rotation;
-
+        public float Rotation { get; private set; }
 
         /// <summary>
         /// Specifies in which direction the lambo will be travelling
@@ -38,8 +33,7 @@ namespace CoffeeShopSimulation
             Right
         };
 
-        private LamboDirection Direction { get; private set; }
-
+        public LamboDirection Direction { get; private set; }
 
         /// <summary>
         /// 
@@ -75,7 +69,7 @@ namespace CoffeeShopSimulation
         /// </summary>
         /// <param name="spawnLocal"> used to specify spawn location </param>
         /// <param name="direction"> Specifies the lambo direction </param>
-        public void Spawn(Vector2 spawnLocal, LamboDirection direction)
+        public LamboModel(Vector2 spawnLocal, LamboDirection direction)
         {
             this.Direction = direction;
             lamboLocal = spawnLocal;
@@ -83,15 +77,15 @@ namespace CoffeeShopSimulation
             switch (direction)
             {
                 case LamboDirection.Up:
-                    rotation = MathHelper.ToRadians(270);
+                    Rotation = MathHelper.ToRadians(270);
                     break;
 
                 case LamboDirection.Down:
-                    rotation = MathHelper.ToRadians(90);
+                    Rotation = MathHelper.ToRadians(90);
                     break;
 
                 case LamboDirection.Left:
-                    rotation = MathHelper.ToRadians(180);
+                    Rotation = MathHelper.ToRadians(180);
                     break;
 
                 case LamboDirection.Right:
