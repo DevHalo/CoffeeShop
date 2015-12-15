@@ -26,8 +26,6 @@ namespace CoffeeShopSimulation
         // Customer Draw Data
         // View class that implements the drawing function of the customer
         public CustomerView View { get; private set; }
-        // Integer that stores the customers number
-        private int customerNumber;
         // Used to store the customers name which will be displayed when the customer is drawn onto the screen
         public string CustomerName { get; private set; }
 
@@ -99,7 +97,6 @@ namespace CoffeeShopSimulation
         {
             // Sets the class level variables values to the ones obtained from the constructor
             Type = customerType;
-            this.customerNumber = customerNumber;
             PositionInLine = positionInLine;
 
             // Sets the customer name by converting the customer type enum to a string and adding the customer number to the end

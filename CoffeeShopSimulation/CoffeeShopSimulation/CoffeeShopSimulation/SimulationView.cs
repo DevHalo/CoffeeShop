@@ -3,7 +3,6 @@
 // Date Created: Dec 5th 2015
 // Date Modified: Dec 6th 2015
 // Description: Handles all Drawing of the simulation
-
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
