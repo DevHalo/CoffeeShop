@@ -40,11 +40,6 @@ namespace CoffeeShopSimulation
 
         private LamboDirection Direction { get; private set; }
 
-        
-        public LamboModel(Texture2D lamboImg)
-        {
-            this.lamboImg = lamboImg;
-        }
 
         /// <summary>
         /// 
