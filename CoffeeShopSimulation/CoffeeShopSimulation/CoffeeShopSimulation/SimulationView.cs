@@ -60,7 +60,7 @@ namespace CoffeeShopSimulation
             sb.DrawString(mainFont,
                           "Tim Hortons Simulator 2015" +
                           "\nSimulation Time: " + model.SimTime + " Seconds" +
-                          "\nNumber of Served Customers: " + model.CustomersServed,
+                          "\nNumber of Served Customers: " + model.Statistics.CustomersServed,
                           Vector2.Zero,
                           Color.Blue);
 

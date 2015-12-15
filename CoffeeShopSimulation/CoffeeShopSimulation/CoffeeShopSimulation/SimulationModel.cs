@@ -37,7 +37,6 @@ namespace CoffeeShopSimulation
         private int customersInStoreLine;                           // Number of customers in the line inside the store
         private int customersInStore;                               // Number of customers inside the store
         private int totalCustomers;                                 // Number of customers that have visited the store
-        public int CustomersServed { get; private set; }            // Number of customers that have been served
         public CustomerModel[] Cashiers { get; private set; }       // Cashiers which serve the customers
         public Vector2[] CashierVectors { get; private set; }       // Vectors at which each the customer will goto to be served by the cashier
 
@@ -48,7 +47,7 @@ namespace CoffeeShopSimulation
         private Rectangle shopBorder = new Rectangle(452, 333, 914, 355);   // Dimensions of the shop
 
         // Simulation Variables
-        private const float SPAWN_TIME = 6.0f;          // Time in seconds between each customer attempting to enter the store
+        private const float SPAWN_TIME = 3.0f;          // Time in seconds between each customer attempting to enter the store
         private const float SIM_DURATION = 300.0f;      // Time in seconds for how long the simulation should run
         private const float STAT_UPDATE_TIME = 1.0f;    // How often should the simulation update the statistics
         private float simTime;                          // Total time the simulation has run
@@ -308,7 +307,6 @@ namespace CoffeeShopSimulation
                             {
                                 Statistics.ProcessExitingCustomer(ExitList[i]);
                                 ExitList.RemoveAt(i);
-                                CustomersServed++;
                             }
                         }
                     }
