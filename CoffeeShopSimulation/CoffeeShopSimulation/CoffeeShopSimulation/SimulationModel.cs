@@ -55,6 +55,11 @@ namespace CoffeeShopSimulation
         private float updateTimer;                      // Timer used to track how long between each statistic update
         public bool Finished { get; private set; }      // Is the simulation finished
 
+        // Lamborghini Emitter
+        private const float LAMBO_SPAWNTIME = 4.0f;     // Spawn time in seconds between lambos
+        private LamboEmitterModel lamboEmitter;         // Spawns lambos
+        private float lamboTimer;                       // Timer used to track time between lambo spawning
+
 
         /// <summary>
         /// Stores all statistics that are tracked during the simulation
@@ -128,6 +133,9 @@ namespace CoffeeShopSimulation
                     // Advance statistics timer
                     updateTimer += gameTime;
 
+                    // Advance lambo spawn timer
+                    lamboTimer += gameTime; 
+
                     if (simTime >= SIM_DURATION)
                     {
                         Finished = true;
@@ -180,6 +188,34 @@ namespace CoffeeShopSimulation
                         Statistics.Update(OutsideLine, InsideLine, Cashiers, ExitList);
                         updateTimer = 0;
                     }
+
+                    // Every 4 seconds, spawn a new lambo
+                    if (lamboTimer >= LAMBO_SPAWNTIME)
+                    {
+                        // Pick a number between 0 and 3
+                        int direction = rand.Next(0, 4);
+
+                        // Depending on the number, spawn a new lambo in the given direction
+                        switch (direction)
+                        {
+                            case 0:
+                                lamboEmitter.SpawnLambo(LamboModel.LamboDirection.Up);
+                                break;
+                            case 1:
+                                lamboEmitter.SpawnLambo(LamboModel.LamboDirection.Down);
+                                break;
+                            case 2:
+                                lamboEmitter.SpawnLambo(LamboModel.LamboDirection.Left);
+                                break;
+                            case 3:
+                                lamboEmitter.SpawnLambo(LamboModel.LamboDirection.Right);
+                                break;
+                        }
+
+                        // Reset the lambo timer
+                        lamboTimer = 0;
+                    }
+
 
                     // Whether or not the simulation should check how many people are inside the store
                     bool checkStore = false;
