@@ -1,7 +1,7 @@
 ﻿// Author: Sanjay Paraboo
 // Class Name: SimulationView.cs
 // Date Created: Dec 5th 2015
-// Date Modified: Dec 6th 2015
+// Date Modified: Dec 14th 2015
 // Description: Handles all Drawing of the simulation
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -46,7 +46,7 @@ namespace CoffeeShopSimulation
             pixelTexture.SetData(new[] { Color.White });
 
             // Loads the background Texture
-            backgroundTexture = content.Load<Texture2D>("Images/background2");
+            backgroundTexture = content.Load<Texture2D>("Images/background");
 
             // Load lambo texture
             lamboTexture = content.Load<Texture2D>("Images/car");

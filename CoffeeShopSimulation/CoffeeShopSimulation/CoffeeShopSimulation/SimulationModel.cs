@@ -149,6 +149,7 @@ namespace CoffeeShopSimulation
                     // Advance lambo spawn timer
                     lamboTimer += gameTime; 
 
+                    // End the simulation if enough time has passed
                     if (simTime >= SIM_DURATION)
                     {
                         Finished = true;

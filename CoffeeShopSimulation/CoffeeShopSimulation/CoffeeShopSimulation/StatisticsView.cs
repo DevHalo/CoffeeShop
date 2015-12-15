@@ -2,7 +2,7 @@
 // File Name: StatisticsView.cs
 // Project Name: A5 Data Manipulation Assignment
 // Creation Date: Dec 5, 2015
-// Modified Date: Dec 13th, 2015
+// Modified Date: Dec 14th, 2015
 // Description: Handles the draw data from the statistics model
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -36,7 +36,7 @@ namespace CoffeeShopSimulation
                           "Longest Wait Time: " + Math.Round(statisticsData.MaxWaitTime, 2) + " seconds" +
                           "\nShortest Wait Time: " + Math.Round(statisticsData.MinWaitTime, 2) + " seconds" +
                           "\nAverage Wait Time: " + Math.Round(statisticsData.AvgWaitTime, 2) + " seconds",
-                          new Vector2(500, 0),
+                          new Vector2(400, 0),
                           Color.Blue);
 
             // Used to obtain the length of the Customer Info List.
