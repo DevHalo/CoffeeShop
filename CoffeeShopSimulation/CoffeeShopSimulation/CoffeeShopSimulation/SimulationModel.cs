@@ -434,6 +434,7 @@ namespace CoffeeShopSimulation
             // Check each customer that is leaving the store
             foreach (CustomerModel customer in ExitList)
             {
+                // If the customer is inside the borders of the store
                 if (customer.Position.X > shopBorder.Left &&
                     customer.Position.Y > shopBorder.Top &&
                     customer.Position.X < shopBorder.Right &&
