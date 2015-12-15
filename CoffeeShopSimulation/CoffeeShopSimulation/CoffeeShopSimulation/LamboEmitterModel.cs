@@ -1,5 +1,5 @@
-﻿// Author: Sanjay Paraboo, Mark Vuoong, Shawn Verma
-// File Name: LamboEmitterLocal.cs
+﻿// Author: Sanjay Paraboo, Mark Voong, Shawn Verma
+// File Name: CustomerView.cs
 // Project Name: A5 Data Manipulation Assignment
 // Creation Date: Dec 5th, 2015
 // Modified Date: Dec 14th, 2015
@@ -15,8 +15,6 @@ namespace CoffeeShopSimulation
         private const int MAX_LAMBOS = 2;
         private const float MAX_LIFE = 6.0f;
 
-        private Vector2 emitLocal;
-
         public List<LamboModel> Lambos { get; private set; }
 
         public Vector2 TopSpawn { get; private set; }
@@ -30,42 +28,55 @@ namespace CoffeeShopSimulation
         /// </summary>
         public LamboEmitterModel()
         {
+            // Initialize Lambo list
             Lambos = new List<LamboModel>();
 
-            TopSpawn = new Vector2();
+            // Initialize vectors
+            TopSpawn = new Vector2(92, -150);
+            LeftSpawn = new Vector2(1460, 102);
+            RightSpawn = new Vector2(-125, 260);
+            BottomSpawn = new Vector2(203, 860);
         }
         
         /// <summary>
-        /// 
+        /// Spawns a lambo in a certain direction
         /// </summary>
+        /// <param name="lamboDirection"> Direction at which the lambo is traveling</param>
         public void SpawnLambo(LamboModel.LamboDirection lamboDirection)
         {
+            // If there arn't too many lambos
             if (Lambos.Count < MAX_LAMBOS)
             {
                 switch (lamboDirection)
                 {
                     case LamboModel.LamboDirection.Up:
-
+                        Lambos.Add(new LamboModel(BottomSpawn, LamboModel.LamboDirection.Up));
                         break;
                     case LamboModel.LamboDirection.Down:
+                        Lambos.Add(new LamboModel(TopSpawn, LamboModel.LamboDirection.Down));
                         break;
                     case LamboModel.LamboDirection.Left:
+                        Lambos.Add(new LamboModel(RightSpawn, LamboModel.LamboDirection.Left));
                         break;
                     case LamboModel.LamboDirection.Right:
+                        Lambos.Add(new LamboModel(LeftSpawn, LamboModel.LamboDirection.Right));
                         break;
                 }
             }
         }
 
         /// <summary>
-        /// 
+        /// Updates all lambos on the screen
         /// </summary>
         /// <param name="gameTimeInMilliSeconds"></param>
         public void Update(float gameTimeInMilliSeconds)
         {
+            // Update each lambo and remove them if neccessary
             foreach (LamboModel lambo in Lambos)
             {
                 lambo.Update(gameTimeInMilliSeconds);
+
+                if (lambo.LifeSpan >= lambo.)
             }
         }
     }
