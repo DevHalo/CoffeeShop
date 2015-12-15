@@ -3,7 +3,8 @@
 // Project Name: A5 Data Manipulation Assignment
 // Creation Date: Dec 5, 2015
 // Modified Date: Dec 14th, 2015
-// Description: A customer instance stores their current location, next waypoint, Order time, current wait time and
+// Description: A customer instance stores their current location, next waypoint, Order time, current
+// wait time and any other customer related data
 
 using Microsoft.Xna.Framework;
 using System;
@@ -54,10 +55,13 @@ namespace CoffeeShopSimulation
             Food,
             Both
         };
+        /// <summary>
+        /// Holds the customer type
+        /// </summary>
         public CustomerType Type { get; private set; }
 
         /// <summary>
-        /// Different states of the customer
+        /// Used to specify different states of the customer
         /// </summary>
         public enum CustomerState
         {
@@ -66,9 +70,8 @@ namespace CoffeeShopSimulation
             AtCashier,
             ExitStore
         };
-
         /// <summary>
-        /// The current state of the customer
+        /// Stores current state of the customer
         /// </summary>
         public CustomerState CurrentState { get; private set; }
 

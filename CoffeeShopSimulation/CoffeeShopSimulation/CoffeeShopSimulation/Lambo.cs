@@ -21,9 +21,11 @@ namespace CoffeeShopSimulation
 
         private Vector2 lamboLocal;
 
+        public float LifeSpan { get; private set; }
+
 
         /// <summary>
-        /// 
+        /// Specifies in which direction the lambo will be travelling
         /// </summary>
         public enum LamboDirection
         {
@@ -35,13 +37,10 @@ namespace CoffeeShopSimulation
 
         private LamboDirection Direction { get; private set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public Lambo(Texture2D lamboImg, LamboDirection direction)
+        
+        public Lambo(Texture2D lamboImg)
         {
             this.lamboImg = lamboImg;
-            this.Direction = direction;
         }
 
         /// <summary>
@@ -50,6 +49,9 @@ namespace CoffeeShopSimulation
         /// <param name="gameTime"></param>
         public void Update(float gameTime)
         {
+            // Adds elasped time to LifeSpan float
+            LifeSpan += gameTime;
+
             switch (Direction)
             {
                 case LamboDirection.Up:
@@ -70,12 +72,11 @@ namespace CoffeeShopSimulation
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public void Spawn()
-        {
 
+        public void Spawn(Vector2 spawnLocal, LamboDirection direction)
+        {
+            this.Direction = direction;
+            lamboLocal = 
         }
 
         /// <summary>
@@ -84,7 +85,15 @@ namespace CoffeeShopSimulation
         /// <param name="sb"></param>
         public void Draw(SpriteBatch sb)
         {
-            sb.Draw(lamboImg, lamboLocal, null, Color.White, 0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0);
+            sb.Draw(lamboImg,
+                    lamboLocal,
+                    null,
+                    Color.White,
+                    0f,
+                    Vector2.Zero,
+                    1.0f,
+                    SpriteEffects.None, 
+                    0);
         }
     }
 }

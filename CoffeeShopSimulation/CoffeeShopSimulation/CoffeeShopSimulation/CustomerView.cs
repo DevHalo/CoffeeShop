@@ -34,7 +34,10 @@ namespace CoffeeShopSimulation
         {
             // Draws the customer image onto the screen
             sb.Draw(customerImg,
-                new Rectangle((int)customerModel.Position.X - 10, (int)customerModel.Position.Y - 10, 20, 20), Color.Red);
+                    new Rectangle((int)customerModel.Position.X - 10,
+                               (int)customerModel.Position.Y - CUSTOMER_SIZE / 2,
+                               CUSTOMER_SIZE, CUSTOMER_SIZE),
+                    Color.Red);
 
             // Draws the customer name above the customer image and centres the text by getting the length of the string
             sb.DrawString(labelFont,
@@ -43,11 +46,11 @@ namespace CoffeeShopSimulation
                                       customerModel.Position.Y - 25),
                           Color.Blue);
 
-            //
+            // Draws the green percentage bar based on how much time is left on the customer order
             sb.Draw(customerImg,
-                    new Rectangle((int)customerModel.Position.X - 10,
-                                  (int)customerModel.Position.Y - 10,
-                                  (int)(customerModel.PercentageFinished * 20f),
+                    new Rectangle((int)customerModel.Position.X - (CUSTOMER_SIZE / 2),
+                                  (int)customerModel.Position.Y - (CUSTOMER_SIZE / 2),
+                                  (int)(customerModel.PercentageFinished * CUSTOMER_SIZE),
                               20),
                     Color.Green);
         }
