@@ -28,6 +28,10 @@ namespace CoffeeShopSimulation
         private Vector2 SimulationTextLocal = new Vector2(750, 375);
         private Vector2 OffScreenCountTextLocal = new Vector2(330, 730);
 
+        // Lambo texture
+        private Texture2D lamboTexture;
+
+
         /// <summary>
         /// Initializes the view and loads all assets into memory
         /// </summary>
@@ -41,6 +45,9 @@ namespace CoffeeShopSimulation
 
             // Loads the background Texture
             backgroundTexture = content.Load<Texture2D>("Images/background2");
+
+            // Load lambo texture
+            lamboTexture = content.Load<Texture2D>("Images/car");
 
             // Load Spritefonts
             mainFont = content.Load<SpriteFont>("Fonts/bigFont");
@@ -56,14 +63,6 @@ namespace CoffeeShopSimulation
         {
             sb.Draw(backgroundTexture, Vector2.Zero, Color.White);
 
-            // Draws title, statistics and other important information
-            sb.Draw(pixelTexture, new Rectangle(0, 0, 1366, 102), Color.White * 0.8f);
-            sb.DrawString(mainFont,
-                          "Tim Hortons Simulator 2015" +
-                          "\nSimulation Time: " + model.SimTime + " Seconds" +
-                          "\nNumber of Served Customers: " + model.Statistics.CustomersServed,
-                          Vector2.Zero,
-                          Color.Blue);
 
 
             // If there are customers in the outside line that are off the screen then it will display the number off screen
@@ -125,6 +124,20 @@ namespace CoffeeShopSimulation
             {
                 customer.View.Draw(sb, pixelTexture, smallFont);
             }
+
+
+
+            // Draws the emitter
+            model.LamboEmitter.View.Draw(sb, lamboTexture);
+
+            // Draws title, statistics and other important information
+            sb.Draw(pixelTexture, new Rectangle(0, 0, 1366, 102), Color.White * 0.8f);
+            sb.DrawString(mainFont,
+                          "Tim Hortons Simulator 2015" +
+                          "\nSimulation Time: " + model.SimTime + " Seconds" +
+                          "\nNumber of Served Customers: " + model.Statistics.CustomersServed,
+                          Vector2.Zero,
+                          Color.Blue);
 
             // Runs the Draw method from the statistics view class
             model.Statistics.View.Draw(sb, mainFont);
