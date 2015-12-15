@@ -32,7 +32,7 @@ namespace CoffeeShopSimulation
             sb.Draw(lamboImg,
                     lamboModel.LamboLocal,
                     null,
-                    Color.White,
+                    lamboModel.LamboColor,
                     lamboModel.Rotation,
                     Vector2.Zero,
                     1.0f,

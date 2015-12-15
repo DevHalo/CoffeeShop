@@ -13,6 +13,12 @@ namespace CoffeeShopSimulation
     {
         // Specifies the lambo speed
         const int LAMBO_SPEED = 15;
+        // constants for lambo color
+        const int RED = 0;
+        const int BLUE = 1;
+        const int YELLOW = 2;
+        const int ORANGE = 3;
+        const int GREEN = 4;
 
         // Stores the lambo texture
         private Texture2D lamboImg;
@@ -30,6 +36,8 @@ namespace CoffeeShopSimulation
         // Used to specify the locaiton of the lambo
         public float Rotation { get; private set; }
 
+
+        public Color LamboColor { get; private set; }
 
         /// <summary>
         /// Specifies in which direction the lambo will be travelling
@@ -54,7 +62,7 @@ namespace CoffeeShopSimulation
         /// </summary>
         /// <param name="spawnLocal"> used to specify spawn location </param>
         /// <param name="direction"> Specifies the lambo direction </param>
-        public LamboModel(Vector2 spawnLocal, LamboDirection direction)
+        public LamboModel(Vector2 spawnLocal, LamboDirection direction, int randColor)
         {
             // Initialize view
             View = new LamboView(this);
@@ -79,6 +87,31 @@ namespace CoffeeShopSimulation
 
                 case LamboDirection.Right:
                     Rotation = MathHelper.ToRadians(270);
+                    break;
+            }
+
+
+            // Gets a random integer for lambo color
+            switch (randColor)
+            {
+                case RED:
+                    LamboColor = Color.Red;
+                    break;
+
+                case BLUE:
+                    LamboColor = Color.Blue;
+                    break;
+
+                case YELLOW:
+                    LamboColor = Color.Yellow;
+                    break;
+
+                case ORANGE:
+                    LamboColor = Color.Orange;
+                    break;
+
+                case GREEN:
+                    LamboColor = Color.Green;
                     break;
             }
         }

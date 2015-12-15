@@ -6,6 +6,7 @@
 // Description:
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace CoffeeShopSimulation
 {
@@ -64,7 +65,8 @@ namespace CoffeeShopSimulation
         /// Spawns a lambo in a certain direction
         /// </summary>
         /// <param name="lamboDirection"> Direction at which the lambo is traveling</param>
-        public void SpawnLambo(LamboModel.LamboDirection lamboDirection)
+        /// <param name="randNum"> Passes through random num generator </param>
+        public void SpawnLambo(LamboModel.LamboDirection lamboDirection, Random randNum)
         {
             // If there arn't too many lambos
             if (Lambos.Count < MAX_LAMBOS)
@@ -72,19 +74,19 @@ namespace CoffeeShopSimulation
                 switch (lamboDirection)
                 {
                     case LamboModel.LamboDirection.Up:
-                        Lambos.Add(new LamboModel(BottomSpawn, LamboModel.LamboDirection.Up));
+                        Lambos.Add(new LamboModel(BottomSpawn, LamboModel.LamboDirection.Up, randNum.Next(0,5)));
                         break;
 
                     case LamboModel.LamboDirection.Down:
-                        Lambos.Add(new LamboModel(TopSpawn, LamboModel.LamboDirection.Down));
+                        Lambos.Add(new LamboModel(TopSpawn, LamboModel.LamboDirection.Down, randNum.Next(0, 5)));
                         break;
 
                     case LamboModel.LamboDirection.Left:
-                        Lambos.Add(new LamboModel(RightSpawn, LamboModel.LamboDirection.Right));
+                        Lambos.Add(new LamboModel(RightSpawn, LamboModel.LamboDirection.Right, randNum.Next(0, 5)));
                         break;
 
                     case LamboModel.LamboDirection.Right:
-                        Lambos.Add(new LamboModel(LeftSpawn, LamboModel.LamboDirection.Left));
+                        Lambos.Add(new LamboModel(LeftSpawn, LamboModel.LamboDirection.Left, randNum.Next(0, 5)));
                         break;
                 }
             }
