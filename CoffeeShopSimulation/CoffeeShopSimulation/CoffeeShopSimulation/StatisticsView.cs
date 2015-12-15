@@ -39,15 +39,19 @@ namespace CoffeeShopSimulation
                           new Vector2(500, 0),
                           Color.Blue);
 
+
+            int length = statisticsData.customerInfo.Count < 5 ? statisticsData.customerInfo.Count : 5;
+
             // Draws the top 5 longest wait times obtained from the statistics model class
-            for (int i = 0; i < statisticsData.LongestWaitTimes.Length; i++)
+            for (int i = 0; i < length; i++)
             {
                 // If the value isnt null then draw the value
-                if (statisticsData.LongestWaitTimes[i] != null)
+                if (statisticsData.customerInfo[i] != null)
                 {
+                    // 
                     sb.DrawString(font,
-                                  i + 1 + ". " + statisticsData.LongestWaitTimes[i].CustomerName +
-                                  "@ " + Math.Round((statisticsData.LongestWaitTimes[i].CustomerWaitTime), 1) + " seconds",
+                                  i + 1 + ". " + statisticsData.customerInfo[length - i - 1].CustomerName +
+                                  "@ " + Math.Round((statisticsData.customerInfo[length - i - 1].CustomerWaitTime), 1) + " seconds",
                                   new Vector2(1000, (i * 20)),
                                   Color.Blue);
                 }
