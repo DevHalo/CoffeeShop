@@ -32,7 +32,6 @@ namespace CoffeeShopSimulation
         /// </summary>
         public StatisticsModel()
         {
-            LongestWaitTimes = new CustomerInfo[5];
             customerInfo = new List<CustomerInfo>();
 
             View = new StatisticsView(this);
@@ -49,17 +48,10 @@ namespace CoffeeShopSimulation
             //Perform the Merge Sort and store the result back in the original array
             //if (customerInfo.Count > 0)
             //{
-            //    customerInfo = MergeSort(customerInfo, 0, customerInfo.Count - 1);
+                customerInfo = MergeSort(customerInfo, 0, customerInfo.Count - 1);
             //}
 
-            InsertionSort(customerInfo);
-
-            //int length = customerInfo.Count < 5 ? customerInfo.Count : LongestWaitTimes.Length;
-
-            //for (int i = 0; i < length; i++)
-            //{
-            //    LongestWaitTimes[i] = customerInfo[(customerInfo.Count - 1) - i];
-            //}
+            //InsertionSort(customerInfo);
         }
         private static void InsertionSort(List<CustomerInfo> customerInfo)
         {
@@ -93,7 +85,7 @@ namespace CoffeeShopSimulation
         private List<CustomerInfo> MergeSort(List<CustomerInfo> customerInfo, int left, int right)
         {
             //Base Case 1: The array passed in was empty, return null
-            if (customerInfo == null)
+            if (customerInfo.Count == 0)
             {
                 return null;
             }
@@ -124,11 +116,11 @@ namespace CoffeeShopSimulation
         {
             //Base Case 0: the left array has no elements, return the right array automatically
             //Similarly for the right array
-            if (left == null)
+            if (left.Count == 0)
             {
                 return right;
             }
-            else if (right == null)
+            else if (right.Count == 0)
             {
                 return left;
             }
