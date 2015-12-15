@@ -13,19 +13,19 @@ namespace CoffeeShopSimulation
 {
     class StatisticsModel
     {
-        //Stores the minimum, maximum, total, and average wait time from all customers
+        // Stores the minimum, maximum, total, and average wait time from all customers
         private float totalWaitTime;
         public float MinWaitTime { get; private set; }
         public float MaxWaitTime { get; private set; }
         public float AvgWaitTime { get; private set; }
 
-        //Stores the number of CustomersServed
+        // Stores the number of CustomersServed
         public int CustomersServed { get; private set; }
 
-        // 
-        public CInfoContainer[] LongestWaitTimes { get; private set; }
+        // Stores the info of all the customers
         public List<CInfoContainer> CustomerInfo {get; private set;}
-        // 
+        
+        // Instance of the statistics view class
         public StatisticsView View { get; private set; }
 
         /// <summary>
@@ -39,38 +39,119 @@ namespace CoffeeShopSimulation
         }
 
         /// <summary>
-        /// Updates the longest wait times according to the current customers in the store
+        /// Updates and sorts the customers' info according to the customer wait times
         /// </summary>
-        /// <param name="customers">stores the queue of customers</param>
+        /// <param name="outsideLine">The info of customers lined up outside the store</param>
+        /// <param name="insideLine">The info of customers lined up inside the store</param>
+        /// <param name="cashiers">The info of customers being served at the cashiers</param>
+        /// <param name="exitList">The info of customers leaving the store</param>
         public void Update(Queue<CustomerModel> outsideLine, Queue<CustomerModel> insideLine, CustomerModel[] cashiers, List<CustomerModel> exitList)
         {
-            CustomerInfo = ToCustomerInfo(outsideLine, insideLine, cashiers, exitList);
+            // Set and combine the customer info of the outside line, the inside line, the people being served by cashiers and, customers leaving 
+            CustomerInfo = CustomerInfoToList(outsideLine, insideLine, cashiers, exitList);
 
-            //Perform the Merge Sort and store the result back in the original array
-            if (CustomerInfo.Count > 0)
+            // If the customer count is greater than 1
+            if (CustomerInfo.Count > 1)
             {
+                //Perform merge sort and store the result back in the original list
                 CustomerInfo = MergeSort(CustomerInfo.ToArray(), 0, CustomerInfo.Count - 1).ToList();
             }
-
-            //InsertionSort(CustomerInfo);
         }
-        private static void InsertionSort(List<CInfoContainer> customerInfo)
-        {
-            CInfoContainer temp;
-            int sorted = 1;
 
-            for (int i = 0; i < customerInfo.Count - 1; i++)
+        /// <summary>
+        /// Adds all the customers' info to a single list
+        /// </summary>
+        /// <param name="outsideLine">The info of customers lined up outside the store</param>
+        /// <param name="insideLine">The info of customers lined up inside the store</param>
+        /// <param name="cashiers">The info of customers being served at the cashiers</param>
+        /// <param name="exitList">The info of customers leaving the store</param>
+        /// <returns>a list of all customers' info</returns>
+        public List<CInfoContainer> CustomerInfoToList(Queue<CustomerModel> outsideLine, Queue<CustomerModel> insideLine, CustomerModel[] cashiers, List<CustomerModel> exitList)
+        {
+            // Stores the customer info
+            List<CInfoContainer> customerInfo = new List<CInfoContainer>();
+
+            // Variable used to store the current customer node which currently is storing the start of the outside line
+            Node<CustomerModel> curCustomer = outsideLine.Peek();
+
+            // For every customer in the outside line add them to the customer info list
+            for (int i = 0; i < outsideLine.Size; i++)
             {
-                for (int j = sorted; j > 0; j--)
+                // Add the customer in the outside line to the customer info list
+                customerInfo.Add(new CInfoContainer(curCustomer.Value.WaitTime, curCustomer.Value.CustomerName));
+
+                // Set the current customer to the next customer in the outside line
+                curCustomer = curCustomer.Next;
+            }
+
+            // Set the current customer to the start of the inside line
+            curCustomer = insideLine.Peek();
+
+            // For every customer in the inside line add them to the customer info list
+            for (int i = 0; i < insideLine.Size; i++)
+            {
+                // Add the customer in the inside line to the customer info list
+                customerInfo.Add(new CInfoContainer(curCustomer.Value.WaitTime, curCustomer.Value.CustomerName));
+
+                // Set the current customer to the next customer in the inside line
+                curCustomer = curCustomer.Next;
+            }
+
+            // For every customer at the cashier 
+            for (int i = 0; i < cashiers.Length; i++)
+            {
+                // If there is a customer at the cashier
+                if (cashiers[i] != null)
                 {
-                    if (customerInfo[j].CustomerWaitTime < customerInfo[j - 1].CustomerWaitTime)
-                    {
-                        temp = customerInfo[j];
-                        customerInfo[j] = customerInfo[j - 1];
-                        customerInfo[j - 1] = temp;
-                    }
+                    // Add the customer to the customer info list
+                    customerInfo.Add(new CInfoContainer(cashiers[i].WaitTime, cashiers[i].CustomerName));
                 }
-                sorted++;
+            }
+
+            // For every customer exiting
+            for (int i = 0; i < exitList.Count; i++)
+            {
+                // Add the customer into the customer info list
+                customerInfo.Add(new CInfoContainer(exitList[i].WaitTime, exitList[i].CustomerName));
+            }
+
+            // Return the list of customers' info
+            return customerInfo;
+        }
+
+        /// <summary>
+        /// Calculates the average wait time, checks to change max and minimum wait times
+        /// </summary>
+        /// <param name="exitingCustomer">stores the customer that exited the store</param>
+        public void ProcessExitingCustomer(CustomerModel exitingCustomer)
+        {
+            // Add the exiting customer wait time the the total wait time
+            totalWaitTime += (exitingCustomer.WaitTime);
+
+            // Increment the number of CustomersServed
+            CustomersServed++;
+
+            // Calculate the average wait time
+            AvgWaitTime = (totalWaitTime / CustomersServed);
+
+            // If the current exiting customer being checked has a greater wait time than the max wait time
+            if (MaxWaitTime < exitingCustomer.WaitTime)
+            {
+                // Set the max wait time to the current exiting customer wait time
+                MaxWaitTime = exitingCustomer.WaitTime;
+            }
+
+            // If minimum wait time is zero
+            if (MinWaitTime <= 0)
+            {
+                // Set the minimum wait time to the exitin customer wait time
+                MinWaitTime = exitingCustomer.WaitTime;
+            }
+            // If minimum wait time is greater than the exiting customer wait time
+            else if (MinWaitTime > exitingCustomer.WaitTime)
+            {
+                //Set minimum wait time to exiting customer wait time
+                MinWaitTime = exitingCustomer.WaitTime;
             }
         }
 
@@ -95,7 +176,7 @@ namespace CoffeeShopSimulation
             if (right - left < 1)
             {
                 //Create a new array of 1 element
-                return new [] { cInfoContainer[left] };
+                return new[] { cInfoContainer[left] };
             }
 
             //Calculate the midpoint index of the range to be considered
@@ -170,84 +251,19 @@ namespace CoffeeShopSimulation
             //Return the merged and sorted array
             return result;
         }
-
-        public List<CInfoContainer> ToCustomerInfo(Queue<CustomerModel> outsideLine, Queue<CustomerModel> insideLine, CustomerModel[] cashiers, List<CustomerModel> exitList)
-        {
-            List<CInfoContainer> customerInfo = new List<CInfoContainer>();
-
-            //Variable used to store the current customer node
-            Node<CustomerModel> curCustomer = outsideLine.Peek();
-            for (int i = 0; i < outsideLine.Size; i++)
-            {
-                customerInfo.Add(new CInfoContainer(curCustomer.Value.WaitTime, curCustomer.Value.CustomerName));
-                curCustomer = curCustomer.Next;
-            }
-
-            curCustomer = insideLine.Peek();
-            for (int i = 0; i < insideLine.Size; i++)
-            {
-                customerInfo.Add(new CInfoContainer(curCustomer.Value.WaitTime, curCustomer.Value.CustomerName));
-                curCustomer = curCustomer.Next;
-            }
-
-            for (int i = 0; i < cashiers.Length; i++)
-            {
-                if (cashiers[i] != null)
-                {
-                    customerInfo.Add(new CInfoContainer(cashiers[i].WaitTime, cashiers[i].CustomerName));
-                }
-            }
-
-            for (int i = 0; i < exitList.Count; i++)
-            {
-                customerInfo.Add(new CInfoContainer(exitList[i].WaitTime, exitList[i].CustomerName));
-            
-            }
-
-            return customerInfo;
-        }
-        /// <summary>
-        /// Calculates the average wait time, checks to change max and minimum wait times
-        /// </summary>
-        /// <param name="customer">stores the customer that exited the store</param>
-        public void ProcessExitingCustomer(CustomerModel customer)
-        {
-            //add the customer wait time the the total wait time
-            totalWaitTime += (customer.WaitTime);
-
-            //Increment the number of CustomersServed
-            CustomersServed++;
-
-            //Calculate the average wait time
-            AvgWaitTime = (totalWaitTime / CustomersServed);
-
-            //if the current customer being checked has a greater wait time than the max wait time
-            if (MaxWaitTime < customer.WaitTime)
-            {
-                //set the max wait time to the current customer wait time
-                MaxWaitTime = customer.WaitTime;
-            }
-
-            //If minimum wait time is zero
-            if (MinWaitTime <= 0)
-            {
-                //set the minimum wait time to the customer wait time
-                MinWaitTime = customer.WaitTime;
-            }
-            // If minimum wait time is greater than the customer wait time
-            else if (MinWaitTime > customer.WaitTime)
-            {
-                //Set minimum wait time to customer wait time
-                MinWaitTime = customer.WaitTime;
-            }
-        }
     }
 
     class CInfoContainer
     {
+        // Variables used to store the customer info
         public string CustomerName { get; set; }
         public float CustomerWaitTime { get; set; }
 
+        /// <summary>
+        /// Initializes each customer
+        /// </summary>
+        /// <param name="customerWaitTime">the wait time of customer until the customer leaves the store</param>
+        /// <param name="customerName">the customer name</param>
         public CInfoContainer(float customerWaitTime, string customerName)
         {
             this.CustomerName = customerName;
