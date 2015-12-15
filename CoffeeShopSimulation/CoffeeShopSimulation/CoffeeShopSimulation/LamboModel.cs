@@ -44,11 +44,16 @@ namespace CoffeeShopSimulation
         public LamboDirection Direction { get; private set; }
 
         /// <summary>
+        /// Stores an instance of the lambo view
+        /// </summary>
+        public LamboView View { get; private set; }
+
+        /// <summary>
         /// Creates an instance of Lambo Model and intializes the LamboView instance
         /// </summary>
         public LamboModel()
         {
-               
+            View = new LamboView(this);
         }
 
         /// <summary>
@@ -92,6 +97,7 @@ namespace CoffeeShopSimulation
             this.Direction = direction;
             LamboLocal = spawnLocal;
 
+            // Depending on the direction of the lambo it will update the rotation float
             switch (direction)
             {
                 case LamboDirection.Up:

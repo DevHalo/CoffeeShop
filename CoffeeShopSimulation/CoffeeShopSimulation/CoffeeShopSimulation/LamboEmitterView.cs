@@ -37,7 +37,7 @@ namespace CoffeeShopSimulation
                 if (i != null)
                 {
 
-                    i.Draw(sb);
+                    i.View.Draw(sb);
                 }
             }
         }

@@ -1,5 +1,5 @@
 ﻿// Author: Sanjay Paraboo, Mark Voong, Shawn Verma
-// File Name: CustomerView.cs
+// File Name: LamboEmitterModel.cs
 // Project Name: A5 Data Manipulation Assignment
 // Creation Date: Dec 5th, 2015
 // Modified Date: Dec 14th, 2015
@@ -52,12 +52,15 @@ namespace CoffeeShopSimulation
                     case LamboModel.LamboDirection.Up:
                         Lambos.Add(new LamboModel(BottomSpawn, LamboModel.LamboDirection.Up));
                         break;
+
                     case LamboModel.LamboDirection.Down:
                         Lambos.Add(new LamboModel(TopSpawn, LamboModel.LamboDirection.Down));
                         break;
+
                     case LamboModel.LamboDirection.Left:
                         Lambos.Add(new LamboModel(RightSpawn, LamboModel.LamboDirection.Left));
                         break;
+
                     case LamboModel.LamboDirection.Right:
                         Lambos.Add(new LamboModel(LeftSpawn, LamboModel.LamboDirection.Right));
                         break;

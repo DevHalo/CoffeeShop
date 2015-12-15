@@ -16,8 +16,6 @@ namespace CoffeeShopSimulation
 {
     class LamboView
     {
-        // Stores the lambo texture
-        private Texture2D lamboImg;
 
         // Stores the instance of LamboModel
         private LamboModel lamboModel;
@@ -25,11 +23,9 @@ namespace CoffeeShopSimulation
         /// <summary>
         /// Used to create an instance of LamboView
         /// </summary>
-        /// <param name="lamboImg"> Passes through the lambo texture </param>
         /// <param name="lamboModel"> Passes thorugh the LamboModel instance </param>
-        public LamboView(Texture2D lamboImg, LamboModel lamboModel)
+        public LamboView(LamboModel lamboModel)
         {
-            this.lamboImg = lamboImg;
             this.lamboModel = lamboModel;
         }
 
@@ -37,13 +33,13 @@ namespace CoffeeShopSimulation
         /// Draws the lambo on the screen
         /// </summary>
         /// <param name="sb"></param>
-        public void Draw(SpriteBatch sb)
+        public void Draw(SpriteBatch sb, Texture2D lamboImg)
         {
             sb.Draw(lamboImg,
                     lamboModel.LamboLocal,
                     null,
                     Color.White,
-                    0f,
+                    lamboModel.Rotation,
                     Vector2.Zero,
                     1.0f,
                     SpriteEffects.None,
