@@ -1,9 +1,10 @@
 ﻿// Author: Shawn Verma
-// Class Names: Queue, Node
-// Date Created: Dec 5th 2015
-// Date Modified: Dec 5th 2015
+// File Name: Queue.cs
+// Class Name: Queue, Node
+// Project Name: A5 Data Manipulation Assignment
+// Creation Date: Dec 5, 2015
+// Modified Date: Dec 13th, 2015
 // Description: Implementation of queues. Generics allow for multiple data types
-
 namespace CoffeeShopSimulation
 {
     class Queue<T>

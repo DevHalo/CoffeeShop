@@ -1,7 +1,9 @@
 ﻿// Author: Shawn Verma
+// File Name: StatisticsModel.cs
 // Class Name: Statistics, CInfoContainer
-// Date Created: Dec 5th 2015
-// Date Modified: Dec 5th 2015
+// Project Name: A5 Data Manipulation Assignment
+// Creation Date: Dec 5, 2015
+// Modified Date: Dec 13th, 2015
 // Description: Keeps track of the statistics of the simulation such as, minimum wait time, max wait time, total wait time, 
 //              average wait time, number of visits, and top 5 longest wait times using the customer info container
 
