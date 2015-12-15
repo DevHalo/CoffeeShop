@@ -205,16 +205,16 @@ namespace CoffeeShopSimulation
                         switch (direction)
                         {
                             case 0:
-                                LamboEmitter.SpawnLambo(LamboModel.LamboDirection.Up);
+                                LamboEmitter.SpawnLambo(LamboModel.LamboDirection.Up, rand);
                                 break;
                             case 1:
-                                LamboEmitter.SpawnLambo(LamboModel.LamboDirection.Down);
+                                LamboEmitter.SpawnLambo(LamboModel.LamboDirection.Down, rand);
                                 break;
                             case 2:
-                                LamboEmitter.SpawnLambo(LamboModel.LamboDirection.Left);
+                                LamboEmitter.SpawnLambo(LamboModel.LamboDirection.Left, rand);
                                 break;
                             case 3:
-                                LamboEmitter.SpawnLambo(LamboModel.LamboDirection.Right);
+                                LamboEmitter.SpawnLambo(LamboModel.LamboDirection.Right, rand);
                                 break;
                         }
 
