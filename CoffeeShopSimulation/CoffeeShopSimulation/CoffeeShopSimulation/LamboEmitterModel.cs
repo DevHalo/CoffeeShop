@@ -12,14 +12,29 @@ namespace CoffeeShopSimulation
     class LamboEmitterModel
     {
         // Specifies the max number of lambos and their lifespans
-        private const int MAX_LAMBOS = 2;
+        private const int MAX_LAMBOS = 4;
         private const float MAX_LIFE = 6.0f;
 
         public List<LamboModel> Lambos { get; private set; }
 
+        /// <summary>
+        /// Spawn vector for lambos spawning from the top
+        /// </summary>
         public Vector2 TopSpawn { get; private set; }
+
+        /// <summary>
+        /// Spawn vector for lambos spawning from the bottom
+        /// </summary>
         public Vector2 LeftSpawn { get; private set; }
+        
+        /// <summary>
+        /// Spawn vector for lambos spawning from the right
+        /// </summary>
         public Vector2 RightSpawn { get; private set; }
+
+        /// <summary>
+        /// Spawn vector for lambos spawning from the left
+        /// </summary>
         public Vector2 BottomSpawn { get; private set; }
 
 
@@ -79,7 +94,10 @@ namespace CoffeeShopSimulation
             {
                 lambo.Update(gameTimeInMilliSeconds);
 
-                if (lambo.LifeSpan >= lambo.)
+                if (lambo.LifeSpan >= MAX_LIFE)
+                {
+                    Lambos.Remove(lambo);
+                }
             }
         }
     }
