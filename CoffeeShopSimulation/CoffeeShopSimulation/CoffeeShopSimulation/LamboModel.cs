@@ -11,14 +11,19 @@ namespace CoffeeShopSimulation
 {
     class LamboModel
     {
+        // Specifies the lambo speed
         const int LAMBO_SPEED = 15;
 
+        // Stores the lambo texture
         private Texture2D lamboImg;
 
+        /// <summary>
+        /// Used to store the lambo location
+        /// </summary>
         public Vector2 LamboLocal { get; private set; }
 
         /// <summary>
-        /// 
+        /// Stores the current lifespan of the lambo
         /// </summary>
         public float LifeSpan { get; private set; }
 
@@ -39,6 +44,14 @@ namespace CoffeeShopSimulation
         public LamboDirection Direction { get; private set; }
 
         /// <summary>
+        /// Creates an instance of Lambo Model and intializes the LamboView instance
+        /// </summary>
+        public LamboModel()
+        {
+               
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="gameTime"></param>
@@ -47,6 +60,7 @@ namespace CoffeeShopSimulation
             // Adds elasped time to LifeSpan float
             LifeSpan += gameTime;
 
+            // Based on the direction it will update the vector
             switch (Direction)
             {
                 case LamboDirection.Up:
@@ -81,18 +95,18 @@ namespace CoffeeShopSimulation
             switch (direction)
             {
                 case LamboDirection.Up:
-                    Rotation = MathHelper.ToRadians(270);
-                    break;
-
-                case LamboDirection.Down:
-                    Rotation = MathHelper.ToRadians(90);
-                    break;
-
-                case LamboDirection.Left:
                     Rotation = MathHelper.ToRadians(180);
                     break;
 
+                case LamboDirection.Down:
+                    break;
+
+                case LamboDirection.Left:
+                    Rotation = MathHelper.ToRadians(90);
+                    break;
+
                 case LamboDirection.Right:
+                    Rotation = MathHelper.ToRadians(270);
                     break;
             }
         }

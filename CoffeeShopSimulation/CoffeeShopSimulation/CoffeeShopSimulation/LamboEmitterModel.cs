@@ -1,5 +1,5 @@
 ﻿// Author: Sanjay Paraboo, Mark Vuoong, Shawn Verma
-// File Name: CustomerView.cs
+// File Name: LamboEmitterLocal.cs
 // Project Name: A5 Data Manipulation Assignment
 // Creation Date: Dec 5th, 2015
 // Modified Date: Dec 14th, 2015
@@ -11,7 +11,9 @@ namespace CoffeeShopSimulation
 {
     class LamboEmitterModel
     {
+        // Specifies the max number of lambos and their lifespans
         private const int MAX_LAMBOS = 2;
+        private const float MAX_LIFE = 6.0f;
 
         private Vector2 emitLocal;
 

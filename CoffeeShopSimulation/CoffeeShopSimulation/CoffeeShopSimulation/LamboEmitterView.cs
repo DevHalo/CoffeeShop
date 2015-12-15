@@ -1,4 +1,11 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿// Author: Sanjay Paraboo, Mark Vuoong, Shawn Verma
+// File Name: LamboEmitterView.cs
+// Project Name: A5 Data Manipulation Assignment
+// Creation Date: Dec 5th, 2015
+// Modified Date: Dec 14th, 2015
+// Description: Handles the LamboModel logic such as spawning and intializing the lambo instances
+
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;

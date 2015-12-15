@@ -3,7 +3,7 @@
 // Project Name: A5 Data Manipulation Assignment
 // Creation Date: Dec 5th, 2015
 // Modified Date: Dec 14th, 2015
-// Description:
+// Description: Handle the Lambo draw data
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,11 +16,17 @@ namespace CoffeeShopSimulation
 {
     class LamboView
     {
-
+        // Stores the lambo texture
         private Texture2D lamboImg;
 
+        // Stores the instance of LamboModel
         private LamboModel lamboModel;
 
+        /// <summary>
+        /// Used to create an instance of LamboView
+        /// </summary>
+        /// <param name="lamboImg"> Passes through the lambo texture </param>
+        /// <param name="lamboModel"> Passes thorugh the LamboModel instance </param>
         public LamboView(Texture2D lamboImg, LamboModel lamboModel)
         {
             this.lamboImg = lamboImg;
