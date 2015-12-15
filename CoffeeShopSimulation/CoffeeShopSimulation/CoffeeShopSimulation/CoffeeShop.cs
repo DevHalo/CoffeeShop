@@ -58,6 +58,12 @@ namespace CoffeeShopSimulation
 
             // Simulate
             simulationModel.Update(gTime);
+
+            // End the simulation if the user pressed ESC
+            if (simulationModel.Exit)
+            {
+                Exit();
+            }
             
             base.Update(gameTime);
         }

@@ -31,6 +31,8 @@ namespace CoffeeShopSimulation
         // Lambo texture
         private Texture2D lamboTexture;
 
+        // Logo texture
+        private Texture2D timmiesLogo;
 
         /// <summary>
         /// Initializes the view and loads all assets into memory
@@ -49,6 +51,9 @@ namespace CoffeeShopSimulation
             // Load lambo texture
             lamboTexture = content.Load<Texture2D>("Images/car");
 
+            // Load timmies logo
+            timmiesLogo = content.Load<Texture2D>("Images/timmies");
+
             // Load Spritefonts
             mainFont = content.Load<SpriteFont>("Fonts/bigFont");
             smallFont = content.Load<SpriteFont>("Fonts/smallFont");
@@ -61,14 +66,14 @@ namespace CoffeeShopSimulation
         /// <param name="model"> Passes thorugh SimulationModel in order to draw the models data </param>
         public void Draw(SpriteBatch sb, SimulationModel model)
         {
+            // Draw background
             sb.Draw(backgroundTexture, Vector2.Zero, Color.White);
-
-
 
             // If there are customers in the outside line that are off the screen then it will display the number off screen
             if (model.OutsideLine.Size > MAX_VISIBLE_CUSTOMERS_OUTSIDE)
             {
-                sb.DrawString(mainFont, "+" + (model.OutsideLine.Size - MAX_VISIBLE_CUSTOMERS_OUTSIDE), OffScreenCountTextLocal, Color.AliceBlue);
+                sb.DrawString(mainFont, "+" + (model.OutsideLine.Size - MAX_VISIBLE_CUSTOMERS_OUTSIDE),
+                    OffScreenCountTextLocal, Color.AliceBlue);
             }
 
             // When paused it will display Simulation paused
@@ -103,11 +108,13 @@ namespace CoffeeShopSimulation
             // Draws every cashiers at their positions
             for (int i = 0; i < model.Cashiers.Length; i++)
             {
-                sb.Draw(pixelTexture,                                                           // Uses 1x1 pixel texture
-                        new Rectangle((int)model.CashierVectors[i].X + 25,                      // Draws it at the customer waypoint vector at the cahsher and added 25 pixels so 
-                                      (int)model.CashierVectors[i].Y - CUSTOMER_SIDE_LENGTH / 2,// the cashier texture goes behind the counter
-                                      CUSTOMER_SIDE_LENGTH, CUSTOMER_SIDE_LENGTH),              // Has a width and length of 25 pixels
-                        Color.Brown);                                                           // Overlay color is brown
+                sb.Draw(pixelTexture, // Uses 1x1 pixel texture
+                    new Rectangle((int) model.CashierVectors[i].X + 25,
+                        // Draws it at the customer waypoint vector at the cahsher and added 25 pixels so 
+                        (int) model.CashierVectors[i].Y - CUSTOMER_SIDE_LENGTH/2,
+                        // the cashier texture goes behind the counter
+                        CUSTOMER_SIDE_LENGTH, CUSTOMER_SIDE_LENGTH), // Has a width and length of 25 pixels
+                    Color.Brown); // Overlay color is brown
             }
 
             // Draws customers at the cashiers if they are not null
@@ -125,22 +132,29 @@ namespace CoffeeShopSimulation
                 customer.View.Draw(sb, pixelTexture, smallFont);
             }
 
-
-
             // Draws the emitter
             model.LamboEmitter.View.Draw(sb, lamboTexture);
 
+            // Tell the user that the simulation has finished when it has reached the simtime
+            if (model.Finished)
+            {
+                sb.DrawString(mainFont, "Simulation Finished. Press ESC to Exit", new Vector2(469, 352), Color.Red);
+            }
+
             // Draws title, statistics and other important information
-            sb.Draw(pixelTexture, new Rectangle(0, 0, 1366, 102), Color.White * 0.8f);
+            sb.Draw(pixelTexture, new Rectangle(0, 0, 1366, 102), Color.White*0.8f);
             sb.DrawString(mainFont,
-                          "Tim Hortons Simulator 2015" +
-                          "\nSimulation Time: " + model.SimTime + " Seconds" +
-                          "\nNumber of Served Customers: " + model.Statistics.CustomersServed,
-                          Vector2.Zero,
-                          Color.Blue);
+                "Tim Hortons Simulator 2015" +
+                "\nSimulation Time: " + model.SimTime + " Seconds" +
+                "\nNumber of Served Customers: " + model.Statistics.CustomersServed,
+                Vector2.Zero,
+                Color.Blue);
 
             // Runs the Draw method from the statistics view class
             model.Statistics.View.Draw(sb, mainFont);
+
+            // Draw timmies logo
+            sb.Draw(timmiesLogo, new Vector2(850, 0), Color.White);
         }
     }
 }

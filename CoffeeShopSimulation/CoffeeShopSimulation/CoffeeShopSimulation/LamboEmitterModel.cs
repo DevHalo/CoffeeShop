@@ -55,9 +55,9 @@ namespace CoffeeShopSimulation
 
             // Initialize vectors
             TopSpawn = new Vector2(92, -150);
-            LeftSpawn = new Vector2(1460, 102);
-            RightSpawn = new Vector2(-125, 260);
-            BottomSpawn = new Vector2(203, 860);
+            LeftSpawn = new Vector2(1460, 100);
+            RightSpawn = new Vector2(-125, 250);
+            BottomSpawn = new Vector2(250, 860);
         }
         
         /// <summary>
