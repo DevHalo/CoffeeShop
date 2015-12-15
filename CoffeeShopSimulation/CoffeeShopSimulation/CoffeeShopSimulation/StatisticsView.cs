@@ -44,19 +44,17 @@ namespace CoffeeShopSimulation
                           new Vector2(500, 0),
                           Color.Blue);
 
-
             // Used to obtain the length of the Customer Info List.
             int length;
             // If the count is less than 5 it will change the length
-            if (statisticsData.customerInfo.Count < 5)
+            if (statisticsData.CustomerInfo.Count < 5)
             {
-                length = statisticsData.customerInfo.Count;
+                length = statisticsData.CustomerInfo.Count;
             }
             else
             {
                 length = 5;
             }
-
 
             // Draws the top 5 longest wait times obtained from the statistics model class
             sb.DrawString(font, "Longest Wait Times:", new Vector2(470, 535), Color.Blue);
@@ -64,18 +62,16 @@ namespace CoffeeShopSimulation
             for (int i = 0; i < length; i++)
             {
                 // If the value isnt null then draw the value
-                if (statisticsData.customerInfo[i] != null)
+                if (statisticsData.CustomerInfo[i] != null)
                 {
                     // Draws 
                     sb.DrawString(font,
-                                  i + 1 + ". " + statisticsData.customerInfo[length - i - 1].CustomerName +
-                                  "@ " + Math.Round((statisticsData.customerInfo[length - i - 1].CustomerWaitTime), 1) + " seconds",
+                                  i + 1 + ". " + statisticsData.CustomerInfo[length - i - 1].CustomerName +
+                                  "@ " + Math.Round((statisticsData.CustomerInfo[length - i - 1].CustomerWaitTime), 1) + " seconds",
                                   new Vector2(480 + (i*20), 560 + (i * 20)),
                                   Color.Blue);
                 }
             }
-
-
         }
     }
 }

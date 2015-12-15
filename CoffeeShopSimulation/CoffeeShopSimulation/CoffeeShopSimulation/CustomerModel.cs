@@ -18,7 +18,7 @@ namespace CoffeeShopSimulation
         private const float ORDER_TIME_FOOD = 18.0f;
         private const float ORDER_TIME_BOTH = 30.0f;
         // Constant used to store the customers movement speed
-        private const int MOVEMENT_SPEED = 12;
+        private const int MOVEMENT_SPEED = 10;
         // Distance between each customer
         private const int CUSTOMER_DISTANCE = 50;
         

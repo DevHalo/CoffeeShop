@@ -5,6 +5,7 @@
 // Description: Keeps track of the statistics of the simulation such as, minimum wait time, max wait time, total wait time, 
 //              average wait time, number of visits, and top 5 longest wait times
 
+using System.Linq;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -18,12 +19,12 @@ namespace CoffeeShopSimulation
         public float MaxWaitTime { get; private set; }
         public float AvgWaitTime { get; private set; }
 
-        //Stores the number of visits
-        private float visits;
+        //Stores the number of CustomersServed
+        public int CustomersServed { get; private set; }
 
         // 
-        public CustomerInfo[] LongestWaitTimes { get; private set; }
-        public List<CustomerInfo> customerInfo {get; private set;}
+        public CInfoContainer[] LongestWaitTimes { get; private set; }
+        public List<CInfoContainer> CustomerInfo {get; private set;}
         // 
         public StatisticsView View { get; private set; }
 
@@ -32,7 +33,7 @@ namespace CoffeeShopSimulation
         /// </summary>
         public StatisticsModel()
         {
-            customerInfo = new List<CustomerInfo>();
+            CustomerInfo = new List<CInfoContainer>();
 
             View = new StatisticsView(this);
         }
@@ -43,19 +44,19 @@ namespace CoffeeShopSimulation
         /// <param name="customers">stores the queue of customers</param>
         public void Update(Queue<CustomerModel> outsideLine, Queue<CustomerModel> insideLine, CustomerModel[] cashiers, List<CustomerModel> exitList)
         {
-            customerInfo = ToCustomerInfo(outsideLine, insideLine, cashiers, exitList);
+            CustomerInfo = ToCustomerInfo(outsideLine, insideLine, cashiers, exitList);
 
             //Perform the Merge Sort and store the result back in the original array
-            if (customerInfo.Count > 0)
-            {
-                customerInfo = MergeSort(customerInfo, 0, customerInfo.Count - 1);
-            }
+            //if (CInfoContainer.Count > 0)
+            //{
+            //    CInfoContainer = MergeSort(CInfoContainer.ToArray(), 0, CInfoContainer.Count - 1).ToList();
+            //}
 
-            //InsertionSort(customerInfo);
+            InsertionSort(CustomerInfo);
         }
-        private static void InsertionSort(List<CustomerInfo> customerInfo)
+        private static void InsertionSort(List<CInfoContainer> customerInfo)
         {
-            CustomerInfo temp;
+            CInfoContainer temp;
             int sorted = 1;
 
             for (int i = 0; i < customerInfo.Count - 1; i++)
@@ -82,19 +83,19 @@ namespace CoffeeShopSimulation
         /// <param name="left">A pointer to the starting index of the nums array to consider</param>
         /// <param name="right">A pointer to the starting index of the nums array to consider</param>
         /// <returns>A sorted array of integers or null if the array empty</returns>
-        private List<CustomerInfo> MergeSort(List<CustomerInfo> customerInfo, int left, int right)
+        private CInfoContainer[] MergeSort(CInfoContainer[] cInfoContainer, int left, int right)
         {
             //Base Case 1: The array passed in was empty, return null
-            //if (customerInfo.Count == 0)
+            //if (CInfoContainer.Count == 0)
             //{
-            //    return new List<CustomerInfo>() {};
+            //    return new List<CInfoContainer>() {};
             //}
             //Base Case 2: The number of elements to be considerd is one, return that one element as
             //an array of 1 element for merging
             if (right - left < 1)
             {
                 //Create a new array of 1 element
-                return new List<CustomerInfo>() { customerInfo[left] };
+                return new [] { cInfoContainer[left] };
             }
 
             //Calculate the midpoint index of the range to be considered
@@ -102,7 +103,7 @@ namespace CoffeeShopSimulation
 
             //Merge the two halves being split, the base case will be two one-element arrays,
             //future cases will continue to build upon this, e.g. two two-element arrays next
-            return Merge(MergeSort(customerInfo, left, mid), MergeSort(customerInfo, mid + 1, right));
+            return Merge(MergeSort(cInfoContainer, left, mid), MergeSort(cInfoContainer, mid + 1, right));
         }
 
         /// <summary>
@@ -112,21 +113,21 @@ namespace CoffeeShopSimulation
         /// <param name="right">A second sorted array of integers to be merged</param>
         /// <returns>An array with size equivalent to the sum of the lengths of 
         /// the two given arrays that holds the merged sorted data of the two arrays</returns>
-        private List<CustomerInfo> Merge(List<CustomerInfo> left, List<CustomerInfo> right)
+        private CInfoContainer[] Merge(CInfoContainer[] left, CInfoContainer[] right)
         {
             //Base Case 0: the left array has no elements, return the right array automatically
             //Similarly for the right array
-            if (left.Count == 0)
+            if (left == null)
             {
                 return right;
             }
-            else if (right.Count == 0)
+            else if (right == null)
             {
                 return left;
             }
 
             //Create a new array of size equal to the sum of the lengths of the two given arrays
-            List<CustomerInfo> result = new List<CustomerInfo>();
+            CInfoContainer[] result = new CInfoContainer[left.Length + right.Length];
 
             //integers pointing to the currently considered element of each given array
             int leftIndex = 0;
@@ -134,34 +135,34 @@ namespace CoffeeShopSimulation
 
             //For each element in the merged array, get the next 
             //smallest element between the two given arrays
-            for (int i = 0; i < result.Count; i++)
+            for (int i = 0; i < result.Length; i++)
             {
                 //If both index values are valid
-                if (leftIndex < left.Count && rightIndex < right.Count)
+                if (leftIndex < left.Length && rightIndex < right.Length)
                 {
                     //Insert the next lowest value of the two given arrays 
                     //into the merged array and move the index pointer
                     if (left[leftIndex].CustomerWaitTime <= right[rightIndex].CustomerWaitTime)
                     {
-                        result.Add(left[leftIndex]);
+                        result[i] = left[leftIndex];
                         leftIndex++;
                     }
                     else
                     {
-                        result.Add(right[rightIndex]);
+                        result[i] = right[rightIndex];
                         rightIndex++;
                     }
                 }
                 //If the left array is all used up, use the next right array element
-                else if (leftIndex == left.Count)
+                else if (leftIndex == left.Length)
                 {
-                    result.Add(right[rightIndex]);
+                    result[i] = right[rightIndex];
                     rightIndex++;
                 }
                 //If the right array is all used up, use the next left array element
                 else
                 {
-                    result.Add(left[leftIndex]);
+                    result[i] = left[leftIndex];
                     leftIndex++;
                 }
             }
@@ -170,25 +171,22 @@ namespace CoffeeShopSimulation
             return result;
         }
 
-        public List<CustomerInfo> ToCustomerInfo(Queue<CustomerModel> outsideLine, Queue<CustomerModel> insideLine, CustomerModel[] cashiers, List<CustomerModel> exitList)
+        public List<CInfoContainer> ToCustomerInfo(Queue<CustomerModel> outsideLine, Queue<CustomerModel> insideLine, CustomerModel[] cashiers, List<CustomerModel> exitList)
         {
+            List<CInfoContainer> customerInfo = new List<CInfoContainer>();
 
-
-            List<CustomerInfo> customerInfo = new List<CustomerInfo>();
             //Variable used to store the current customer node
             Node<CustomerModel> curCustomer = outsideLine.Peek();
-
-            curCustomer = outsideLine.Peek();
             for (int i = 0; i < outsideLine.Size; i++)
             {
-                customerInfo.Add(new CustomerInfo(curCustomer.Value.WaitTime, curCustomer.Value.CustomerName));
+                customerInfo.Add(new CInfoContainer(curCustomer.Value.WaitTime, curCustomer.Value.CustomerName));
                 curCustomer = curCustomer.Next;
             }
 
             curCustomer = insideLine.Peek();
             for (int i = 0; i < insideLine.Size; i++)
             {
-                customerInfo.Add(new CustomerInfo(curCustomer.Value.WaitTime, curCustomer.Value.CustomerName));
+                customerInfo.Add(new CInfoContainer(curCustomer.Value.WaitTime, curCustomer.Value.CustomerName));
                 curCustomer = curCustomer.Next;
             }
 
@@ -196,13 +194,14 @@ namespace CoffeeShopSimulation
             {
                 if (cashiers[i] != null)
                 {
-                    customerInfo.Add(new CustomerInfo(cashiers[i].WaitTime, cashiers[i].CustomerName));
+                    customerInfo.Add(new CInfoContainer(cashiers[i].WaitTime, cashiers[i].CustomerName));
                 }
             }
 
             for (int i = 0; i < exitList.Count; i++)
             {
-                customerInfo.Add(new CustomerInfo(exitList[i].WaitTime, exitList[i].CustomerName));
+                customerInfo.Add(new CInfoContainer(exitList[i].WaitTime, exitList[i].CustomerName));
+            
             }
 
             return customerInfo;
@@ -216,11 +215,11 @@ namespace CoffeeShopSimulation
             //add the customer wait time the the total wait time
             totalWaitTime += (customer.WaitTime);
 
-            //Increment the number of visits
-            visits++;
+            //Increment the number of CustomersServed
+            CustomersServed++;
 
             //Calculate the average wait time
-            AvgWaitTime = (totalWaitTime / visits);
+            AvgWaitTime = (totalWaitTime / CustomersServed);
 
             //if the current customer being checked has a greater wait time than the max wait time
             if (MaxWaitTime < customer.WaitTime)
@@ -244,12 +243,12 @@ namespace CoffeeShopSimulation
         }
     }
 
-    class CustomerInfo
+    class CInfoContainer
     {
         public string CustomerName { get; set; }
         public float CustomerWaitTime { get; set; }
 
-        public CustomerInfo(float customerWaitTime, string customerName)
+        public CInfoContainer(float customerWaitTime, string customerName)
         {
             this.CustomerName = customerName;
             this.CustomerWaitTime = customerWaitTime;
