@@ -45,31 +45,26 @@ namespace CoffeeShopSimulation
                           Color.Blue);
 
             // Used to obtain the length of the Customer Info List.
-            int length;
-            // If the count is less than 5 it will change the length
-            if (statisticsData.CustomerInfo.Count < 5)
-            {
-                length = statisticsData.CustomerInfo.Count;
-            }
-            else
-            {
-                length = 5;
-            }
+            int start = statisticsData.CustomerInfo.Count - 1;
+            int end = (int)MathHelper.Clamp(start - 4, 0, start);
 
             // Draws the top 5 longest wait times obtained from the statistics model class
             sb.DrawString(font, "Longest Wait Times:", new Vector2(470, 535), Color.Blue);
 
-            for (int i = 0; i < length; i++)
+            if (statisticsData.CustomerInfo.Count > 0)
             {
-                // If the value isnt null then draw the value
-                if (statisticsData.CustomerInfo[i] != null)
+                for (int i = start; i >= end; i--)
                 {
-                    // Draws 
-                    sb.DrawString(font,
-                                  i + 1 + ". " + statisticsData.CustomerInfo[length - i - 1].CustomerName +
-                                  "@ " + Math.Round((statisticsData.CustomerInfo[length - i - 1].CustomerWaitTime), 1) + " seconds",
-                                  new Vector2(480 + (i*20), 560 + (i * 20)),
-                                  Color.Blue);
+                    // If the value isnt null then draw the value
+                    if (statisticsData.CustomerInfo[i] != null)
+                    {
+                        // Draws 
+                        sb.DrawString(font,
+                            (start - i) + 1 + ". " + statisticsData.CustomerInfo[i].CustomerName +
+                            "@ " + Math.Round((statisticsData.CustomerInfo[i].CustomerWaitTime), 1) + " seconds",
+                            new Vector2(480 + ((start - i) *20), 560 + ((start - i)*20)),
+                            Color.Blue);
+                    }
                 }
             }
         }
