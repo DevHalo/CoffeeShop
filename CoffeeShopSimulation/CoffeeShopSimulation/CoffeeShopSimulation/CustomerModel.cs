@@ -53,6 +53,7 @@ namespace CoffeeShopSimulation
             Food,
             Both
         };
+
         /// <summary>
         /// Holds the customer type
         /// </summary>
