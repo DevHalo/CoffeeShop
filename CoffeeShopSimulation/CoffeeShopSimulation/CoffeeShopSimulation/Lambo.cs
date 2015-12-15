@@ -15,6 +15,7 @@ namespace CoffeeShopSimulation
 {
     class Lambo
     {
+        const int LAMBO_SPEED = 15;
 
         private Texture2D lamboImg;
 
@@ -23,9 +24,23 @@ namespace CoffeeShopSimulation
         /// <summary>
         /// 
         /// </summary>
-        public Lambo(Texture2D lamboImg)
+        public enum LamboDirection
+        {
+            Up,
+            Down,
+            Left,
+            Right
+        };
+
+        private LamboDirection Direction { get; private set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Lambo(Texture2D lamboImg, LamboDirection direction)
         {
             this.lamboImg = lamboImg;
+            this.Direction = direction;
         }
 
         /// <summary>
@@ -34,9 +49,29 @@ namespace CoffeeShopSimulation
         /// <param name="gameTime"></param>
         public void Update(float gameTime)
         {
+            switch (Direction)
+            {
+                case LamboDirection.Up:
+                    lamboLocal.Y -= LAMBO_SPEED;
+                    break;
 
+                case LamboDirection.Down:
+                    lamboLocal.Y += LAMBO_SPEED;
+                    break;
+
+                case LamboDirection.Left:
+                    lamboLocal.X -= LAMBO_SPEED;
+                    break;
+
+                case LamboDirection.Right:
+                    lamboLocal.X += LAMBO_SPEED;
+                    break;
+            }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void Spawn()
         {
 
