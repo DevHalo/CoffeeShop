@@ -47,12 +47,12 @@ namespace CoffeeShopSimulation
             CustomerInfo = ToCustomerInfo(outsideLine, insideLine, cashiers, exitList);
 
             //Perform the Merge Sort and store the result back in the original array
-            //if (CInfoContainer.Count > 0)
-            //{
-            //    CInfoContainer = MergeSort(CInfoContainer.ToArray(), 0, CInfoContainer.Count - 1).ToList();
-            //}
+            if (CustomerInfo.Count > 0)
+            {
+                CustomerInfo = MergeSort(CustomerInfo.ToArray(), 0, CustomerInfo.Count - 1).ToList();
+            }
 
-            InsertionSort(CustomerInfo);
+            //InsertionSort(CustomerInfo);
         }
         private static void InsertionSort(List<CInfoContainer> customerInfo)
         {
