@@ -13,7 +13,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace CoffeeShopSimulation
 {
-    class Lambo
+    class LamboModel
     {
         const int LAMBO_SPEED = 15;
 
@@ -22,6 +22,9 @@ namespace CoffeeShopSimulation
         private Vector2 lamboLocal;
 
         public float LifeSpan { get; private set; }
+
+        // Used to specify the locaiton of the lambo
+        private float rotation;
 
 
         /// <summary>
@@ -38,7 +41,7 @@ namespace CoffeeShopSimulation
         private LamboDirection Direction { get; private set; }
 
         
-        public Lambo(Texture2D lamboImg)
+        public LamboModel(Texture2D lamboImg)
         {
             this.lamboImg = lamboImg;
         }
@@ -72,15 +75,37 @@ namespace CoffeeShopSimulation
             }
         }
 
-
+        /// <summary>
+        /// Used to spawn the lamborghinis
+        /// </summary>
+        /// <param name="spawnLocal"> used to specify spawn location </param>
+        /// <param name="direction"> Specifies the lambo direction </param>
         public void Spawn(Vector2 spawnLocal, LamboDirection direction)
         {
             this.Direction = direction;
-            lamboLocal = 
+            lamboLocal = spawnLocal;
+
+            switch (direction)
+            {
+                case LamboDirection.Up:
+                    rotation = MathHelper.ToRadians(270);
+                    break;
+
+                case LamboDirection.Down:
+                    rotation = MathHelper.ToRadians(90);
+                    break;
+
+                case LamboDirection.Left:
+                    rotation = MathHelper.ToRadians(180);
+                    break;
+
+                case LamboDirection.Right:
+                    break;
+            }
         }
 
         /// <summary>
-        /// 
+        /// Draws the lambo on the screen
         /// </summary>
         /// <param name="sb"></param>
         public void Draw(SpriteBatch sb)

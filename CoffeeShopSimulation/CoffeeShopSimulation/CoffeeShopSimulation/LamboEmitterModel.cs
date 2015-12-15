@@ -13,25 +13,19 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace CoffeeShopSimulation
 {
-    class LamboEmitter
+    class LamboEmitterModel
     {
         private const int MAX_LAMBOS = 2;
 
         private Vector2 emitLocal;
 
-        private Texture2D lamboTexture;
-
-        Lambo[] Lambos = new Lambo[MAX_LAMBOS];
+        LamboModel[] Lambos = new LamboModel[MAX_LAMBOS];
 
         public Vector2 TopSpawn { get; private set; }
         public Vector2 LeftSpawn { get; private set; }
         public Vector2 RightSpawn { get; private set; }
         public Vector2 BottomSpawn { get; private set; }
 
-        public LamboEmitter(Texture2D lamboTexture)
-        {
-            this.lamboTexture = lamboTexture;
-        }
 
         /// <summary>
         /// 
@@ -42,21 +36,6 @@ namespace CoffeeShopSimulation
 
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sb"></param>
-        public void Draw(SpriteBatch sb)
-        {
-            foreach (Lambo i in Lambos)
-            {
-                if (i != null)
-                {
-
-                    i.Draw(sb);
-                }
-            }
-        }
 
     }
 }
