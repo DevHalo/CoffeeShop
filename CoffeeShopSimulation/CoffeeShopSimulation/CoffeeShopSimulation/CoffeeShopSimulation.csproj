@@ -83,7 +83,6 @@
     <Compile Include="SimulationModel.cs" />
     <Compile Include="StatisticsModel.cs" />
     <Compile Include="StatisticsView.cs" />
-    <Compile Include="WaypointManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
