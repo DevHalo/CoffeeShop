@@ -56,9 +56,9 @@ namespace CoffeeShopSimulation
         public bool Finished { get; private set; }      // Is the simulation finished
 
         // Lamborghini Emitter
-        private const float LAMBO_SPAWNTIME = 4.0f;     // Spawn time in seconds between lambos
-        private LamboEmitterModel lamboEmitter;         // Spawns lambos
-        private float lamboTimer;                       // Timer used to track time between lambo spawning
+        private const float LAMBO_SPAWNTIME = 0.8f;                     // Spawn time in seconds between lambos
+        public LamboEmitterModel LamboEmitter { get; private set; }     // Spawns lambos
+        private float lamboTimer;                                       // Timer used to track time between lambo spawning
 
 
         /// <summary>
@@ -93,6 +93,9 @@ namespace CoffeeShopSimulation
             Cashiers = new CustomerModel[4];
             CashierVectors = new Vector2[4];
 
+            // Initialize emitter model
+            LamboEmitter = new LamboEmitterModel();
+
             // Initialize statistics class
             Statistics = new StatisticsModel();
 
@@ -101,6 +104,9 @@ namespace CoffeeShopSimulation
             {
                 CashierVectors[i] = new Vector2(1280, 400 + (50 * i));
             }
+
+            // Set finished to false
+            Finished = false;
         }
 
         /// <summary>
@@ -119,7 +125,7 @@ namespace CoffeeShopSimulation
             }
 
             // If the simulation has not completed yet
-            if (Finished)
+            if (!Finished)
             {
                 // If the simulation was not paused
                 if (!Paused)
@@ -199,16 +205,16 @@ namespace CoffeeShopSimulation
                         switch (direction)
                         {
                             case 0:
-                                lamboEmitter.SpawnLambo(LamboModel.LamboDirection.Up);
+                                LamboEmitter.SpawnLambo(LamboModel.LamboDirection.Up);
                                 break;
                             case 1:
-                                lamboEmitter.SpawnLambo(LamboModel.LamboDirection.Down);
+                                LamboEmitter.SpawnLambo(LamboModel.LamboDirection.Down);
                                 break;
                             case 2:
-                                lamboEmitter.SpawnLambo(LamboModel.LamboDirection.Left);
+                                LamboEmitter.SpawnLambo(LamboModel.LamboDirection.Left);
                                 break;
                             case 3:
-                                lamboEmitter.SpawnLambo(LamboModel.LamboDirection.Right);
+                                LamboEmitter.SpawnLambo(LamboModel.LamboDirection.Right);
                                 break;
                         }
 
@@ -216,6 +222,8 @@ namespace CoffeeShopSimulation
                         lamboTimer = 0;
                     }
 
+                    // Update lambo emitter
+                    LamboEmitter.Update(gameTime);
 
                     // Whether or not the simulation should check how many people are inside the store
                     bool checkStore = false;

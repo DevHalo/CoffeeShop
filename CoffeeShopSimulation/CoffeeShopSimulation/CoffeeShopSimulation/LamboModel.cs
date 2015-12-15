@@ -30,6 +30,7 @@ namespace CoffeeShopSimulation
         // Used to specify the locaiton of the lambo
         public float Rotation { get; private set; }
 
+
         /// <summary>
         /// Specifies in which direction the lambo will be travelling
         /// </summary>
@@ -49,11 +50,37 @@ namespace CoffeeShopSimulation
         public LamboView View { get; private set; }
 
         /// <summary>
-        /// Creates an instance of Lambo Model and intializes the LamboView instance
+        /// Used to spawn the lamborghinis
         /// </summary>
-        public LamboModel()
+        /// <param name="spawnLocal"> used to specify spawn location </param>
+        /// <param name="direction"> Specifies the lambo direction </param>
+        public LamboModel(Vector2 spawnLocal, LamboDirection direction)
         {
+            // Initialize view
             View = new LamboView(this);
+
+            // Updates the location by setting it to the spawn point
+            this.Direction = direction;
+            LamboLocal = spawnLocal;
+
+            // Depending on the direction of the lambo it will update the rotation float
+            switch (direction)
+            {
+                case LamboDirection.Up:
+                    Rotation = MathHelper.ToRadians(180);
+                    break;
+
+                case LamboDirection.Down:
+                    break;
+
+                case LamboDirection.Left:
+                    Rotation = MathHelper.ToRadians(90);
+                    break;
+
+                case LamboDirection.Right:
+                    Rotation = MathHelper.ToRadians(270);
+                    break;
+            }
         }
 
         /// <summary>
@@ -82,37 +109,6 @@ namespace CoffeeShopSimulation
 
                 case LamboDirection.Right:
                     LamboLocal += new Vector2(LAMBO_SPEED, 0);
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// Used to spawn the lamborghinis
-        /// </summary>
-        /// <param name="spawnLocal"> used to specify spawn location </param>
-        /// <param name="direction"> Specifies the lambo direction </param>
-        public LamboModel(Vector2 spawnLocal, LamboDirection direction)
-        {
-            // Updates the location by setting it to the spawn point
-            this.Direction = direction;
-            LamboLocal = spawnLocal;
-
-            // Depending on the direction of the lambo it will update the rotation float
-            switch (direction)
-            {
-                case LamboDirection.Up:
-                    Rotation = MathHelper.ToRadians(180);
-                    break;
-
-                case LamboDirection.Down:
-                    break;
-
-                case LamboDirection.Left:
-                    Rotation = MathHelper.ToRadians(90);
-                    break;
-
-                case LamboDirection.Right:
-                    Rotation = MathHelper.ToRadians(270);
                     break;
             }
         }

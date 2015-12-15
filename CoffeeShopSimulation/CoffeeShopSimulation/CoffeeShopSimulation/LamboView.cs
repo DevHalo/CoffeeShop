@@ -4,13 +4,8 @@
 // Creation Date: Dec 5th, 2015
 // Modified Date: Dec 14th, 2015
 // Description: Handle the Lambo draw data
-
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace CoffeeShopSimulation
 {

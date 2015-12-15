@@ -4,25 +4,21 @@
 // Creation Date: Dec 5th, 2015
 // Modified Date: Dec 14th, 2015
 // Description: Handles the LamboModel logic such as spawning and intializing the lambo instances
-
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace CoffeeShopSimulation
 {
     class LamboEmitterView
     {
-
-        private Texture2D lamboTexture;
-
+        // Model associated with this view
         private LamboEmitterModel lamboModel;
 
-        public LamboEmitterView(LamboEmitterModel lamboModel,Texture2D lamboTexture)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="lamboModel"></param>
+        public LamboEmitterView(LamboEmitterModel lamboModel)
         {
-            this.lamboTexture = lamboTexture;
             this.lamboModel = lamboModel;
         }
 
@@ -30,14 +26,14 @@ namespace CoffeeShopSimulation
         /// 
         /// </summary>
         /// <param name="sb"></param>
-        public void Draw(SpriteBatch sb)
+        /// <param name="lamboTexture"></param>
+        public void Draw(SpriteBatch sb, Texture2D lamboTexture)
         {
             foreach (LamboModel i in lamboModel.Lambos)
             {
                 if (i != null)
                 {
-
-                    i.View.Draw(sb);
+                    i.View.Draw(sb, lamboTexture);
                 }
             }
         }

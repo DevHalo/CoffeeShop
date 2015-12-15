@@ -12,8 +12,8 @@ namespace CoffeeShopSimulation
     class LamboEmitterModel
     {
         // Specifies the max number of lambos and their lifespans
-        private const int MAX_LAMBOS = 4;
-        private const float MAX_LIFE = 6.0f;
+        private const int MAX_LAMBOS = 10;
+        private const float MAX_LIFE = 2.0f;
 
         public List<LamboModel> Lambos { get; private set; }
 
@@ -37,6 +37,10 @@ namespace CoffeeShopSimulation
         /// </summary>
         public Vector2 BottomSpawn { get; private set; }
 
+        /// <summary>
+        /// View associated with the model
+        /// </summary>
+        public LamboEmitterView View { get; private set; }
 
         /// <summary>
         /// Initialize Lambo spawn positions
@@ -45,6 +49,9 @@ namespace CoffeeShopSimulation
         {
             // Initialize Lambo list
             Lambos = new List<LamboModel>();
+            
+            // Initialize view
+            View = new LamboEmitterView(this);
 
             // Initialize vectors
             TopSpawn = new Vector2(92, -150);
@@ -73,11 +80,11 @@ namespace CoffeeShopSimulation
                         break;
 
                     case LamboModel.LamboDirection.Left:
-                        Lambos.Add(new LamboModel(RightSpawn, LamboModel.LamboDirection.Left));
+                        Lambos.Add(new LamboModel(RightSpawn, LamboModel.LamboDirection.Right));
                         break;
 
                     case LamboModel.LamboDirection.Right:
-                        Lambos.Add(new LamboModel(LeftSpawn, LamboModel.LamboDirection.Right));
+                        Lambos.Add(new LamboModel(LeftSpawn, LamboModel.LamboDirection.Left));
                         break;
                 }
             }
@@ -90,13 +97,13 @@ namespace CoffeeShopSimulation
         public void Update(float gameTimeInMilliSeconds)
         {
             // Update each lambo and remove them if neccessary
-            foreach (LamboModel lambo in Lambos)
+            for (int i = 0; i < Lambos.Count; i++)
             {
-                lambo.Update(gameTimeInMilliSeconds);
+                Lambos[i].Update(gameTimeInMilliSeconds);
 
-                if (lambo.LifeSpan >= MAX_LIFE)
+                if (Lambos[i].LifeSpan >= MAX_LIFE)
                 {
-                    Lambos.Remove(lambo);
+                    Lambos.RemoveAt(i);
                 }
             }
         }
