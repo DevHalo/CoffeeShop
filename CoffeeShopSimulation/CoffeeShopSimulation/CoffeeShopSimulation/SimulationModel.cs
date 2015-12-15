@@ -50,7 +50,7 @@ namespace CoffeeShopSimulation
         private const float SPAWN_TIME = 3.0f;          // Time in seconds between each customer attempting to enter the store
         private const float SIM_DURATION = 300.0f;      // Time in seconds for how long the simulation should run
         private const float STAT_UPDATE_TIME = 1.0f;    // How often should the simulation update the statistics
-        private float simTime = 299;                          // Total time the simulation has run
+        private float simTime;                          // Total time the simulation has run
         private float respawnTimer;                     // Timer used to delay time between customer spawning
         private float updateTimer;                      // Timer used to track how long between each statistic update
         public bool Finished { get; private set; }      // Is the simulation finished
