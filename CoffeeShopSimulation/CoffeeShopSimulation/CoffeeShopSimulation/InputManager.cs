@@ -3,10 +3,6 @@
 // Date Created: Dec 5th 2015
 // Date Modified: Dec 14th 2015
 // Description: Handles all input by the user
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework.Input;
 
 namespace CoffeeShopSimulation
